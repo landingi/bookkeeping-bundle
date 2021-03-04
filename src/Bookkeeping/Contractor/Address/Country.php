@@ -5,20 +5,22 @@ namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address;
 
 final class Country
 {
-    private string $identifier;
+    private string $name;
+    private string $alpha2Code;
 
-    public function __construct(string $identifier)
+    public function __construct(string $name, string $alpha2Code)
     {
-        $this->identifier = $identifier;
+        $this->name = $name;
+        $this->alpha2Code = $alpha2Code;
     }
 
-    public function toString(): string
+    public function getAlpha2Code(): string
     {
-        return $this->identifier;
+        return $this->alpha2Code;
     }
 
-    public function __toString(): string
+    public function getName(): string
     {
-        return $this->toString();
+        return $this->name;
     }
 }
