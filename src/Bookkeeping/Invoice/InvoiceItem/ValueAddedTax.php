@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Bookkeeping;
+namespace Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem;
 
 final class ValueAddedTax
 {
