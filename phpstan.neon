@@ -1,0 +1,2 @@
+includes:
+    - vendor/landingi/php-coding-standards/phpstan.neon
