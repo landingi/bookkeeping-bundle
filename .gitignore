@@ -3,3 +3,7 @@
 ###> composer/composer ###
 composer.lock
 ###< composer/composer ###
+
+###> phpunit/phpunit ###
+.phpunit.result.cache
+###< phpunit/phpunit ###
