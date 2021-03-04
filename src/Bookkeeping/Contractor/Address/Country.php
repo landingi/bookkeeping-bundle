@@ -36,4 +36,14 @@ final class Country
     {
         return $this->name;
     }
+
+    public function toString(): string
+    {
+        return $this->name;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
 }
