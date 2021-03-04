@@ -1,5 +1,5 @@
 ci:
-	vendor/bin/phpunit tests
+	vendor/bin/phpunit
 	vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=256M
 	vendor/bin/ecs check --config vendor/landingi/php-coding-standards/ecs.php
 fix:
