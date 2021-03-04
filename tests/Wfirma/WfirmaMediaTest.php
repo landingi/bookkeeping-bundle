@@ -15,42 +15,35 @@ final class WfirmaMediaTest extends TestCase
     {
         $this->xml = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<api>
-</api>
+<root>
+</root>
 XML;
         $this->media = new WfirmaMedia(new SimpleXMLElement($this->xml));
     }
 
-    public function testItIsValidMedia(): void
+    public function testSimpleXML(): void
     {
         self::assertXmlStringEqualsXmlString($this->xml, (string) (new SimpleXMLElement($this->xml))->asXML());
     }
 
-    public function testItGetsXML(): void
+    public function testItConvertsToString(): void
     {
-        /*
+        $this->media->with('child', 'value');
+        $this->media->with('child', '')->with('child', 'value');
+        $this->media->with('child', '');
+
         self::assertXmlStringEqualsXmlString(
             <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<api>
-    <invoices>
-        <invoice>
-            <contractor>
-                <id>100</id>
-            </contractor>
-            <paymentmethod>transfer</paymentmethod>
-            <currency>PLN</currency>
-            <alreadypaid_initial>1400</alreadypaid_initial>
-            <type>normal</type>
-            <date>2020-02-01</date>
-            <paymentdate>2020-02-01</paymentdate>
-            <description>Description Example</description>
-        </invoice>
-    </invoices>
-</api>
+<root>
+    <child>value</child>
+    <child>
+        <child>value</child>    
+    </child>
+    <child></child>
+</root>
 XML,
-            $this->media->with('invoices', 'asd')->with('id', 'id')->getXML()
+            $this->media->toString()
         );
-        */
     }
 }
