@@ -5,5 +5,6 @@ namespace Landingi\BookkeepingBundle\Bookkeeping;
 
 interface Media
 {
-    public function with(string $key, string $value): Media;
+    public function with(string $key, string $value): self;
+    public function toString(): string;
 }

@@ -10,6 +10,13 @@ final class WFirmaInvoice extends Invoice
 {
     public function print(Media $media): Media
     {
-        // TODO: Implement print() method.
+        $invoices = $media->with('invoices', '');
+        $invoice = $invoices->with('invoice', '');
+        $contractor = $invoice->with('contractor', '');
+        $contractor->with('id', $this->contractor->getIdentifier()->toString());
+        $invoice->with('paymentmethod', 'transfer');
+        $invoice->with('currency', $this->currency->getSymbol());
+
+        return $media;
     }
 }

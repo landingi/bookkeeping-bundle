@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Memory;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
-use Landingi\BookkeepingBundle\Bookkeeping\ValueAddedTax;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
 use Landingi\BookkeepingBundle\Bookkeeping\ValueAddedTaxStorage;
 
 final class MemoryValueAddedTaxStorage implements ValueAddedTaxStorage
@@ -40,7 +40,7 @@ final class MemoryValueAddedTaxStorage implements ValueAddedTaxStorage
         'SE' =>  25,
     ];
 
-    public function getByCountry(Country $country) : ValueAddedTax
+    public function getByCountry(Country $country): ValueAddedTax
     {
         return new ValueAddedTax(self::MEMORY[$country->getAlpha2Code()]);
     }

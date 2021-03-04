@@ -26,17 +26,13 @@ final class Company implements Contractor
         $this->valueAddedTaxIdentifier = $valueAddedTaxIdentifier;
     }
 
-    public function toString()
-    {
-        return <<<STRING
-{$this->name}
-{$this->address}
-{$this->valueAddedTaxIdentifier}
-STRING;
-    }
-
     public function print(Media $media): Media
     {
-        // TODO: Implement print() method.
+        return $media;
+    }
+
+    public function getIdentifier(): ContractorIdentifier
+    {
+        return $this->identifier;
     }
 }

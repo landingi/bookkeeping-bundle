@@ -10,6 +10,6 @@ final class WFirmaInvoiceItem extends InvoiceItem
 {
     public function print(Media $media): Media
     {
-        // TODO: Implement print() method.
+        return $media;
     }
 }
