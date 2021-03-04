@@ -22,4 +22,17 @@ final class InvoiceItemCollection implements IteratorAggregate
     {
         return new ArrayIterator($this->items);
     }
+
+    /**
+     * @return InvoiceItem[]
+     */
+    public function getAll(): array
+    {
+        return $this->items;
+    }
+
+    public function merge(self $collection): self
+    {
+        return new self(array_merge($this->items, $collection->getAll()));
+    }
 }

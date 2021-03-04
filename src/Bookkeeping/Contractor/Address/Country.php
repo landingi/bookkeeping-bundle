@@ -7,27 +7,33 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\AddressException
 
 final class Country
 {
-    private string $code;
+    private string $name;
+    private string $alpha2Code;
 
     /**
      * @throws AddressException
      */
-    public function __construct(string $code)
+    public function __construct(string $name, string $alpha2Code)
     {
-        if (2 !== strlen($code)) {
+        if (empty($name)) {
+            throw new AddressException('Country name cannot be an empty value!');
+        }
+
+        if (2 !== strlen($alpha2Code)) {
             throw new AddressException('Country code must be a 2 character string!');
         }
 
-        $this->code = $code;
+        $this->name = $name;
+        $this->alpha2Code = $alpha2Code;
     }
 
-    public function toString(): string
+    public function getAlpha2Code(): string
     {
-        return $this->code;
+        return $this->alpha2Code;
     }
 
-    public function __toString(): string
+    public function getName(): string
     {
-        return $this->toString();
+        return $this->name;
     }
 }
