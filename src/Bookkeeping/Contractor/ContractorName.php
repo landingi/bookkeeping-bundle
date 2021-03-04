@@ -1,21 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address;
+namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\AddressException;
-
-final class City
+final class ContractorName
 {
     private string $name;
 
-    /**
-     * @throws AddressException
-     */
     public function __construct(string $name)
     {
         if (empty($name)) {
-            throw new AddressException('City name cannot be an empty value!');
+            throw new ContractorException('Contractor name cannot be an empty value!');
         }
 
         $this->name = $name;
@@ -23,7 +18,7 @@ final class City
 
     public function toString(): string
     {
-        return "$this->name";
+        return $this->name;
     }
 
     public function __toString(): string

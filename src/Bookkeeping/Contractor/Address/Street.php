@@ -3,18 +3,27 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address;
 
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\AddressException;
+
 final class Street
 {
-    private string $identifier;
+    private string $name;
 
-    public function __construct(string $identifier)
+    /**
+     * @throws AddressException
+     */
+    public function __construct(string $name)
     {
-        $this->identifier = $identifier;
+        if (empty($name)) {
+            throw new AddressException('Street value cannot be an empty value!');
+        }
+
+        $this->name = $name;
     }
 
     public function toString(): string
     {
-        return $this->identifier;
+        return $this->name;
     }
 
     public function __toString(): string

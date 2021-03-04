@@ -3,18 +3,27 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address;
 
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\AddressException;
+
 final class PostalCode
 {
-    private string $identifier;
+    private string $code;
 
-    public function __construct(string $identifier)
+    /**
+     * @throws AddressException
+     */
+    public function __construct(string $code)
     {
-        $this->identifier = $identifier;
+        if (empty($code)) {
+            throw new AddressException('Postal code cannot be an empty value!');
+        }
+
+        $this->code = $code;
     }
 
     public function toString(): string
     {
-        return $this->identifier;
+        return $this->code;
     }
 
     public function __toString(): string
