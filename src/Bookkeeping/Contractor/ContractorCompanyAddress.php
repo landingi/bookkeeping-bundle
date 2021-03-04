@@ -3,6 +3,6 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 
-class ContractorAddress
+final class ContractorCompanyAddress extends ContractorAddress
 {
 }
