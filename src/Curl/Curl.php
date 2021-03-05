@@ -3,11 +3,17 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Curl;
 
+use ErrorException;
+use RuntimeException;
+
 final class Curl
 {
     private $curl;
 
-    public static function withBasicAuth(string $url, string $credentials)
+    /**
+     * @throws ErrorException
+     */
+    public static function withBasicAuth(string $url, string $credentials): Curl
     {
         $curl = new self($url);
         $curl->setOpt(CURLOPT_USERPWD, $credentials);
@@ -15,10 +21,13 @@ final class Curl
         return $curl;
     }
 
+    /**
+     * @throws ErrorException
+     */
     public function __construct(string $url)
     {
         if (!extension_loaded('curl')) {
-            throw new \ErrorException('cURL library is not loaded');
+            throw new ErrorException('cURL library is not loaded');
         }
 
         $this->curl = curl_init();
@@ -26,15 +35,22 @@ final class Curl
         $this->setOpt(CURLOPT_RETURNTRANSFER, true);
     }
 
-    public function requestGET()
+    public function requestGET(): string
     {
         return $this->exec();
     }
 
-    public function requestPOST(string $data)
+    public function requestPOST(string $data): string
     {
         $this->setOpt(CURLOPT_POST, 1);
         $this->setOpt(CURLOPT_POSTFIELDS, $data);
+
+        return $this->exec();
+    }
+
+    public function requestDELETE(): string
+    {
+        $this->setOpt(CURLOPT_CUSTOMREQUEST, 'DELETE');
 
         return $this->exec();
     }
@@ -44,8 +60,14 @@ final class Curl
         return curl_setopt($this->curl, $option, $value);
     }
 
-    private function exec()
+    private function exec(): string
     {
-        return curl_exec($this->curl);
+        $response = curl_exec($this->curl);
+
+        if (false === $response) {
+            throw new RuntimeException('cURL failed');
+        }
+
+        return $response;
     }
 }

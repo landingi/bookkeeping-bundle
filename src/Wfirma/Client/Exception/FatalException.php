@@ -1,9 +1,9 @@
 <?php
 namespace Landingi\BookkeepingBundle\Wfirma\Client\Exception;
 
-use Landingi\BookkeepingBundle\Wfirma\Client\WFirmaClientException;
+use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
 
-final class FatalException extends WFirmaClientException
+final class FatalException extends WfirmaClientException
 {
     public function __construct(string $url, array $result, string $request)
     {

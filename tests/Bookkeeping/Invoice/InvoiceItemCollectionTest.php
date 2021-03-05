@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 
+use Generator;
 use PHPUnit\Framework\TestCase;
-use \Landingi\BookkeepingBundle\Fake;
+use Landingi\BookkeepingBundle\Fake;
 
 final class InvoiceItemCollectionTest extends TestCase
 {
@@ -19,7 +20,7 @@ final class InvoiceItemCollectionTest extends TestCase
         self::assertEquals($expectedCollection->getAll(), $firstCollection->merge($secondCollection)->getAll());
     }
 
-    public function twoCollectionsToMergeProvider()
+    public function twoCollectionsToMergeProvider(): Generator
     {
         yield 'merging collections with one item' => [
             new InvoiceItemCollection([$firstItem = Fake\InvoiceItem::createWithoutPrice('test1')]),
@@ -61,7 +62,7 @@ final class InvoiceItemCollectionTest extends TestCase
         );
     }
 
-    public function threeCollectionsToMergeProvider()
+    public function threeCollectionsToMergeProvider(): Generator
     {
         yield 'merging three collections contain single item' => [
             new InvoiceItemCollection([$firstItem = Fake\InvoiceItem::createWithoutPrice('test1')]),

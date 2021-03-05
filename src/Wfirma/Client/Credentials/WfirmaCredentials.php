@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Client\Credentials;
 
-final class WFirmaCredentials
+final class WfirmaCredentials
 {
     private string $login;
     private string $password;
@@ -18,7 +18,7 @@ final class WFirmaCredentials
 
     public function toString(): string
     {
-        return $this->login . ':' . $this->password;
+        return sprintf('%s:%s', $this->login, $this->password);
     }
 
     public function __toString(): string

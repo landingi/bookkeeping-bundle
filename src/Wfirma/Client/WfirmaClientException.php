@@ -5,7 +5,7 @@ namespace Landingi\BookkeepingBundle\Wfirma\Client;
 
 use Landingi\BookkeepingBundle\Wfirma\WFirmaException;
 
-class WFirmaClientException extends WFirmaException
+class WfirmaClientException extends WFirmaException
 {
     protected string $url;
     protected array $result;

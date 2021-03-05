@@ -9,5 +9,5 @@ interface ContractorBook
 {
     public function find(ContractorIdentifier $identifier): Contractor;
     public function create(): Contractor;
-    public function delete(): void;
+    public function delete(ContractorIdentifier $identifier): void;
 }

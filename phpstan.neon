@@ -6,3 +6,5 @@ parameters:
     ignoreErrors:
         - '#Property [a-zA-Z0-9\\]+::[a-zA-Z0-9\\\$]+ is never read, only written.#'
         - '#Property [a-zA-Z0-9\\]+::[a-zA-Z0-9\\\$]+ is never written, only read.#'
+    excludes_analyse:
+        - src/Curl/Curl

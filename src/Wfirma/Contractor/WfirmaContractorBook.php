@@ -6,9 +6,16 @@ namespace Landingi\BookkeepingBundle\Wfirma\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
+use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 
-final class WFirmaContractorBook implements ContractorBook
+final class WfirmaContractorBook implements ContractorBook
 {
+    private WfirmaClient $client;
+
+    public function __construct(WfirmaClient $client)
+    {
+        $this->client = $client;
+    }
 
     public function find(ContractorIdentifier $identifier): Contractor
     {
@@ -20,8 +27,8 @@ final class WFirmaContractorBook implements ContractorBook
         // TODO: Implement create() method.
     }
 
-    public function delete(): void
+    public function delete(ContractorIdentifier $identifier): void
     {
-        // TODO: Implement delete() method.
+        $this->client->requestDELETE(sprintf('/contractors/delete/%s', $identifier->toString()));
     }
 }
