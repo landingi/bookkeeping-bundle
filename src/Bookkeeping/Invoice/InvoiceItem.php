@@ -24,5 +24,10 @@ abstract class InvoiceItem
         $this->numberOfUnits = $numberOfUnits;
     }
 
+    public function getPrice(): Price
+    {
+        return $this->price;
+    }
+
     abstract public function print(Media $media): Media;
 }

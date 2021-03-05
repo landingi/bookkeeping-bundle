@@ -16,6 +16,11 @@ final class WFirmaInvoice extends Invoice
         $contractor->with('id', $this->contractor->getIdentifier()->toString());
         $invoice->with('paymentmethod', 'transfer');
         $invoice->with('currency', $this->currency->getSymbol());
+        $invoice->with('alreadypaid_initial', (string) $this->getMoneyValue());
+        $invoice->with('type', 'normal');
+        $invoice->with('date', $this->createdAt->format('Y-m-d'));
+        $invoice->with('paymentdate', $this->paidAt->format('Y-m-d'));
+        $invoice->with('description', $this->description->toString());
 
         return $media;
     }

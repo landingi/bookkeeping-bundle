@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Invoice;
 
+use DateTime;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
@@ -51,7 +52,9 @@ final class WfirmaInvoiceBook implements InvoiceBook
                     new Country('poland', 'PL')
                 )
             ),
-            new Currency('PLN')
+            new Currency('PLN'),
+            new DateTime(),
+            new DateTime()
         );
     }
 
@@ -67,7 +70,9 @@ final class WfirmaInvoiceBook implements InvoiceBook
             $description,
             $itemCollection,
             $contractor,
-            new Currency('PLN')
+            new Currency('PLN'),
+            new DateTime(),
+            new DateTime()
         );
     }
 

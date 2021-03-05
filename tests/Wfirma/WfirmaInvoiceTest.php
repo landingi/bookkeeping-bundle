@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma;
 
+use DateTime;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
@@ -50,7 +51,9 @@ XML;
                     new Country('poland', 'PL')
                 )
             ),
-            new Currency('PLN')
+            new Currency('PLN'),
+            new DateTime('2020-02-01'),
+            new DateTime('2020-02-01'),
         );
 
         self::assertXmlStringEqualsXmlString(
@@ -64,6 +67,11 @@ XML;
             </contractor>
             <paymentmethod>transfer</paymentmethod>
             <currency>PLN</currency>
+            <alreadypaid_initial>0</alreadypaid_initial>
+            <type>normal</type>
+            <date>2020-02-01</date>
+            <paymentdate>2020-02-01</paymentdate>
+            <description>Description Example</description>
         </invoice>
     </invoices>
 </api>

@@ -18,7 +18,7 @@ final class WfirmaMedia implements Media
 
     public function with(string $key, string $value): self
     {
-        if (empty($value)) {
+        if ('' === $value) {
             $child = $this->builder->addChild($key);
         } else {
             $child = $this->builder->addChild($key, $value);

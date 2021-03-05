@@ -30,4 +30,9 @@ final class Price
     {
         return $this->toString();
     }
+
+    public function toInteger(): int
+    {
+        return $this->price;
+    }
 }
