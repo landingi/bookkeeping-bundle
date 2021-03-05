@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Landingi\BookkeepingBundle\Wfirma\Client\Exception;
 
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;

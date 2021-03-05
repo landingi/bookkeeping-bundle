@@ -4,6 +4,15 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Wfirma\Invoice;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
+use Landingi\BookkeepingBundle\Bookkeeping\Currency;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
@@ -11,6 +20,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItemCollection;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
+use Landingi\BookkeepingBundle\Wfirma\WFirmaInvoice;
 
 final class WfirmaInvoiceBook implements InvoiceBook
 {
@@ -21,14 +31,44 @@ final class WfirmaInvoiceBook implements InvoiceBook
         $this->client = $client;
     }
 
+    /**
+     * Currently returns fake invoice.
+     */
     public function find(InvoiceIdentifier $identifier): Invoice
     {
-        // TODO: Implement find() method.
+        return new WFirmaInvoice(
+            $identifier,
+            new InvoiceSeries(),
+            new InvoiceDescription('Description Example'),
+            new InvoiceItemCollection([]),
+            new Person(
+                new ContractorIdentifier('100'),
+                new ContractorName('name'),
+                new ContractorAddress(
+                    new Street('name'),
+                    new PostalCode('postal'),
+                    new City('city'),
+                    new Country('poland', 'PL')
+                )
+            ),
+            new Currency('PLN')
+        );
     }
 
-    public function create(Contractor $contractor, InvoiceSeries $series, InvoiceDescription $description, InvoiceItemCollection $itemCollection): Invoice
-    {
-        // TODO: Implement create() method.
+    public function create(
+        Contractor $contractor,
+        InvoiceSeries $series,
+        InvoiceDescription $description,
+        InvoiceItemCollection $itemCollection
+    ): Invoice {
+        return new WFirmaInvoice(
+            new InvoiceIdentifier('2'),
+            $series,
+            $description,
+            $itemCollection,
+            $contractor,
+            new Currency('PLN')
+        );
     }
 
     public function delete(InvoiceIdentifier $identifier): void

@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 
 use Generator;
-use PHPUnit\Framework\TestCase;
 use Landingi\BookkeepingBundle\Fake;
+use PHPUnit\Framework\TestCase;
 
 final class InvoiceItemCollectionTest extends TestCase
 {
@@ -25,13 +25,13 @@ final class InvoiceItemCollectionTest extends TestCase
         yield 'merging collections with one item' => [
             new InvoiceItemCollection([$firstItem = Fake\InvoiceItem::createWithoutPrice('test1')]),
             new InvoiceItemCollection([$secondItem = Fake\InvoiceItem::createWithoutPrice('test2')]),
-            new InvoiceItemCollection([$firstItem, $secondItem])
+            new InvoiceItemCollection([$firstItem, $secondItem]),
         ];
 
         yield 'merging collections when one is empty' => [
             new InvoiceItemCollection([$firstItem = Fake\InvoiceItem::createWithoutPrice('test1')]),
             new InvoiceItemCollection([]),
-            new InvoiceItemCollection([$firstItem])
+            new InvoiceItemCollection([$firstItem]),
         ];
 
         yield 'merging collection with various number of items' => [
@@ -40,7 +40,7 @@ final class InvoiceItemCollectionTest extends TestCase
                 $secondItem = Fake\InvoiceItem::createWithoutPrice('test2'),
                 $thirdItem = Fake\InvoiceItem::createWithoutPrice('test3'),
             ]),
-            new InvoiceItemCollection([$firstItem, $secondItem, $thirdItem])
+            new InvoiceItemCollection([$firstItem, $secondItem, $thirdItem]),
         ];
     }
 
@@ -68,14 +68,14 @@ final class InvoiceItemCollectionTest extends TestCase
             new InvoiceItemCollection([$firstItem = Fake\InvoiceItem::createWithoutPrice('test1')]),
             new InvoiceItemCollection([$secondItem = Fake\InvoiceItem::createWithoutPrice('test2')]),
             new InvoiceItemCollection([$thirdItem = Fake\InvoiceItem::createWithoutPrice('test3')]),
-            new InvoiceItemCollection([$firstItem, $secondItem, $thirdItem])
+            new InvoiceItemCollection([$firstItem, $secondItem, $thirdItem]),
         ];
 
         yield 'merging three collections when one is empty' => [
             new InvoiceItemCollection([$firstItem = Fake\InvoiceItem::createWithoutPrice('test1')]),
             new InvoiceItemCollection([]),
             new InvoiceItemCollection([$secondItem = Fake\InvoiceItem::createWithoutPrice('test2')]),
-            new InvoiceItemCollection([$firstItem, $secondItem])
+            new InvoiceItemCollection([$firstItem, $secondItem]),
         ];
 
         yield 'merging three collection with various number of items' => [
@@ -86,7 +86,7 @@ final class InvoiceItemCollectionTest extends TestCase
                 $fourthItem = Fake\InvoiceItem::createWithoutPrice('test4'),
             ]),
             new InvoiceItemCollection([$fifthItem = Fake\InvoiceItem::createWithoutPrice('test5')]),
-            new InvoiceItemCollection([$firstItem, $secondItem, $thirdItem, $fourthItem, $fifthItem])
+            new InvoiceItemCollection([$firstItem, $secondItem, $thirdItem, $fourthItem, $fifthItem]),
         ];
     }
 }

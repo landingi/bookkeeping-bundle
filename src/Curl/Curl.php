@@ -13,7 +13,7 @@ final class Curl
     /**
      * @throws ErrorException
      */
-    public static function withBasicAuth(string $url, string $credentials): Curl
+    public static function withBasicAuth(string $url, string $credentials): self
     {
         $curl = new self($url);
         $curl->setOpt(CURLOPT_USERPWD, $credentials);

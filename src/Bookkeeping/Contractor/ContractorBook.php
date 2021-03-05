@@ -8,6 +8,6 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 interface ContractorBook
 {
     public function find(ContractorIdentifier $identifier): Contractor;
-    public function create(): Contractor;
+    public function create(ContractorName $name, ContractorAddress $address): Contractor;
     public function delete(ContractorIdentifier $identifier): void;
 }

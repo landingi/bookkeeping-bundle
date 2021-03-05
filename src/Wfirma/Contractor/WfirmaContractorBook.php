@@ -4,8 +4,14 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Wfirma\Contractor;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 
 final class WfirmaContractorBook implements ContractorBook
@@ -19,12 +25,25 @@ final class WfirmaContractorBook implements ContractorBook
 
     public function find(ContractorIdentifier $identifier): Contractor
     {
-        // TODO: Implement find() method.
+        return new Contractor\Person(
+            $identifier,
+            new ContractorName('name'),
+            new ContractorAddress(
+                new Street('name'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('poland', 'PL')
+            )
+        );
     }
 
-    public function create(): Contractor
+    public function create(ContractorName $name, ContractorAddress $address): Contractor
     {
-        // TODO: Implement create() method.
+        return new Contractor\Person(
+            new ContractorIdentifier('100'),
+            $name,
+            $address
+        );
     }
 
     public function delete(ContractorIdentifier $identifier): void

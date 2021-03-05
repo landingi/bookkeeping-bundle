@@ -52,6 +52,8 @@ final class WfirmaClient
      * @throws FatalException
      * @throws NotFoundException
      * @throws OutOfServiceException
+     *
+     * @phpstan-ignore-next-line
      */
     private function handleResponse(array $result, string $url, string $data): array
     {
