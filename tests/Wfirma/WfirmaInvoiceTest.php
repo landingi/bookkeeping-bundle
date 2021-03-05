@@ -53,7 +53,7 @@ XML;
             ),
             new Currency('PLN'),
             new DateTime('2020-02-01'),
-            new DateTime('2020-02-01'),
+            new DateTime('2020-02-01')
         );
 
         self::assertXmlStringEqualsXmlString(
