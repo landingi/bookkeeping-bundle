@@ -52,7 +52,9 @@ final class WfirmaClient
     public function getVatId(string $countryId, int $vatRate)
     {
         $country = $this->requestPOST(
-            'declaration_countries/find', (string) (new Request\DeclarationCountries\Find($countryId)));
+            'declaration_countries/find',
+            (string) (new Request\DeclarationCountries\Find($countryId))
+        );
         $vatCode = $this->requestPOST(
             'vat_codes/find',
             (string) (new Request\VatCodes\Find(
@@ -64,6 +66,9 @@ final class WfirmaClient
         return $vatCode['vat_codes'][0]['vat_code']['id'];
     }
 
+    /**
+     * @throws WfirmaClientException
+     */
     public function requestInvoiceDownload(string $url): string
     {
         $result = $this->getCurl($url)->requestPOST((string) new Download());

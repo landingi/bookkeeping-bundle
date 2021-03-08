@@ -3,17 +3,20 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Contractor;
 
+use JsonException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
+use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaException;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
 
 final class WfirmaContractorBook implements ContractorBook
 {
-    private const CONTRACTOR_API_URL = 'http://api2.wfirma.pl/contractors/%s';
+    private const CONTRACTOR_API_URL = 'https://api2.wfirma.pl/contractors/%s';
 
     private WfirmaClient $client;
     private ContractorFactory $contractorFactory;
@@ -26,7 +29,8 @@ final class WfirmaContractorBook implements ContractorBook
 
     /**
      * @throws WfirmaException
-     * @throws Contractor\ContractorException
+     * @throws ContractorException
+     * @throws JsonException
      */
     public function find(ContractorIdentifier $identifier): Contractor
     {
@@ -48,7 +52,8 @@ final class WfirmaContractorBook implements ContractorBook
 
     /**
      * @throws WfirmaException
-     * @throws Contractor\ContractorException
+     * @throws ContractorException
+     * @throws JsonException
      */
     public function create(Contractor $contractor): Contractor
     {
@@ -65,11 +70,18 @@ final class WfirmaContractorBook implements ContractorBook
         );
     }
 
+    /**
+     * @throws JsonException
+     * @throws WfirmaClientException
+     */
     public function delete(ContractorIdentifier $identifier): void
     {
         $this->client->requestDELETE(sprintf('/contractors/delete/%s', $identifier->toString()));
     }
 
+    /**
+     * @throws WfirmaException
+     */
     private function getContractorResult(array $response): array
     {
         if (false === isset($response['contractors'][0]['contractor'])) {
