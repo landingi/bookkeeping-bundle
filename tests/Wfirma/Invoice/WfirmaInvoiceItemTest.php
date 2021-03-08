@@ -7,6 +7,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Name;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\NumberOfUnits;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Price;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
@@ -30,7 +31,7 @@ XML;
         $item = new WfirmaInvoiceItem(
             new Name('item name 1'),
             new Price(10),
-            new ValueAddedTax(20),
+            new WfirmaValueAddedTax('1111', new ValueAddedTax(20)),
             new NumberOfUnits(1)
         );
 
@@ -43,6 +44,9 @@ XML;
         <unit>szt.</unit>
         <count>1</count>
         <price>10</price>
+        <vat_code>
+            <id>1111</id>
+        </vat_code>
     </invoicecontent>
 </api>
 XML,

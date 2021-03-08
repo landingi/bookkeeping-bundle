@@ -10,7 +10,7 @@ abstract class Invoice
     protected Invoice\InvoiceIdentifier $identifier;
     protected Invoice\InvoiceSeries $invoiceSeries;
     protected Invoice\InvoiceDescription $description;
-    protected Invoice\InvoiceItemCollection $items;
+    protected Collection $items;
     protected Contractor $contractor;
     protected Currency $currency;
     protected DateTime $createdAt;
@@ -21,7 +21,7 @@ abstract class Invoice
         Invoice\InvoiceIdentifier $identifier,
         Invoice\InvoiceSeries $invoiceSeries,
         Invoice\InvoiceDescription $description,
-        Invoice\InvoiceItemCollection $items,
+        Collection $items,
         Contractor $contractor,
         Currency $currency,
         DateTime $createdAt,

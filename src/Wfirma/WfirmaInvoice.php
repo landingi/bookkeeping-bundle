@@ -37,6 +37,8 @@ final class WfirmaInvoice extends Invoice
             $itemContent->with('unit', 'szt.');
             $itemContent->with('count', $item->getUnits()->toString());
             $itemContent->with('price', $item->getPrice()->toString());
+            $vatCode = $itemContent->with('vat_code', '');
+            $vatCode->with('id', $item->getVatId());
         }
 
         if ($this->contractor->isEuropeanUnionCitizen()) {

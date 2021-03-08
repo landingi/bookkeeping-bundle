@@ -4,10 +4,25 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Wfirma\Invoice;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Name;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\NumberOfUnits;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Price;
 use Landingi\BookkeepingBundle\Bookkeeping\Media;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
 
 final class WfirmaInvoiceItem extends InvoiceItem
 {
+    private string $vatId;
+
+    /**
+     * WfirmaValueAddedTax - to haksior bo wfirma jest zjebana.
+     */
+    public function __construct(Name $name, Price $price, WfirmaValueAddedTax $tax, NumberOfUnits $numberOfUnits)
+    {
+        $this->vatId = $tax->getIdentifier();
+        parent::__construct($name, $price, $tax->getTax(), $numberOfUnits);
+    }
+
     public function print(Media $media): Media
     {
         $content = $media->with('invoicecontent', '');
@@ -16,7 +31,14 @@ final class WfirmaInvoiceItem extends InvoiceItem
         $content->with('unit', 'szt.');
         $content->with('count', $this->numberOfUnits->toString());
         $content->with('price', $this->price->toString());
+        $vatCode = $content->with('vat_code', '');
+        $vatCode->with('id', $this->vatId);
 
         return $media;
+    }
+
+    public function getVatId(): string
+    {
+        return $this->vatId;
     }
 }

@@ -48,7 +48,7 @@ final class WfirmaClient
         return $this->handleResponse(json_decode($this->getCurl($url)->requestDELETE(), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
-    public function getVatId(string $countryId, int $vatRate)
+    public function getVatId(string $countryId, int $vatRate): int
     {
         $country = $this->requestPOST('declaration_countries/find', <<<XML
 <?xml version="1.0" encoding="UTF-8"?>

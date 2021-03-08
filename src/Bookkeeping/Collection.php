@@ -1,17 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Bookkeeping\Invoice;
+namespace Landingi\BookkeepingBundle\Bookkeeping;
 
 use ArrayIterator;
 use IteratorAggregate;
 
-final class InvoiceItemCollection implements IteratorAggregate
+class Collection implements IteratorAggregate
 {
-    /**
-     * @var InvoiceItem[]
-     */
-    private array $items;
+    protected array $items;
 
     public function __construct(array $items)
     {
@@ -23,9 +20,6 @@ final class InvoiceItemCollection implements IteratorAggregate
         return new ArrayIterator($this->items);
     }
 
-    /**
-     * @return InvoiceItem[]
-     */
     public function getAll(): array
     {
         return $this->items;
@@ -33,6 +27,6 @@ final class InvoiceItemCollection implements IteratorAggregate
 
     public function merge(self $collection): self
     {
-        return new self(array_merge($this->items, $collection->getAll()));
+        return new self(array_merge($this->items, $collection->items));
     }
 }

@@ -20,11 +20,12 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Name;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\NumberOfUnits;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Price;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItemCollection;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries\InvoiceSeriesIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItemCollection;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 
@@ -48,11 +49,11 @@ XML;
             new InvoiceIdentifier('2'),
             new InvoiceSeries(new InvoiceSeriesIdentifier(700)),
             new InvoiceDescription('Description Example'),
-            new InvoiceItemCollection([
+            new WfirmaInvoiceItemCollection([
                 new WfirmaInvoiceItem(
                     new Name('item name 1'),
                     new Price(10),
-                    new ValueAddedTax(20),
+                    new WfirmaValueAddedTax('1111', new ValueAddedTax(20)),
                     new NumberOfUnits(1)
                 ),
             ]),
@@ -102,7 +103,7 @@ XML;
                     <count>1</count>
                     <price>10</price>
                     <vat_code>
-                        <id>1000</id>
+                        <id>1111</id>
                     </vat_code>
                 </invoicecontent>
             </invoicecontents>

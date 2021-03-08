@@ -8,12 +8,13 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItemCollection;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries\InvoiceSeriesIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
-use Landingi\BookkeepingBundle\Wfirma\WFirmaInvoice;
-use Landingi\BookkeepingBundle\Wfirma\WFirmaInvoiceItem;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItemCollection;
+use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoice;
 
 final class InvoiceFactory
 {
@@ -23,12 +24,12 @@ final class InvoiceFactory
             new Invoice\InvoiceIdentifier($data['id']),
             new InvoiceSeries(new InvoiceSeriesIdentifier($data['series']['id'])),
             new InvoiceDescription($data['description']),
-            new InvoiceItemCollection($this->getInvoiceItems($data['invoicecontents'])),
+            new WfirmaInvoiceItemCollection($this->getInvoiceItems($data['invoicecontents'])),
             $contractor,
             new Currency($data['currency']),
             new DateTime($data['date']),
             new DateTime($data['paymentdate']),
-            new Language((int) $data['translation_language'] === 0 ? 'PL' : 'EN')
+            new Language(0 === (int) $data['translation_language'] ? 'PL' : 'EN')
         );
     }
 
@@ -40,7 +41,7 @@ final class InvoiceFactory
             $invoiceItems[] = new WFirmaInvoiceItem(
               new Invoice\InvoiceItem\Name($item['name']),
               new Invoice\InvoiceItem\Price((int) ($item['price'] * 100)),
-              new Invoice\InvoiceItem\ValueAddedTax(0),
+              new WfirmaValueAddedTax($item['vat_codes']['id'], new Invoice\InvoiceItem\ValueAddedTax(0)),
               new Invoice\InvoiceItem\NumberOfUnits((int) $item['count'])
             );
         }
