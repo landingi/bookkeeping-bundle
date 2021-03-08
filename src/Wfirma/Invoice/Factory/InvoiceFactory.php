@@ -14,7 +14,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItemCollection;
-use Landingi\BookkeepingBundle\Wfirma\WFirmaInvoice;
+use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoice;
 
 final class InvoiceFactory
 {
