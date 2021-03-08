@@ -84,7 +84,7 @@ XML;
             </contractor>
             <paymentmethod>transfer</paymentmethod>
             <currency>PLN</currency>
-            <alreadypaid_initial>0</alreadypaid_initial>
+            <alreadypaid_initial>10</alreadypaid_initial>
             <type>normal</type>
             <date>2020-02-01</date>
             <paymentdate>2020-02-01</paymentdate>

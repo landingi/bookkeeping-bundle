@@ -17,7 +17,6 @@ final class WFirmaInvoiceItem extends InvoiceItem
         $content->with('count', $this->numberOfUnits->toString());
         $content->with('price', $this->price->toString());
 
-
         return $media;
     }
 }

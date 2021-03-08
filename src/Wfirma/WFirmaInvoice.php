@@ -29,6 +29,16 @@ final class WFirmaInvoice extends Invoice
             $language->with('id', '1');
         }
 
+        $contents = $invoice->with('invoicecontents', '');
+
+        foreach ($this->items->getAll() as $item) {
+            $itemContent = $contents->with('invoicecontent', '');
+            $itemContent->with('name', $item->getName()->toString());
+            $itemContent->with('unit', 'szt.');
+            $itemContent->with('count', $item->getUnits()->toString());
+            $itemContent->with('price', $item->getPrice()->toString());
+        }
+
         return $media;
     }
 }
