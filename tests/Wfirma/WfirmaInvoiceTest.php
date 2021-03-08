@@ -100,6 +100,9 @@ XML;
                     <unit>szt.</unit>
                     <count>1</count>
                     <price>10</price>
+                    <vat_code>
+                        <id>1000</id>
+                    </vat_code>
                 </invoicecontent>
             </invoicecontents>
             <vat_moss_details>

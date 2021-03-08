@@ -32,7 +32,7 @@ final class ContractorFactory
 
         return new Company(
             new Contractor\ContractorIdentifier((string) $data['id']),
-            new ContractorName((string) $data['name']),
+            new Contractor\ContractorName((string) $data['name']),
             new Contractor\ContractorEmail((string) $data['email']),
             $this->getContractorAddress($data),
             new Company\ValueAddedTaxIdentifier((string) $data['nip'])

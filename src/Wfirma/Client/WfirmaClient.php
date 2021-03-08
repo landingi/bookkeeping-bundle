@@ -48,6 +48,52 @@ final class WfirmaClient
         return $this->handleResponse(json_decode($this->getCurl($url)->requestDELETE(), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
+    public function getVatId(string $countryId, int $vatRate)
+    {
+        $country = $this->requestPOST('declaration_countries/find', <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<api>
+    <declaration_countries>
+        <parameters>
+            <conditions>
+                <condition>
+                    <field>code</field>    
+                    <operator>eq</operator>
+                    <value>{$countryId}</value>
+                </condition>
+            </conditions>
+        </parameters>
+    </declaration_countries>
+</api>
+XML);
+        $vatCode = $this->requestPOST(
+            'vat_codes/find',
+            <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<api>
+    <vat_codes>
+        <parameters>
+            <conditions>
+                <condition>
+                    <field>declaration_country_id</field>    
+                    <operator>eq</operator>
+                    <value>{$country['declaration_countries'][0]['declaration_country']['id']}</value>
+                </condition>
+                <condition>
+                    <field>rate</field>    
+                    <operator>eq</operator>
+                    <value>{$vatRate}</value>
+                </condition>
+            </conditions>
+        </parameters>
+    </vat_codes>
+</api>
+XML
+        );
+
+        return $vatCode['vat_codes'][0]['vat_code']['id'];
+    }
+
     private function getCurl(string $url): Curl
     {
         return Curl::withBasicAuth(
