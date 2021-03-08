@@ -17,4 +17,5 @@ interface InvoiceBook
         Collection $itemCollection
     ): Invoice;
     public function delete(InvoiceIdentifier $identifier): void;
+    public function download(InvoiceIdentifier $identifier): string;
 }

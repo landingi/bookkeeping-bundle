@@ -14,7 +14,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItemCollection;
-use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoice;
+use Landingi\BookkeepingBundle\Wfirma\WFirmaInvoice;
 
 final class InvoiceFactory
 {
@@ -38,7 +38,7 @@ final class InvoiceFactory
         $invoiceItems = [];
 
         foreach ($items as $key => $item) {
-            $invoiceItems[] = new WFirmaInvoiceItem(
+            $invoiceItems[] = new WfirmaInvoiceItem(
               new Invoice\InvoiceItem\Name($item['name']),
               new Invoice\InvoiceItem\Price((int) ($item['price'] * 100)),
               new WfirmaValueAddedTax($item['vat_codes']['id'], new Invoice\InvoiceItem\ValueAddedTax(0)),

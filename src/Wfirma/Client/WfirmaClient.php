@@ -10,6 +10,7 @@ use Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoice\Download;
 
 final class WfirmaClient
 {
@@ -48,50 +49,30 @@ final class WfirmaClient
         return $this->handleResponse(json_decode($this->getCurl($url)->requestDELETE(), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
-    public function getVatId(string $countryId, int $vatRate): int
+    public function getVatId(string $countryId, int $vatRate)
     {
-        $country = $this->requestPOST('declaration_countries/find', <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<api>
-    <declaration_countries>
-        <parameters>
-            <conditions>
-                <condition>
-                    <field>code</field>    
-                    <operator>eq</operator>
-                    <value>{$countryId}</value>
-                </condition>
-            </conditions>
-        </parameters>
-    </declaration_countries>
-</api>
-XML);
+        $country = $this->requestPOST(
+            'declaration_countries/find', (string) (new Request\DeclarationCountries\Find($countryId)));
         $vatCode = $this->requestPOST(
             'vat_codes/find',
-            <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<api>
-    <vat_codes>
-        <parameters>
-            <conditions>
-                <condition>
-                    <field>declaration_country_id</field>    
-                    <operator>eq</operator>
-                    <value>{$country['declaration_countries'][0]['declaration_country']['id']}</value>
-                </condition>
-                <condition>
-                    <field>rate</field>    
-                    <operator>eq</operator>
-                    <value>{$vatRate}</value>
-                </condition>
-            </conditions>
-        </parameters>
-    </vat_codes>
-</api>
-XML
+            (string) (new Request\VatCodes\Find(
+                (int) $country['declaration_countries'][0]['declaration_country']['id'],
+                $vatRate
+            ))
         );
 
         return $vatCode['vat_codes'][0]['vat_code']['id'];
+    }
+
+    public function requestInvoiceDownload(string $url): string
+    {
+        $result = $this->getCurl($url)->requestPOST((string) new Download());
+
+        if (false === is_string($result)) {
+            throw new WfirmaClientException($url, [$result], 'invoice_download', 'Invalid response');
+        }
+
+        return $result;
     }
 
     private function getCurl(string $url): Curl

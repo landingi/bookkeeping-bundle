@@ -13,6 +13,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
+use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoice\Download;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
@@ -96,5 +97,14 @@ final class WfirmaInvoiceBook implements InvoiceBook
         }
 
         return $response['invoices'][0]['invoice'];
+    }
+
+    public function download(InvoiceIdentifier $identifier): string
+    {
+        return $this->client->requestInvoiceDownload(
+            sprintf(self::INVOICE_API_URL,
+                sprintf('%s%s', 'download/', $identifier->toString())
+            )
+        );
     }
 }
