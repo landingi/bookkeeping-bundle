@@ -23,9 +23,9 @@ final class WFirmaInvoice extends Invoice
         $invoice->with('description', $this->description->toString());
         $series = $invoice->with('series', '');
         $series->with('id', $this->invoiceSeries->getIdentifier()->toString());
-        $language = $invoice->with('translation_language', '');
 
         if ($this->language->isEnglish()) {
+            $language = $invoice->with('translation_language', '');
             $language->with('id', '1');
         }
 
