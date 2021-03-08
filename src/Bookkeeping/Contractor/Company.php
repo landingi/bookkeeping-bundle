@@ -31,6 +31,32 @@ final class Company implements Contractor
 
     public function print(Media $media): Media
     {
+        $contractors = $media->with('contractors', '');
+        $contractor = $contractors->with('contractor', '');
+        $contractor->with('name', $this->name->toString());
+        $contractor->with('altname', $this->name->toString());
+        $contractor->with('street', $this->address->getStreet()->toString());
+        $contractor->with('zip', $this->address->getPostalCode()->toString());
+        $contractor->with('city', $this->address->getCity()->toString());
+        $contractor->with('country', $this->address->getCountry()->toString());
+        $contractor->with('email', $this->email->toString());
+        $contractor->with(
+            'nip',
+            sprintf(
+                '%s%s',
+                $this->address->getCountry()->toString(),
+                $this->valueAddedTaxIdentifier->toString()
+            )
+        );
+
+        if ($this->address->getCountry()->isPoland()) {
+            $contractor->with('tax_id_type', 'nip');
+        } elseif ($this->address->getCountry()->isEuropeanUnion()) {
+            $contractor->with('tax_id_type', 'vat');
+        } else {
+            $contractor->with('tax_id_type', 'custom');
+        }
+
         return $media;
     }
 
