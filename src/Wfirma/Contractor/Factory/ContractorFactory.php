@@ -23,19 +23,19 @@ final class ContractorFactory
     {
         if (empty($data['nip'])) {
             return new Contractor\Person(
-                new Contractor\ContractorIdentifier($data['id']),
-                new ContractorName($data['name']),
-                new Contractor\ContractorEmail($data['email']),
+                new Contractor\ContractorIdentifier((string) $data['id']),
+                new ContractorName((string) $data['name']),
+                new Contractor\ContractorEmail((string) $data['email']),
                 $this->getContractorAddress($data)
             );
         }
 
         return new Company(
-            new Contractor\ContractorIdentifier($data['id']),
-            new ContractorName($data['name']),
-            new Contractor\ContractorEmail($data['email']),
+            new Contractor\ContractorIdentifier((string) $data['id']),
+            new ContractorName((string) $data['name']),
+            new Contractor\ContractorEmail((string) $data['email']),
             $this->getContractorAddress($data),
-            new Company\ValueAddedTaxIdentifier($data['nip'])
+            new Company\ValueAddedTaxIdentifier((string) $data['nip'])
         );
     }
 
@@ -45,10 +45,10 @@ final class ContractorFactory
     private function getContractorAddress(array $data): ContractorAddress
     {
         return new ContractorAddress(
-            new Street($data['street']),
-            new PostalCode($data['zip']),
-            new City($data['city']),
-            new Country($data['country'])
+            new Street((string) $data['street']),
+            new PostalCode((string) $data['zip']),
+            new City((string) $data['city']),
+            new Country((string) $data['country'])
         );
     }
 }
