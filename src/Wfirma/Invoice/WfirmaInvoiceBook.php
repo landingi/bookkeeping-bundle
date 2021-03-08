@@ -5,15 +5,6 @@ namespace Landingi\BookkeepingBundle\Wfirma\Invoice;
 
 use DateTime;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceBook;
@@ -21,45 +12,40 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItemCollection;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries\InvoiceSeriesIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
+use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
+use Landingi\BookkeepingBundle\Wfirma\WFirmaException;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoice;
 
 final class WfirmaInvoiceBook implements InvoiceBook
 {
+    private const INVOICE_API_URL = 'http://api2.wfirma.pl/invoices/%s';
+
     private WfirmaClient $client;
+    private InvoiceFactory $invoiceFactory;
+    private ContractorFactory $contractorFactory;
 
     public function __construct(WfirmaClient $client)
     {
         $this->client = $client;
     }
 
-    /**
-     * Currently returns fake invoice.
-     */
     public function find(InvoiceIdentifier $identifier): Invoice
     {
-        return new WfirmaInvoice(
-            $identifier,
-            new InvoiceSeries(new InvoiceSeriesIdentifier(700)),
-            new InvoiceDescription('Description Example'),
-            new InvoiceItemCollection([]),
-            new Person(
-                new ContractorIdentifier('100'),
-                new ContractorName('name'),
-                new ContractorEmail('name@mail.pl'),
-                new ContractorAddress(
-                    new Street('name'),
-                    new PostalCode('postal'),
-                    new City('city'),
-                    new Country('PL')
+        $invoiceResult = $this->getInvoiceResult(
+            $this->client->requestGET(
+                sprintf(
+                    self::INVOICE_API_URL,
+                    sprintf('%s%s', 'get/', $identifier->toString())
                 )
-            ),
-            new Currency('PLN'),
-            new DateTime(),
-            new DateTime(),
-            new Language('en')
+            )
+        );
+
+        return $this->invoiceFactory->getInvoiceFromApiData(
+            $invoiceResult,
+            $this->contractorFactory->getContractor($this->getContractorResult($invoiceResult))
         );
     }
 
@@ -85,5 +71,28 @@ final class WfirmaInvoiceBook implements InvoiceBook
     public function delete(InvoiceIdentifier $identifier): void
     {
         $this->client->requestDELETE(sprintf('/invoices/delete/%s', $identifier->toString()));
+    }
+
+    private function getContractorResult(array $response): array
+    {
+        return [
+            'id' => $response['contractor']['id'],
+            'name' => $response['contractor']['name'],
+            'email' => $response['contractor']['email'],
+            'nip' => $response['contractor_detail']['nip'],
+            'street' => $response['contractor_detail']['street'],
+            'city' => $response['contractor_detail']['city'],
+            'zip' => $response['contractor_detail']['zip'],
+            'country' => $response['contractor_detail']['country'],
+        ];
+    }
+
+    private function getInvoiceResult(array $response): array
+    {
+        if (false === isset($response['invoices'][0]['invoice'])) {
+            throw new WfirmaException('Invalid response structure!');
+        }
+
+        return $response['invoices'][0]['invoice'];
     }
 }
