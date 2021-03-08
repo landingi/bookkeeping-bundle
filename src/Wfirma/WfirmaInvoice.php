@@ -6,7 +6,7 @@ namespace Landingi\BookkeepingBundle\Wfirma;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Media;
 
-final class WFirmaInvoice extends Invoice
+final class WfirmaInvoice extends Invoice
 {
     public function print(Media $media): Media
     {

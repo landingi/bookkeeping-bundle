@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Client;
 
+use JsonException;
 use Landingi\BookkeepingBundle\Curl\Curl;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException;
@@ -22,26 +23,29 @@ final class WfirmaClient
 
     /**
      * @throws WfirmaClientException
+     * @throws JsonException
      */
     public function requestGET(string $url): array
     {
-        return $this->handleResponse(json_decode($this->getCurl($url)->requestGET(), true), $url);
+        return $this->handleResponse(json_decode($this->getCurl($url)->requestGET(), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
     /**
      * @throws WfirmaClientException
+     * @throws JsonException
      */
     public function requestPOST(string $url, string $data): array
     {
-        return $this->handleResponse(json_decode($this->getCurl($url)->requestPOST($data), true), $url);
+        return $this->handleResponse(json_decode($this->getCurl($url)->requestPOST($data), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
     /**
      * @throws WfirmaClientException
+     * @throws JsonException
      */
     public function requestDELETE(string $url): array
     {
-        return $this->handleResponse(json_decode($this->getCurl($url)->requestDELETE(), true), $url);
+        return $this->handleResponse(json_decode($this->getCurl($url)->requestDELETE(), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
     private function getCurl(string $url): Curl
@@ -62,8 +66,6 @@ final class WfirmaClient
      * @throws FatalException
      * @throws NotFoundException
      * @throws OutOfServiceException
-     *
-     * @phpstan-ignore-next-line
      */
     private function handleResponse(array $result, string $url, string $data = ''): array
     {

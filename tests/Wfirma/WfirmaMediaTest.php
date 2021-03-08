@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma;
 
-use DOMDocument;
-use DOMElement;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 

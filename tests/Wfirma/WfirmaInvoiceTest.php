@@ -41,7 +41,6 @@ XML;
         $this->media = new WfirmaMedia(new SimpleXMLElement($xml));
     }
 
-
     public function testItPrints(): void
     {
         $invoice = new WfirmaInvoice(
@@ -54,7 +53,7 @@ XML;
                     new Price(10),
                     new ValueAddedTax(20),
                     new NumberOfUnits(1)
-                )
+                ),
             ]),
             new Person(
                 new ContractorIdentifier('100'),
