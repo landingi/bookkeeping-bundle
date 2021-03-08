@@ -4,50 +4,78 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Wfirma\Contractor;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
+use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
+use Landingi\BookkeepingBundle\Wfirma\WFirmaException;
+use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
 
 final class WfirmaContractorBook implements ContractorBook
 {
-    private WfirmaClient $client;
+    private const CONTRACTOR_API_URL = 'http://api2.wfirma.pl/contractors/%s';
 
-    public function __construct(WfirmaClient $client)
+    private WfirmaClient $client;
+    private ContractorFactory $contractorFactory;
+
+    public function __construct(WfirmaClient $client, ContractorFactory $contractorFactory)
     {
         $this->client = $client;
+        $this->contractorFactory = $contractorFactory;
     }
 
+    /**
+     * @throws WFirmaException
+     * @throws Contractor\ContractorException
+     */
     public function find(ContractorIdentifier $identifier): Contractor
     {
-        return new Contractor\Person(
-            $identifier,
-            new ContractorName('name'),
-            new ContractorAddress(
-                new Street('name'),
-                new PostalCode('postal'),
-                new City('city'),
-                new Country('poland', 'PL')
+        return $this->contractorFactory->getContractor(
+            $this->getContractorResult(
+                $this->client->requestGET(
+                    sprintf(
+                        self::CONTRACTOR_API_URL,
+                        sprintf(
+                            '%s%s',
+                            'get/',
+                            $identifier->toString()
+                        )
+                    )
+                )
             )
         );
     }
 
-    public function create(ContractorName $name, ContractorAddress $address): Contractor
+    /**
+     * @throws WFirmaException
+     * @throws Contractor\ContractorException
+     */
+    public function create(Contractor $contractor): Contractor
     {
-        return new Contractor\Person(
-            new ContractorIdentifier('100'),
-            $name,
-            $address
+        return $this->contractorFactory->getContractor(
+            $this->getContractorResult(
+                $this->client->requestPOST(
+                    sprintf(
+                        self::CONTRACTOR_API_URL,
+                        sprintf('%s', 'add')
+                    ),
+                    $contractor->print(new WfirmaMedia(new \SimpleXMLElement('')))->toString()
+                )
+            )
         );
     }
 
     public function delete(ContractorIdentifier $identifier): void
     {
         $this->client->requestDELETE(sprintf('/contractors/delete/%s', $identifier->toString()));
+    }
+
+    private function getContractorResult(array $response): array
+    {
+        if (false === isset($response['contractors'][0]['contractor'])) {
+            throw new WFirmaException('Invalid response structure!');
+        }
+
+        return $response['contractors'][0]['contractor'];
     }
 }

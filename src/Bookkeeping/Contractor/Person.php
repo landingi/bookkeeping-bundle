@@ -10,12 +10,18 @@ final class Person implements Contractor
 {
     private ContractorIdentifier $identifier;
     private ContractorName $name;
+    private ContractorEmail $email;
     private ContractorAddress $address;
 
-    public function __construct(ContractorIdentifier $identifier, ContractorName $name, ContractorAddress $address)
-    {
+    public function __construct(
+        ContractorIdentifier $identifier,
+        ContractorName $name,
+        ContractorEmail $email,
+        ContractorAddress $address
+    ) {
         $this->identifier = $identifier;
         $this->name = $name;
+        $this->email = $email;
         $this->address = $address;
     }
 

@@ -10,31 +10,25 @@ final class CountryTest extends TestCase
 {
     public function testCreatingObjectWithValidData(): void
     {
-        $country = new Country('foo', 'XY');
-        self::assertEquals('foo', $country->toString());
-    }
-
-    public function testCreatingObjectWithEmptyCountryName(): void
-    {
-        self::expectException(AddressException::class);
-        new Country('', 'XY');
+        $country = new Country( 'XY');
+        self::assertEquals('XY', $country->toString());
     }
 
     public function testCreatingObjectWithEmptyCountryIso2Code(): void
     {
         self::expectException(AddressException::class);
-        new Country('XYZ', '');
+        new Country('');
     }
 
     public function testCreatingObjectWithTooLongCountryIso2Code(): void
     {
         self::expectException(AddressException::class);
-        new Country('XYZ', 'XYZ');
+        new Country( 'XYZ');
     }
 
     public function testCreatingObjectWithTooShortCountryIso2Code(): void
     {
         self::expectException(AddressException::class);
-        new Country('XYZ', 'X');
+        new Country('X');
     }
 }

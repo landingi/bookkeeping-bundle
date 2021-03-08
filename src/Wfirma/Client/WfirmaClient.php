@@ -20,19 +20,33 @@ final class WfirmaClient
         $this->credentials = $credentials;
     }
 
-    public function requestGET(string $url): string
+    /**
+     * @throws WfirmaClientException
+     */
+    public function requestGET(string $url): array
     {
-        return '';
+        return $this->handleResponse(json_decode($this->getCurl($url)->requestGET(), true), $url);
     }
 
-    public function requestPOST(string $url, string $data): string
+    /**
+     * @throws WfirmaClientException
+     */
+    public function requestPOST(string $url, string $data): array
     {
-        return '';
+        return $this->handleResponse(json_decode($this->getCurl($url)->requestPOST($data), true), $url);
     }
 
-    public function requestDELETE(string $url): string
+    /**
+     * @throws WfirmaClientException
+     */
+    public function requestDELETE(string $url): array
     {
-        $curl = Curl::withBasicAuth(
+        return $this->handleResponse(json_decode($this->getCurl($url)->requestDELETE(), true), $url);
+    }
+
+    private function getCurl(string $url): Curl
+    {
+        return Curl::withBasicAuth(
             sprintf(
                 '%s/%s?company_id=%d&inputFormat=xml&outputFormat=json',
                 self::API,
@@ -41,10 +55,6 @@ final class WfirmaClient
             ),
             $this->credentials->toString()
         );
-
-        $curl->requestDELETE();
-
-        return '';
     }
 
     /**
@@ -55,7 +65,7 @@ final class WfirmaClient
      *
      * @phpstan-ignore-next-line
      */
-    private function handleResponse(array $result, string $url, string $data): array
+    private function handleResponse(array $result, string $url, string $data = ''): array
     {
         switch ($result['status']['code']) {
             case 'OK':

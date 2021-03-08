@@ -9,6 +9,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
@@ -46,11 +47,12 @@ XML;
             new Person(
                 new ContractorIdentifier('100'),
                 new ContractorName('name'),
+                new ContractorEmail('bar@test.test'),
                 new ContractorAddress(
                     new Street('name'),
                     new PostalCode('postal'),
                     new City('city'),
-                    new Country('poland', 'PL')
+                    new Country('PL')
                 )
             ),
             new Currency('PLN'),

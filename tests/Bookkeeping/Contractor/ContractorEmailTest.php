@@ -6,17 +6,17 @@ namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\BookkeepingException;
 use PHPUnit\Framework\TestCase;
 
-final class ContractorNameTest extends TestCase
+final class ContractorEmailTest extends TestCase
 {
     public function testCreatingObjectWithValidData(): void
     {
-        $name = new ContractorName('foo bar');
-        self::assertEquals('foo bar', $name->toString());
+        $email = new ContractorEmail('foo bar');
+        self::assertEquals('foo bar', $email->toString());
     }
 
     public function testCreatingObjectWithEmptyData(): void
     {
         self::expectException(BookkeepingException::class);
-        new ContractorName('');
+        new ContractorEmail('');
     }
 }

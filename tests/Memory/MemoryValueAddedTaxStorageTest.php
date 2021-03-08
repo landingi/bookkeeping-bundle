@@ -17,6 +17,6 @@ final class MemoryValueAddedTaxStorageTest extends TestCase
 
     public function testItGetsValueAddedTaxByCountry(): void
     {
-        self::assertEquals(23, $this->storage->getByCountry(new Country('poland', 'PL'))->getRate());
+        self::assertEquals(23, $this->storage->getByCountry(new Country('PL'))->getRate());
     }
 }
