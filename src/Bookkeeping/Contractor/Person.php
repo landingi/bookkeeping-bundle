@@ -34,4 +34,9 @@ final class Person implements Contractor
     {
         return $this->identifier;
     }
+
+    public function isEuropeanUnionCitizen(): bool
+    {
+        return true;
+    }
 }

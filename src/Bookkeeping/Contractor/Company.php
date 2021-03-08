@@ -38,4 +38,9 @@ final class Company implements Contractor
     {
         return $this->identifier;
     }
+
+    public function isEuropeanUnionCitizen(): bool
+    {
+        return true;
+    }
 }

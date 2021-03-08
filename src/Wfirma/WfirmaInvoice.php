@@ -39,6 +39,13 @@ final class WfirmaInvoice extends Invoice
             $itemContent->with('price', $item->getPrice()->toString());
         }
 
+        if ($this->contractor->isEuropeanUnionCitizen()) {
+            $vatDetails = $invoice->with('vat_moss_details', '');
+            $vatDetails->with('type', 'SA');
+            $vatDetails->with('evidence1_type', 'A');
+            $vatDetails->with('evidence2_type', 'F');
+        }
+
         return $media;
     }
 }
