@@ -16,7 +16,7 @@ final class CityTest extends TestCase
 
     public function testCreatingObjectWithEmptyData(): void
     {
-        self::expectException(AddressException::class);
+        $this->expectException(AddressException::class);
         new City('');
     }
 }

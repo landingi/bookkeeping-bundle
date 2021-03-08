@@ -16,19 +16,19 @@ final class CountryTest extends TestCase
 
     public function testCreatingObjectWithEmptyCountryIso2Code(): void
     {
-        self::expectException(AddressException::class);
+        $this->expectException(AddressException::class);
         new Country('');
     }
 
     public function testCreatingObjectWithTooLongCountryIso2Code(): void
     {
-        self::expectException(AddressException::class);
+        $this->expectException(AddressException::class);
         new Country('XYZ');
     }
 
     public function testCreatingObjectWithTooShortCountryIso2Code(): void
     {
-        self::expectException(AddressException::class);
+        $this->expectException(AddressException::class);
         new Country('X');
     }
 }
