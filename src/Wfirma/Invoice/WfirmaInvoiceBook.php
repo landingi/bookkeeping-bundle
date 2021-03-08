@@ -20,6 +20,8 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItemCollection;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries\InvoiceSeriesIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\WFirmaInvoice;
 
@@ -39,7 +41,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
     {
         return new WFirmaInvoice(
             $identifier,
-            new InvoiceSeries(),
+            new InvoiceSeries(new InvoiceSeriesIdentifier(700)),
             new InvoiceDescription('Description Example'),
             new InvoiceItemCollection([]),
             new Person(
@@ -54,7 +56,8 @@ final class WfirmaInvoiceBook implements InvoiceBook
             ),
             new Currency('PLN'),
             new DateTime(),
-            new DateTime()
+            new DateTime(),
+            new Language('en')
         );
     }
 
@@ -72,7 +75,8 @@ final class WfirmaInvoiceBook implements InvoiceBook
             $contractor,
             new Currency('PLN'),
             new DateTime(),
-            new DateTime()
+            new DateTime(),
+            new Language('en')
         );
     }
 

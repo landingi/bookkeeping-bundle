@@ -17,6 +17,8 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItemCollection;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries\InvoiceSeriesIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 
@@ -38,7 +40,7 @@ XML;
     {
         $invoice = new WFirmaInvoice(
             new InvoiceIdentifier('2'),
-            new InvoiceSeries(),
+            new InvoiceSeries(new InvoiceSeriesIdentifier(700)),
             new InvoiceDescription('Description Example'),
             new InvoiceItemCollection([]),
             new Person(
@@ -53,7 +55,8 @@ XML;
             ),
             new Currency('PLN'),
             new DateTime('2020-02-01'),
-            new DateTime('2020-02-01')
+            new DateTime('2020-02-01'),
+            new Language('en')
         );
 
         self::assertXmlStringEqualsXmlString(
@@ -72,6 +75,12 @@ XML;
             <date>2020-02-01</date>
             <paymentdate>2020-02-01</paymentdate>
             <description>Description Example</description>
+            <series>
+                <id>700</id>
+            </series>
+            <translation_language>
+                <id>1</id>
+            </translation_language>
         </invoice>
     </invoices>
 </api>

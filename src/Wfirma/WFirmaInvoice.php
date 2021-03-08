@@ -21,6 +21,13 @@ final class WFirmaInvoice extends Invoice
         $invoice->with('date', $this->createdAt->format('Y-m-d'));
         $invoice->with('paymentdate', $this->paidAt->format('Y-m-d'));
         $invoice->with('description', $this->description->toString());
+        $series = $invoice->with('series', '');
+        $series->with('id', $this->invoiceSeries->getIdentifier()->toString());
+        $language = $invoice->with('translation_language', '');
+
+        if ($this->language->isEnglish()) {
+            $language->with('id', '1');
+        }
 
         return $media;
     }

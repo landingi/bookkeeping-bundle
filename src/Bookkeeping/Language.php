@@ -14,11 +14,11 @@ final class Language
 
     public function isEnglish(): bool
     {
-        return $this->code === 'EN';
+        return 'EN' === $this->code;
     }
 
     public function isPolish(): bool
     {
-        return $this->code === 'PL';
+        return 'PL' === $this->code;
     }
 }

@@ -17,9 +17,9 @@ final class LanguageTest extends TestCase
 
     public function testItIsPolish(): void
     {
-        self::assertTrue((new Language('pl'))->isEnglish());
-        self::assertTrue((new Language('PL'))->isEnglish());
-        self::assertFalse((new Language('en'))->isEnglish());
-        self::assertFalse((new Language('EN'))->isEnglish());
+        self::assertTrue((new Language('pl'))->isPolish());
+        self::assertTrue((new Language('PL'))->isPolish());
+        self::assertFalse((new Language('en'))->isPolish());
+        self::assertFalse((new Language('EN'))->isPolish());
     }
 }
