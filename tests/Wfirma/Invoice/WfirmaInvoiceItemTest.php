@@ -1,12 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Wfirma;
+namespace Landingi\BookkeepingBundle\Wfirma\Invoice;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Name;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\NumberOfUnits;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Price;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
+use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
 use PHPUnit\Framework\TestCase;
 use SimpleXMLElement;
 
