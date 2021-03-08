@@ -10,22 +10,9 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
 use PHPUnit\Framework\TestCase;
-use SimpleXMLElement;
 
 final class WfirmaInvoiceItemTest extends TestCase
 {
-    private WfirmaMedia $media;
-
-    protected function setUp(): void
-    {
-        $xml = <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<api>
-</api>
-XML;
-        $this->media = new WfirmaMedia(new SimpleXMLElement($xml));
-    }
-
     public function testItPrints(): void
     {
         $item = new WfirmaInvoiceItem(
@@ -50,7 +37,7 @@ XML;
     </invoicecontent>
 </api>
 XML,
-            $item->print($this->media)->toString()
+            $item->print(WfirmaMedia::api())->toString()
         );
     }
 }

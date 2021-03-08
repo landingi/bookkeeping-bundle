@@ -16,7 +16,10 @@ final class ContractorNameTest extends TestCase
 
     public function testCreatingObjectWithEmptyData(): void
     {
-        self::expectException(BookkeepingException::class);
+        $this->expectException(BookkeepingException::class);
         new ContractorName('');
+
+        $this->expectException(BookkeepingException::class);
+        new ContractorName(' ');
     }
 }

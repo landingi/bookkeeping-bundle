@@ -16,7 +16,7 @@ final class ValueAddedTaxIdentifierTest extends TestCase
 
     public function testCreatingObjectWithEmptyData(): void
     {
-        self::expectException(BookkeepingException::class);
+        $this->expectException(BookkeepingException::class);
         new ValueAddedTaxIdentifier('');
     }
 }

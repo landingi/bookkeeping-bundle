@@ -26,11 +26,11 @@ final class WfirmaInvoiceItem extends InvoiceItem
     public function print(Media $media): Media
     {
         $content = $media->with('invoicecontent', '');
-
         $content->with('name', $this->name->toString());
         $content->with('unit', 'szt.');
         $content->with('count', $this->numberOfUnits->toString());
         $content->with('price', $this->price->toString());
+
         $vatCode = $content->with('vat_code', '');
         $vatCode->with('id', $this->vatId);
 

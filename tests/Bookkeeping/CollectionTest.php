@@ -1,14 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Bookkeeping\Invoice;
+namespace Landingi\BookkeepingBundle\Bookkeeping;
 
 use Generator;
-use Landingi\BookkeepingBundle\Bookkeeping\Collection;
 use Landingi\BookkeepingBundle\Fake;
 use PHPUnit\Framework\TestCase;
 
-final class InvoiceItemCollectionTest extends TestCase
+final class CollectionTest extends TestCase
 {
     /**
      * @dataProvider twoCollectionsToMergeProvider

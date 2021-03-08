@@ -27,6 +27,16 @@ final class Person implements Contractor
 
     public function print(Media $media): Media
     {
+        $contractors = $media->with('contractors', '');
+        $contractor = $contractors->with('contractor', '');
+        $contractor->with('name', $this->name->toString());
+        $contractor->with('altname', $this->name->toString());
+        $contractor->with('street', $this->address->getStreet()->toString());
+        $contractor->with('zip', $this->address->getPostalCode()->toString());
+        $contractor->with('city', $this->address->getCity()->toString());
+        $contractor->with('country', $this->address->getCountry()->toString());
+        $contractor->with('email', $this->email->toString());
+
         return $media;
     }
 

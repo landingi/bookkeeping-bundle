@@ -11,6 +11,19 @@ final class WfirmaMedia implements Media
 {
     private SimpleXMLElement $builder;
 
+    public static function api(): self
+    {
+        return new self(
+            new SimpleXMLElement(
+                <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<api>
+</api>
+XML
+            )
+        );
+    }
+
     public function __construct(SimpleXMLElement $simpleXMLElement)
     {
         $this->builder = $simpleXMLElement;

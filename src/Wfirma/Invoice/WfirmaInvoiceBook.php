@@ -3,23 +3,17 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Invoice;
 
-use DateTime;
 use JsonException;
-use Landingi\BookkeepingBundle\Bookkeeping\Collection;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
-use Landingi\BookkeepingBundle\Bookkeeping\Currency;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceBook;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
-use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaException;
-use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoice;
+use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
 
 final class WfirmaInvoiceBook implements InvoiceBook
 {
@@ -57,24 +51,21 @@ final class WfirmaInvoiceBook implements InvoiceBook
         );
     }
 
-    public function create(
-        Contractor $contractor,
-        InvoiceSeries $series,
-        InvoiceDescription $description,
-        Collection $itemCollection
-    ): Invoice {
-        $this->client->getVatId('', 23);
+    public function create(Invoice $invoice): Invoice
+    {
+        $invoiceResult = $this->getInvoiceResult(
+            $this->client->requestPOST(
+                sprintf(
+                    self::INVOICE_API_URL,
+                    'add'
+                ),
+                $invoice->print(WfirmaMedia::api())->toString()
+            )
+        );
 
-        return new WfirmaInvoice(
-            new InvoiceIdentifier('2'),
-            $series,
-            $description,
-            $itemCollection,
-            $contractor,
-            new Currency('PLN'),
-            new DateTime(),
-            new DateTime(),
-            new Language('en')
+        return $this->invoiceFactory->getInvoiceFromApiData(
+            $invoiceResult,
+            $this->contractorFactory->getContractor($this->getContractorResult($invoiceResult))
         );
     }
 

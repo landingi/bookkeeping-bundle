@@ -3,22 +3,33 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\InvalidEmailAddressException;
+
 final class ContractorEmail
 {
-    private string $email;
+    private string $address;
 
-    public function __construct(string $email)
+    /**
+     * Email validation from landingi/core.
+     *
+     * @throws InvalidEmailAddressException
+     */
+    public function __construct(string $address)
     {
-        if (empty($email)) {
-            throw new ContractorException('Contractor email cannot be an empty value!');
+        if (false === filter_var($address, FILTER_VALIDATE_EMAIL)) {
+            throw InvalidEmailAddressException::invalidFormat($address);
         }
 
-        $this->email = $email;
+        if (is_numeric(explode('@', $address)[0])) {
+            throw InvalidEmailAddressException::mailboxCannotBeNumber($address);
+        }
+
+        $this->address = $address;
     }
 
     public function toString(): string
     {
-        return $this->email;
+        return $this->address;
     }
 
     public function __toString(): string

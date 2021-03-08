@@ -17,6 +17,11 @@ final class InvoiceSeriesIdentifier
         return (string) $this->identifier;
     }
 
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+
     public function toInteger(): int
     {
         return $this->identifier;

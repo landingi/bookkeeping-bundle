@@ -64,7 +64,7 @@ final class WfirmaContractorBook implements ContractorBook
                         self::CONTRACTOR_API_URL,
                         sprintf('%s', 'add')
                     ),
-                    $contractor->print(new WfirmaMedia(new \SimpleXMLElement('')))->toString()
+                    $contractor->print(WfirmaMedia::api())->toString()
                 )
             )
         );
@@ -76,7 +76,12 @@ final class WfirmaContractorBook implements ContractorBook
      */
     public function delete(ContractorIdentifier $identifier): void
     {
-        $this->client->requestDELETE(sprintf('/contractors/delete/%s', $identifier->toString()));
+        $this->client->requestDELETE(
+            sprintf(
+                self::CONTRACTOR_API_URL,
+                sprintf('%s/%s', 'contractors/delete', $identifier->toString())
+            )
+        );
     }
 
     /**

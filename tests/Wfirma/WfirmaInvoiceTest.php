@@ -27,22 +27,9 @@ use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItemCollection;
 use PHPUnit\Framework\TestCase;
-use SimpleXMLElement;
 
 final class WfirmaInvoiceTest extends TestCase
 {
-    private WfirmaMedia $media;
-
-    protected function setUp(): void
-    {
-        $xml = <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<api>
-</api>
-XML;
-        $this->media = new WfirmaMedia(new SimpleXMLElement($xml));
-    }
-
     public function testItPrints(): void
     {
         $invoice = new WfirmaInvoice(
@@ -116,7 +103,7 @@ XML;
     </invoices>
 </api>
 XML,
-            $invoice->print($this->media)->toString()
+            $invoice->print(WfirmaMedia::api())->toString()
         );
     }
 }

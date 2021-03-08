@@ -16,7 +16,10 @@ final class ContractorIdentifierTest extends TestCase
 
     public function testCreatingObjectWithEmptyData(): void
     {
-        self::expectException(BookkeepingException::class);
+        $this->expectException(BookkeepingException::class);
         new ContractorIdentifier('');
+
+        $this->expectException(BookkeepingException::class);
+        new ContractorIdentifier(' ');
     }
 }
