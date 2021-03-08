@@ -10,6 +10,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
@@ -23,7 +24,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries\InvoiceSeriesIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
-use Landingi\BookkeepingBundle\Wfirma\WFirmaInvoice;
+use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoice;
 
 final class WfirmaInvoiceBook implements InvoiceBook
 {
@@ -39,7 +40,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
      */
     public function find(InvoiceIdentifier $identifier): Invoice
     {
-        return new WFirmaInvoice(
+        return new WfirmaInvoice(
             $identifier,
             new InvoiceSeries(new InvoiceSeriesIdentifier(700)),
             new InvoiceDescription('Description Example'),
@@ -47,11 +48,12 @@ final class WfirmaInvoiceBook implements InvoiceBook
             new Person(
                 new ContractorIdentifier('100'),
                 new ContractorName('name'),
+                new ContractorEmail('name@mail.pl'),
                 new ContractorAddress(
                     new Street('name'),
                     new PostalCode('postal'),
                     new City('city'),
-                    new Country('poland', 'PL')
+                    new Country('PL')
                 )
             ),
             new Currency('PLN'),
@@ -67,7 +69,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
         InvoiceDescription $description,
         InvoiceItemCollection $itemCollection
     ): Invoice {
-        return new WFirmaInvoice(
+        return new WfirmaInvoice(
             new InvoiceIdentifier('2'),
             $series,
             $description,

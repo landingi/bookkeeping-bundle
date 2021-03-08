@@ -8,7 +8,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
-use Landingi\BookkeepingBundle\Wfirma\WFirmaException;
+use Landingi\BookkeepingBundle\Wfirma\WfirmaException;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
 
 final class WfirmaContractorBook implements ContractorBook
@@ -25,7 +25,7 @@ final class WfirmaContractorBook implements ContractorBook
     }
 
     /**
-     * @throws WFirmaException
+     * @throws WfirmaException
      * @throws Contractor\ContractorException
      */
     public function find(ContractorIdentifier $identifier): Contractor
@@ -47,7 +47,7 @@ final class WfirmaContractorBook implements ContractorBook
     }
 
     /**
-     * @throws WFirmaException
+     * @throws WfirmaException
      * @throws Contractor\ContractorException
      */
     public function create(Contractor $contractor): Contractor
@@ -73,7 +73,7 @@ final class WfirmaContractorBook implements ContractorBook
     private function getContractorResult(array $response): array
     {
         if (false === isset($response['contractors'][0]['contractor'])) {
-            throw new WFirmaException('Invalid response structure!');
+            throw new WfirmaException('Invalid response structure!');
         }
 
         return $response['contractors'][0]['contractor'];

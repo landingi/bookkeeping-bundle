@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Client;
 
-use Landingi\BookkeepingBundle\Wfirma\WFirmaException;
+use Landingi\BookkeepingBundle\Wfirma\WfirmaException;
 
-class WfirmaClientException extends WFirmaException
+class WfirmaClientException extends WfirmaException
 {
     protected string $url;
     protected array $result;
