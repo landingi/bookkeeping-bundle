@@ -42,17 +42,16 @@ final class WfirmaInvoiceBookTest extends TestCase
 
     public function setUp(): void
     {
-        $this->invoiceBook = new WfirmaInvoiceBook(
-            new WfirmaClient(
-                new WfirmaCredentials('', '', 0)
-            ),
-            new InvoiceFactory(),
-            new ContractorFactory()
+        $client = new WfirmaClient(
+            new WfirmaCredentials(
+                getenv('WFIRMA_API_LOGIN'),
+                getenv('WFIRMA_API_PASSWORD'),
+                (int) getenv('WFIRMA_API_COMPANY')
+            )
         );
-        $this->contractorBook = new WfirmaContractorBook(
-            new WfirmaClient(new WfirmaCredentials('', '', 0)),
-            new ContractorFactory()
-        );
+
+        $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), new ContractorFactory());
+        $this->contractorBook = new WfirmaContractorBook($client, new ContractorFactory());
     }
 
     public function testInvoiceWorkflow(): void
