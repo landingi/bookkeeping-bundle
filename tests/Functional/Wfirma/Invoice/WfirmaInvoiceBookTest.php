@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Wfirma\Invoice;
+namespace Landingi\BookkeepingBundle\Functional\Wfirma\Invoice;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
@@ -29,6 +29,9 @@ use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\WfirmaContractorBook;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceBook;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItemCollection;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoice;
 use PHPUnit\Framework\TestCase;
 
@@ -67,7 +70,7 @@ final class WfirmaInvoiceBookTest extends TestCase
                         new Price((int) (100.55 * 100)),
                         new WfirmaValueAddedTax('222', new ValueAddedTax(23)),
                         new NumberOfUnits(2)
-                    )
+                    ),
                 ]),
                 $contractor,
                 new Currency('PLN'),

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Wfirma\Contractor;
+namespace Landingi\BookkeepingBundle\Functional\Wfirma\Contractor;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
@@ -17,6 +17,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
+use Landingi\BookkeepingBundle\Wfirma\Contractor\WfirmaContractorBook;
 use PHPUnit\Framework\TestCase;
 
 final class WfirmaContractorBookTest extends TestCase
