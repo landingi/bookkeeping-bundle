@@ -72,7 +72,8 @@ final class WfirmaInvoiceTest extends TestCase
             </contractor>
             <paymentmethod>transfer</paymentmethod>
             <currency>PLN</currency>
-            <alreadypaid_initial>10</alreadypaid_initial>
+            <paid>1</paid>
+            <alreadypaid_initial>0</alreadypaid_initial>
             <type>normal</type>
             <date>2020-02-01</date>
             <paymentdate>2020-02-01</paymentdate>
@@ -88,7 +89,7 @@ final class WfirmaInvoiceTest extends TestCase
                     <name>item name 1</name>
                     <unit>szt.</unit>
                     <count>1</count>
-                    <price>10</price>
+                    <price>0.1</price>
                     <vat_code>
                         <id>1111</id>
                     </vat_code>

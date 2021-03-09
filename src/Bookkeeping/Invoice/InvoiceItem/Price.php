@@ -25,7 +25,7 @@ final class Price
 
     public function toString(): string
     {
-        return (string) $this->price;
+        return (string) $this->toFloat();
     }
 
     public function __toString(): string
@@ -33,8 +33,8 @@ final class Price
         return $this->toString();
     }
 
-    public function toInteger(): int
+    public function toFloat(): float
     {
-        return $this->price;
+        return $this->price / 100;
     }
 }

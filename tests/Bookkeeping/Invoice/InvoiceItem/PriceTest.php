@@ -13,7 +13,7 @@ final class PriceTest extends TestCase
         $price = new Price(0);
         self::assertEquals('0', $price->toString());
         self::assertEquals('0', (string) $price);
-        self::assertEquals(0, $price->toInteger());
+        self::assertEquals(0, $price->toFloat());
     }
 
     public function testItIsNotEmptyString(): void

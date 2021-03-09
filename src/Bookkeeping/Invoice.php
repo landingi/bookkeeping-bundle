@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Bookkeeping;
 
 use DateTime;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem;
 
 abstract class Invoice
 {
@@ -42,15 +44,21 @@ abstract class Invoice
     /**
      * Returns NET sum of all invoice items.
      */
-    public function getMoneyValue(): int
+    public function getMoneyValue(): float
     {
         $sum = 0;
 
+        /** @var InvoiceItem $item */
         foreach ($this->items->getAll() as $item) {
-            $sum += $item->getPrice()->toInteger();
+            $sum += $item->getPrice()->toFloat() * $item->getUnits()->toInteger();
         }
 
         return $sum;
+    }
+
+    public function getIdentifier(): InvoiceIdentifier
+    {
+        return $this->identifier;
     }
 
     abstract public function print(Media $media): Media;

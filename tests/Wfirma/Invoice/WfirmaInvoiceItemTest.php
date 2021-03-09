@@ -30,7 +30,7 @@ final class WfirmaInvoiceItemTest extends TestCase
         <name>item name 1</name>
         <unit>szt.</unit>
         <count>1</count>
-        <price>10</price>
+        <price>0.1</price>
         <vat_code>
             <id>1111</id>
         </vat_code>
