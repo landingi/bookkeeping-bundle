@@ -79,7 +79,7 @@ final class WfirmaContractorBook implements ContractorBook
         $this->client->requestDELETE(
             sprintf(
                 self::CONTRACTOR_API_URL,
-                sprintf('%s/%s', 'contractors/delete', $identifier->toString())
+                sprintf('%s/%s', '/delete', $identifier->toString())
             )
         );
     }
