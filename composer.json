@@ -6,7 +6,8 @@
     "require": {
         "php": "^7.4",
         "ext-simplexml": "*",
-        "ext-curl": "*"
+        "ext-curl": "*",
+        "ext-json": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
@@ -19,7 +20,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Landingi\\BookkeepingBundle\\" : "tests"
+            "Landingi\\BookkeepingBundle\\Unit\\" : "tests/Unit",
+            "Landingi\\BookkeepingBundle\\Functional\\" : "tests/Functional"
         }
     },
     "minimum-stability": "stable"

@@ -30,4 +30,9 @@ final class NumberOfUnits
     {
         return $this->toString();
     }
+
+    public function toInteger(): int
+    {
+        return $this->number;
+    }
 }

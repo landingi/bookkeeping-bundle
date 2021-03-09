@@ -11,6 +11,19 @@ final class WfirmaMedia implements Media
 {
     private SimpleXMLElement $builder;
 
+    public static function api(): self
+    {
+        return new self(
+            new SimpleXMLElement(
+                <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<api>
+</api>
+XML
+            )
+        );
+    }
+
     public function __construct(SimpleXMLElement $simpleXMLElement)
     {
         $this->builder = $simpleXMLElement;
@@ -18,7 +31,7 @@ final class WfirmaMedia implements Media
 
     public function with(string $key, string $value): self
     {
-        if (empty($value)) {
+        if ('' === $value) {
             $child = $this->builder->addChild($key);
         } else {
             $child = $this->builder->addChild($key, $value);

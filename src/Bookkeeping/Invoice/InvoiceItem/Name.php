@@ -9,6 +9,9 @@ final class Name
 {
     private string $name;
 
+    /**
+     * @throws InvoiceItemException
+     */
     public function __construct(string $name)
     {
         if (empty($name)) {

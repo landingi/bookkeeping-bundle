@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Client;
 
+use JsonException;
 use Landingi\BookkeepingBundle\Curl\Curl;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoice\Download;
 
 final class WfirmaClient
 {
@@ -20,19 +22,67 @@ final class WfirmaClient
         $this->credentials = $credentials;
     }
 
-    public function requestGET(string $url): string
+    /**
+     * @throws WfirmaClientException
+     * @throws JsonException
+     */
+    public function requestGET(string $url): array
     {
-        return '';
+        return $this->handleResponse(json_decode($this->getCurl($url)->requestGET(), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
-    public function requestPOST(string $url, string $data): string
+    /**
+     * @throws WfirmaClientException
+     * @throws JsonException
+     */
+    public function requestPOST(string $url, string $data): array
     {
-        return '';
+        return $this->handleResponse(json_decode($this->getCurl($url)->requestPOST($data), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
-    public function requestDELETE(string $url): string
+    /**
+     * @throws WfirmaClientException
+     * @throws JsonException
+     */
+    public function requestDELETE(string $url): array
     {
-        $curl = Curl::withBasicAuth(
+        return $this->handleResponse(json_decode($this->getCurl($url)->requestDELETE(), true, 512, JSON_THROW_ON_ERROR), $url);
+    }
+
+    public function getVatId(string $countryId, int $vatRate): int
+    {
+        $country = $this->requestPOST(
+            'declaration_countries/find',
+            (string) (new Request\DeclarationCountries\Find($countryId))
+        );
+        $vatCode = $this->requestPOST(
+            'vat_codes/find',
+            (string) (new Request\VatCodes\Find(
+                (int) $country['declaration_countries'][0]['declaration_country']['id'],
+                $vatRate
+            ))
+        );
+
+        return $vatCode['vat_codes'][0]['vat_code']['id'];
+    }
+
+    /**
+     * @throws WfirmaClientException
+     */
+    public function requestInvoiceDownload(string $url): string
+    {
+        $result = $this->getCurl($url)->requestPOST((string) new Download());
+
+        if (!is_string($result)) {
+            throw new WfirmaClientException($url, [$result], 'invoice_download', 'Invalid response');
+        }
+
+        return $result;
+    }
+
+    private function getCurl(string $url): Curl
+    {
+        return Curl::withBasicAuth(
             sprintf(
                 '%s/%s?company_id=%d&inputFormat=xml&outputFormat=json',
                 self::API,
@@ -41,10 +91,6 @@ final class WfirmaClient
             ),
             $this->credentials->toString()
         );
-
-        $curl->requestDELETE();
-
-        return '';
     }
 
     /**
@@ -52,10 +98,8 @@ final class WfirmaClient
      * @throws FatalException
      * @throws NotFoundException
      * @throws OutOfServiceException
-     *
-     * @phpstan-ignore-next-line
      */
-    private function handleResponse(array $result, string $url, string $data): array
+    private function handleResponse(array $result, string $url, string $data = ''): array
     {
         switch ($result['status']['code']) {
             case 'OK':

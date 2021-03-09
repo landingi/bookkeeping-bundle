@@ -23,17 +23,23 @@ final class ContractorAddress
         $this->country = $country;
     }
 
-    public function toString(): string
+    public function getStreet(): Street
     {
-        return <<<STRING
-{$this->street}
-{$this->postalCode}, {$this->city}
-{$this->country}
-STRING;
+        return $this->street;
     }
 
-    public function __toString(): string
+    public function getPostalCode(): PostalCode
     {
-        return $this->toString();
+        return $this->postalCode;
+    }
+
+    public function getCity(): City
+    {
+        return $this->city;
+    }
+
+    public function getCountry(): Country
+    {
+        return $this->country;
     }
 }
