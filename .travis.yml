@@ -5,7 +5,3 @@ script:
     - make ci
 install:
     - composer install
-env:
-    - WFIRMA_API_COMPANY=
-    - WFIRMA_API_LOGIN=
-    - WFIRMA_API_PASSWORD=
