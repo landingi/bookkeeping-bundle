@@ -99,7 +99,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
     {
         return [
             'id' => $response['contractor']['id'],
-            'name' => $response['contractor']['name'],
+            'name' => $response['contractor_detail']['name'],
             'email' => $response['contractor']['email'],
             'nip' => $response['contractor_detail']['nip'],
             'street' => $response['contractor_detail']['street'],
