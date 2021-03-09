@@ -17,15 +17,20 @@ use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
 
 final class WfirmaInvoiceBook implements InvoiceBook
 {
-    private const INVOICE_API_URL = 'https://api2.wfirma.pl/invoices/%s';
+    private const INVOICE_API_URL = '/invoices/%s';
 
     private WfirmaClient $client;
     private InvoiceFactory $invoiceFactory;
     private ContractorFactory $contractorFactory;
 
-    public function __construct(WfirmaClient $client)
-    {
+    public function __construct(
+        WfirmaClient $client,
+        InvoiceFactory $invoiceFactory,
+        ContractorFactory $contractorFactory
+    ) {
         $this->client = $client;
+        $this->invoiceFactory = $invoiceFactory;
+        $this->contractorFactory = $contractorFactory;
     }
 
     /**

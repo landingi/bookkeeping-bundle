@@ -16,7 +16,7 @@ use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
 
 final class WfirmaContractorBook implements ContractorBook
 {
-    private const CONTRACTOR_API_URL = 'https://api2.wfirma.pl/contractors/%s';
+    private const CONTRACTOR_API_URL = '/contractors/%s';
 
     private WfirmaClient $client;
     private ContractorFactory $contractorFactory;
