@@ -58,8 +58,8 @@ final class CompanyTest extends TestCase
             <city>city</city>
             <country>PL</country>
             <email>name@foo.bar</email>
-            <nip>PL333444555</nip>
             <tax_id_type>nip</tax_id_type>
+            <nip>333444555</nip>
         </contractor>
     </contractors>
 </api>
@@ -96,8 +96,8 @@ XML,
             <city>city</city>
             <country>DE</country>
             <email>name@foo.bar</email>
-            <nip>DE333444555</nip>
             <tax_id_type>vat</tax_id_type>
+            <nip>DE333444555</nip>
         </contractor>
     </contractors>
 </api>
@@ -134,7 +134,6 @@ XML,
             <city>city</city>
             <country>UY</country>
             <email>name@foo.bar</email>
-            <nip>UY333444555</nip>
             <tax_id_type>custom</tax_id_type>
         </contractor>
     </contractors>

@@ -16,11 +16,7 @@ final class WfirmaInvoiceBookTest extends TestCase
     {
         $book = new WfirmaInvoiceBook(
             new WfirmaClient(
-                new WfirmaCredentials(
-                    '',
-                    '',
-
-                )
+                new WfirmaCredentials('', '', 0)
             ),
             new InvoiceFactory(),
             new ContractorFactory()

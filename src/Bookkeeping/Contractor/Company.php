@@ -40,19 +40,20 @@ final class Company implements Contractor
         $contractor->with('city', $this->address->getCity()->toString());
         $contractor->with('country', $this->address->getCountry()->toString());
         $contractor->with('email', $this->email->toString());
-        $contractor->with(
-            'nip',
-            sprintf(
-                '%s%s',
-                $this->address->getCountry()->toString(),
-                $this->valueAddedTaxIdentifier->toString()
-            )
-        );
 
         if ($this->address->getCountry()->isPoland()) {
             $contractor->with('tax_id_type', 'nip');
+            $contractor->with('nip', $this->valueAddedTaxIdentifier->toString());
         } elseif ($this->address->getCountry()->isEuropeanUnion()) {
             $contractor->with('tax_id_type', 'vat');
+            $contractor->with(
+                'nip',
+                sprintf(
+                    '%s%s',
+                    $this->address->getCountry()->toString(),
+                    $this->valueAddedTaxIdentifier->toString()
+                )
+            );
         } else {
             $contractor->with('tax_id_type', 'custom');
         }

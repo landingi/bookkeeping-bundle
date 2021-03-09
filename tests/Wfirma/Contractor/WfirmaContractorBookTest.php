@@ -27,11 +27,7 @@ final class WfirmaContractorBookTest extends TestCase
     {
         $this->book = new WfirmaContractorBook(
             new WfirmaClient(
-                new WfirmaCredentials(
-                    '',
-                    '',
-                    0
-                )
+                new WfirmaCredentials('', '', 0)
             ),
             new ContractorFactory()
         );
@@ -74,7 +70,7 @@ final class WfirmaContractorBookTest extends TestCase
                     new City('test'),
                     new Country('PL')
                 ),
-                new Company\ValueAddedTaxIdentifier('1234567890')
+                new Company\ValueAddedTaxIdentifier('6482791634')
             )
         );
 
