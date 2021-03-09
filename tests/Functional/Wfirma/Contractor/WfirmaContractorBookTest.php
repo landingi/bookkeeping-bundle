@@ -27,7 +27,7 @@ final class WfirmaContractorBookTest extends TestCase
     public function setUp(): void
     {
         $this->book = new WfirmaContractorBook(
-            $client = new WfirmaClient(
+            new WfirmaClient(
                 new WfirmaCredentials(
                     (string) getenv('WFIRMA_API_LOGIN'),
                     (string) getenv('WFIRMA_API_PASSWORD'),
