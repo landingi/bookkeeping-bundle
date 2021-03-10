@@ -7,6 +7,9 @@ final class ContractorName
 {
     private string $name;
 
+    /**
+     * @throws ContractorException
+     */
     public function __construct(string $name)
     {
         if (empty($name)) {

@@ -23,7 +23,7 @@ final class City
 
     public function toString(): string
     {
-        return "$this->name";
+        return $this->name;
     }
 
     public function __toString(): string

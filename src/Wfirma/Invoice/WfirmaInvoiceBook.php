@@ -14,6 +14,7 @@ use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaException;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
+use function sprintf;
 
 final class WfirmaInvoiceBook implements InvoiceBook
 {

@@ -5,6 +5,7 @@ namespace Landingi\BookkeepingBundle\Bookkeeping;
 
 use ArrayIterator;
 use IteratorAggregate;
+use function array_merge;
 
 class Collection implements IteratorAggregate
 {
