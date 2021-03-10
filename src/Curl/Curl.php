@@ -3,15 +3,17 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Curl;
 
-use ErrorException;
-use RuntimeException;
+use function curl_error;
+use function curl_exec;
+use function curl_init;
+use function curl_setopt;
 
 final class Curl
 {
     private $curl;
 
     /**
-     * @throws ErrorException
+     * @throws CurlException
      */
     public static function withBasicAuth(string $url, string $credentials): self
     {
@@ -22,12 +24,12 @@ final class Curl
     }
 
     /**
-     * @throws ErrorException
+     * @throws CurlException
      */
     public function __construct(string $url)
     {
         if (!extension_loaded('curl')) {
-            throw new ErrorException('cURL library is not loaded');
+            throw new CurlException('cURL library is not loaded');
         }
 
         $this->curl = curl_init();
@@ -60,12 +62,15 @@ final class Curl
         return curl_setopt($this->curl, $option, $value);
     }
 
+    /**
+     * @throws CurlException
+     */
     private function exec(): string
     {
         $response = curl_exec($this->curl);
 
         if (false === $response) {
-            throw new RuntimeException('cURL failed');
+            throw new CurlException('cURL error: ' . curl_error($this->curl));
         }
 
         return $response;

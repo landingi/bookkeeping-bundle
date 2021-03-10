@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping;
 
+use function strtoupper;
+
 final class Language
 {
     private string $code;

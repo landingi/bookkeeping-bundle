@@ -5,6 +5,7 @@ namespace Landingi\BookkeepingBundle\Bookkeeping;
 
 use Exception;
 use Throwable;
+use function sprintf;
 
 class BookkeepingException extends Exception
 {

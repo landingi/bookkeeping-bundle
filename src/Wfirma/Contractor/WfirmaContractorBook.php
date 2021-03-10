@@ -13,6 +13,7 @@ use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaException;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
+use function sprintf;
 
 final class WfirmaContractorBook implements ContractorBook
 {

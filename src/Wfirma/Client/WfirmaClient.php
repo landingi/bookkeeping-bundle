@@ -11,6 +11,8 @@ use Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoice\Download;
+use function is_string;
+use function sprintf;
 
 final class WfirmaClient
 {

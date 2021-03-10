@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Client\Credentials;
 
+use function sprintf;
+
 final class WfirmaCredentials
 {
     private string $login;
