@@ -31,8 +31,12 @@ final class WfirmaInvoiceItem extends InvoiceItem
         $content->with('count', $this->numberOfUnits->toString());
         $content->with('price', $this->price->toString());
 
-        $vatCode = $content->with('vat_code', '');
-        $vatCode->with('id', $this->vatId);
+        if ($this->vatId > 0) {
+            $vatCode = $content->with('vat_code', '');
+            $vatCode->with('id', $this->vatId);
+        } else {
+            $content->with('vat', (string) $this->tax->getRate());
+        }
 
         return $media;
     }

@@ -33,13 +33,7 @@ final class WfirmaInvoice extends Invoice
         $contents = $invoice->with('invoicecontents', '');
 
         foreach ($this->items->getAll() as $item) {
-            $itemContent = $contents->with('invoicecontent', '');
-            $itemContent->with('name', $item->getName()->toString());
-            $itemContent->with('unit', 'szt.');
-            $itemContent->with('count', $item->getUnits()->toString());
-            $itemContent->with('price', $item->getPrice()->toString());
-            $vatCode = $itemContent->with('vat_code', '');
-            $vatCode->with('id', $item->getVatId());
+            $item->print($contents);
         }
 
         if ($this->contractor->isEuropeanUnionCitizen()) {

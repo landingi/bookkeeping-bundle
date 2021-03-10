@@ -65,7 +65,7 @@ final class WfirmaClient
             ))
         );
 
-        return $vatCode['vat_codes'][0]['vat_code']['id'];
+        return (int) $vatCode['vat_codes'][0]['vat_code']['id'];
     }
 
     /**
