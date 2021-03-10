@@ -51,11 +51,11 @@ final class WfirmaClient
         return $this->handleResponse(json_decode($this->getCurl($url)->requestDELETE(), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
-    public function getVatId(string $countryId, int $vatRate): int
+    public function getVatId(string $countryCode, int $vatRate): int
     {
         $country = $this->requestPOST(
             'declaration_countries/find',
-            (string) (new Request\DeclarationCountries\Find($countryId))
+            (string) (new Request\DeclarationCountries\Find($countryCode))
         );
         $vatCode = $this->requestPOST(
             'vat_codes/find',
