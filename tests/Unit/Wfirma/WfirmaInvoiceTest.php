@@ -23,6 +23,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Price;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries\InvoiceSeriesIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
@@ -40,6 +41,7 @@ final class WfirmaInvoiceTest extends TestCase
             new InvoiceSeries(new InvoiceSeriesIdentifier(700)),
             new InvoiceDescription('Description Example'),
             new InvoiceFullNumber('FV 69/2021'),
+            new InvoiceTotalValue('1'),
             new WfirmaInvoiceItemCollection([
                 new WfirmaInvoiceItem(
                     new Name('item name 1'),

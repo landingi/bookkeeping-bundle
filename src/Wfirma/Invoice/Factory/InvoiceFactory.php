@@ -23,6 +23,7 @@ final class InvoiceFactory
             new Invoice\InvoiceSeries(new InvoiceSeriesIdentifier($data['series']['id'])),
             new Invoice\InvoiceDescription($data['description']),
             new Invoice\InvoiceFullNumber($data['fullnumber']),
+            new Invoice\InvoiceTotalValue($data['total']),
             new WfirmaInvoiceItemCollection($this->getInvoiceItems($data['invoicecontents'])),
             $contractor,
             new Currency($data['currency']),
