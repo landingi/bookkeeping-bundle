@@ -31,7 +31,7 @@ final class WfirmaInvoiceItem extends InvoiceItem
         $content->with('count', $this->numberOfUnits->toString());
         $content->with('price', $this->price->toString());
 
-        if ($this->vatId > 0) {
+        if ($this->vatId) {
             $vatCode = $content->with('vat_code', '');
             $vatCode->with('id', $this->vatId);
         } else {
