@@ -7,8 +7,6 @@ use DateTime;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries\InvoiceSeriesIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
@@ -22,8 +20,9 @@ final class InvoiceFactory
     {
         return new WfirmaInvoice(
             new Invoice\InvoiceIdentifier($data['id']),
-            new InvoiceSeries(new InvoiceSeriesIdentifier($data['series']['id'])),
-            new InvoiceDescription($data['description']),
+            new Invoice\InvoiceSeries(new InvoiceSeriesIdentifier($data['series']['id'])),
+            new Invoice\InvoiceDescription($data['description']),
+            new Invoice\InvoiceFullNumber($data['fullnumber']),
             new WfirmaInvoiceItemCollection($this->getInvoiceItems($data['invoicecontents'])),
             $contractor,
             new Currency($data['currency']),

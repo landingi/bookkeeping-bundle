@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Bookkeeping;
 
 use DateTime;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceFullNumber;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem;
 
@@ -12,6 +13,7 @@ abstract class Invoice
     protected Invoice\InvoiceIdentifier $identifier;
     protected Invoice\InvoiceSeries $invoiceSeries;
     protected Invoice\InvoiceDescription $description;
+    protected Invoice\InvoiceFullNumber $fullNumber;
     protected Collection $items;
     protected Contractor $contractor;
     protected Currency $currency;
@@ -23,6 +25,7 @@ abstract class Invoice
         Invoice\InvoiceIdentifier $identifier,
         Invoice\InvoiceSeries $invoiceSeries,
         Invoice\InvoiceDescription $description,
+        Invoice\InvoiceFullNumber $fullNumber,
         Collection $items,
         Contractor $contractor,
         Currency $currency,
@@ -33,6 +36,7 @@ abstract class Invoice
         $this->identifier = $identifier;
         $this->invoiceSeries = $invoiceSeries;
         $this->description = $description;
+        $this->fullNumber = $fullNumber;
         $this->items = $items;
         $this->contractor = $contractor;
         $this->currency = $currency;
@@ -59,6 +63,11 @@ abstract class Invoice
     public function getIdentifier(): InvoiceIdentifier
     {
         return $this->identifier;
+    }
+
+    public function getFullNumber(): InvoiceFullNumber
+    {
+        return $this->fullNumber;
     }
 
     abstract public function print(Media $media): Media;

@@ -15,6 +15,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceFullNumber;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Name;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\NumberOfUnits;
@@ -38,6 +39,7 @@ final class WfirmaInvoiceTest extends TestCase
             new InvoiceIdentifier('2'),
             new InvoiceSeries(new InvoiceSeriesIdentifier(700)),
             new InvoiceDescription('Description Example'),
+            new InvoiceFullNumber('FV 69/2021'),
             new WfirmaInvoiceItemCollection([
                 new WfirmaInvoiceItem(
                     new Name('item name 1'),
@@ -80,6 +82,7 @@ final class WfirmaInvoiceTest extends TestCase
             <date>2020-02-01</date>
             <paymentdate>2020-02-01</paymentdate>
             <description>Description Example</description>
+            <fullnumber>asdasdsd</fullnumber>
             <series>
                 <id>700</id>
             </series>
