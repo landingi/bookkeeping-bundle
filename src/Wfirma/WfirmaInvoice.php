@@ -5,6 +5,7 @@ namespace Landingi\BookkeepingBundle\Wfirma;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Media;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
 
 final class WfirmaInvoice extends Invoice
 {
@@ -32,6 +33,9 @@ final class WfirmaInvoice extends Invoice
 
         $contents = $invoice->with('invoicecontents', '');
 
+        /**
+         * @var WfirmaInvoiceItem $item
+         */
         foreach ($this->items->getAll() as $item) {
             $item->print($contents);
         }
