@@ -5,6 +5,7 @@ namespace Landingi\BookkeepingBundle\Wfirma;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Media;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
 
 final class WfirmaInvoice extends Invoice
 {
@@ -32,14 +33,11 @@ final class WfirmaInvoice extends Invoice
 
         $contents = $invoice->with('invoicecontents', '');
 
+        /**
+         * @var WfirmaInvoiceItem $item
+         */
         foreach ($this->items->getAll() as $item) {
-            $itemContent = $contents->with('invoicecontent', '');
-            $itemContent->with('name', $item->getName()->toString());
-            $itemContent->with('unit', 'szt.');
-            $itemContent->with('count', $item->getUnits()->toString());
-            $itemContent->with('price', $item->getPrice()->toString());
-            $vatCode = $itemContent->with('vat_code', '');
-            $vatCode->with('id', $item->getVatId());
+            $item->print($contents);
         }
 
         if ($this->contractor->isEuropeanUnionCitizen()) {
