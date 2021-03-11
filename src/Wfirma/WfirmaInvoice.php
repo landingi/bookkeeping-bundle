@@ -23,7 +23,6 @@ final class WfirmaInvoice extends Invoice
         $invoice->with('date', $this->createdAt->format('Y-m-d'));
         $invoice->with('paymentdate', $this->paidAt->format('Y-m-d'));
         $invoice->with('description', $this->description->toString());
-        $invoice->with('fullnumber', $this->fullNumber->toString());
         $series = $invoice->with('series', '');
         $series->with('id', $this->invoiceSeries->getIdentifier()->toString());
 

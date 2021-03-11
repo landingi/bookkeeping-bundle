@@ -82,7 +82,6 @@ final class WfirmaInvoiceTest extends TestCase
             <date>2020-02-01</date>
             <paymentdate>2020-02-01</paymentdate>
             <description>Description Example</description>
-            <fullnumber>FV 69/2021</fullnumber>
             <series>
                 <id>700</id>
             </series>
