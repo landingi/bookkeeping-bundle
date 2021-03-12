@@ -31,13 +31,11 @@ final class WfirmaInvoiceItem extends InvoiceItem
         $content->with('count', $this->numberOfUnits->toString());
         $content->with('price', $this->price->toString());
 
-        if ($this->vatId) {
-            if (WfirmaValueAddedTax::NO_TAX === $this->vatId) {
-                $content->with('vat', WfirmaValueAddedTax::NO_TAX);
-            } else {
-                $vatCode = $content->with('vat_code', '');
-                $vatCode->with('id', $this->vatId);
-            }
+        if (WfirmaValueAddedTax::NO_TAX === $this->vatId) {
+            $content->with('vat', WfirmaValueAddedTax::NO_TAX);
+        } else if ($this->vatId) {
+            $vatCode = $content->with('vat_code', '');
+            $vatCode->with('id', $this->vatId);
         } else {
             $content->with('vat', (string) $this->tax->getRate());
         }
