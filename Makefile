@@ -1,6 +1,6 @@
 ci:
 	vendor/bin/phpunit --color=always --testsuite unit-tests
-	vendor/bin/phpunit --color=always --testsuite functional-tests
+	#vendor/bin/phpunit --color=always --testsuite functional-tests
 	vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=256M
 	vendor/bin/ecs check --config vendor/landingi/php-coding-standards/ecs.php
 fix:
