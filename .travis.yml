@@ -1,7 +1,14 @@
 language: php
 php:
     - '7.4'
-script:
-    - make ci
+
 install:
     - composer install
+
+jobs:
+    include:
+        - stage: CI
+          script: make ci
+
+        - stage: Functional Tests
+          script: make functional

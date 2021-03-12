@@ -11,14 +11,22 @@ final class PriceTest extends TestCase
 {
     public function testItConvertsToString(): void
     {
-        $price = new Price(0);
-        self::assertEquals('0', $price->toString());
-        self::assertEquals('0', (string) $price);
-        self::assertEquals(0, $price->toFloat());
+        $price = new Price(1);
+        self::assertEquals('0.01', $price->toString());
+        self::assertEquals('0.01', (string) $price);
+        self::assertEquals(0.01, $price->toFloat());
+
+        $price = new Price(1000);
+        self::assertEquals('10', $price->toString());
+        self::assertEquals('10', (string) $price);
+        self::assertEquals(10, $price->toFloat());
     }
 
     public function testItIsNotEmptyString(): void
     {
+        $this->expectException(InvoiceItemException::class);
+        new Price(0);
+
         $this->expectException(InvoiceItemException::class);
         new Price(-1);
 
