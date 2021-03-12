@@ -9,6 +9,7 @@ final class WfirmaValueAddedTax
 {
     private string $identifier;
     private ValueAddedTax $tax;
+    public const NO_VAT = 'NP';
 
     public function __construct(string $identifier, ValueAddedTax $tax)
     {
