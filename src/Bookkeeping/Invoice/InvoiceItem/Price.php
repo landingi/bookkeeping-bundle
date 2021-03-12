@@ -16,7 +16,7 @@ final class Price
      */
     public function __construct(int $price)
     {
-        if (!($price > 0)) {
+        if ($price <= 0) {
             throw new InvoiceItemException('Price must be a greater that zero');
         }
 

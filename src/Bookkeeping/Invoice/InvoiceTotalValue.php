@@ -14,7 +14,7 @@ final class InvoiceTotalValue
      */
     public function __construct(int $totalValue)
     {
-        if (!($totalValue > 0)) {
+        if ($totalValue <= 0) {
             throw new InvoiceException('Total Value must be greater that zero');
         }
 
