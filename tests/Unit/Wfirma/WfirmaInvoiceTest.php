@@ -41,7 +41,7 @@ final class WfirmaInvoiceTest extends TestCase
             new InvoiceSeries(new InvoiceSeriesIdentifier(700)),
             new InvoiceDescription('Description Example'),
             new InvoiceFullNumber('FV 69/2021'),
-            new InvoiceTotalValue('1'),
+            new InvoiceTotalValue(100),
             new WfirmaInvoiceItemCollection([
                 new WfirmaInvoiceItem(
                     new Name('item name 1'),
