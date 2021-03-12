@@ -33,7 +33,7 @@ final class WfirmaInvoiceItem extends InvoiceItem
 
         if (WfirmaValueAddedTax::NO_TAX === $this->vatId) {
             $content->with('vat', WfirmaValueAddedTax::NO_TAX);
-        } else if ($this->vatId) {
+        } elseif ($this->vatId) {
             $vatCode = $content->with('vat_code', '');
             $vatCode->with('id', $this->vatId);
         } else {
