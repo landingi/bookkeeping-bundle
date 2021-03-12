@@ -23,6 +23,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\NumberOfUnits;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Price;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
@@ -65,6 +66,7 @@ final class WfirmaInvoiceBookTest extends TestCase
                 new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
                 new InvoiceDescription('test description - bundle invoice'),
                 new InvoiceFullNumber('FV 69/2021'),
+                new InvoiceTotalValue(100),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),
