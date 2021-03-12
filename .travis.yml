@@ -5,6 +5,10 @@ php:
 install:
     - composer install
 
+branches:
+    only:
+        - master
+
 jobs:
     include:
         - stage: CI
