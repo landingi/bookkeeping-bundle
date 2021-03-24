@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Functional\Wfirma\Invoice;
 
+use DateTime;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
@@ -77,8 +78,9 @@ final class WfirmaInvoiceBookTest extends TestCase
                 ]),
                 $contractor,
                 new Currency('PLN'),
-                new \DateTime(),
-                new \DateTime(),
+                new DateTime(),
+                new DateTime(),
+                new DateTime(),
                 new Language('PL')
             )
         );

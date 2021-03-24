@@ -1,11 +1,15 @@
 [![Build Status](https://travis-ci.com/landingi/bookkeeping-bundle.svg?branch=master)](https://travis-ci.com/landingi/bookkeeping-bundle)
 # bookkeeping-bundle
 
+## How to use
+
 ```
 composer require landingi/bookkeeping-bundle
 ```
 
-# Wfirma
+## Develop
 
-https://doc.wfirma.pl
+# Additional
+
+[Wfirma API documentation](https://doc.wfirma.pl)
 

@@ -29,6 +29,7 @@ final class InvoiceFactory
             new Currency($data['currency']),
             new DateTime($data['date']),
             new DateTime($data['paymentdate']),
+            new DateTime($data['disposaldate']),
             new Language(0 === (int) $data['translation_language'] ? 'PL' : 'EN')
         );
     }

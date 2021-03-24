@@ -64,6 +64,7 @@ final class WfirmaInvoiceTest extends TestCase
             new Currency('PLN'),
             new DateTime('2020-02-01'),
             new DateTime('2020-02-01'),
+            new DateTime('2020-02-01'),
             new Language('en')
         );
 
@@ -81,8 +82,10 @@ final class WfirmaInvoiceTest extends TestCase
             <paid>1</paid>
             <alreadypaid_initial>0</alreadypaid_initial>
             <type>normal</type>
+            <price_type>netto</price_type>
             <date>2020-02-01</date>
             <paymentdate>2020-02-01</paymentdate>
+            <disposaldate>2020-02-01</disposaldate>
             <description>Description Example</description>
             <fullnumber>FV 69/2021</fullnumber>
             <total>1</total>
