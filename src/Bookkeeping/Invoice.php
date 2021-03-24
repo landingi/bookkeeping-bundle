@@ -21,6 +21,7 @@ abstract class Invoice
     protected Currency $currency;
     protected DateTime $createdAt;
     protected DateTime $paidAt;
+    protected DateTime $saleAt;
     protected Language $language;
 
     public function __construct(
@@ -34,6 +35,7 @@ abstract class Invoice
         Currency $currency,
         DateTime $createdAt,
         DateTime $paidAt,
+        DateTime $saleAt,
         Language $language
     ) {
         $this->identifier = $identifier;
@@ -47,6 +49,7 @@ abstract class Invoice
         $this->createdAt = $createdAt;
         $this->paidAt = $paidAt;
         $this->language = $language;
+        $this->saleAt = $saleAt;
     }
 
     /**
