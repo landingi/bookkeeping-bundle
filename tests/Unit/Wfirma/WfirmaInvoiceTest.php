@@ -84,7 +84,7 @@ final class WfirmaInvoiceTest extends TestCase
             <type>normal</type>
             <price_type>netto</price_type>
             <date>2020-02-01</date>
-            <payment_date>2020-02-01</payment_date>
+            <paymentdate>2020-02-01</paymentdate>
             <disposaldate>2020-02-01</disposaldate>
             <description>Description Example</description>
             <fullnumber>FV 69/2021</fullnumber>

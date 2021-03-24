@@ -22,7 +22,7 @@ final class WfirmaInvoice extends Invoice
         $invoice->with('type', 'normal');
         $invoice->with('price_type', 'netto');
         $invoice->with('date', $this->createdAt->format('Y-m-d'));
-        $invoice->with('payment_date', $this->paidAt->format('Y-m-d'));
+        $invoice->with('paymentdate', $this->paidAt->format('Y-m-d'));
         $invoice->with('disposaldate', $this->saleAt->format('Y-m-d'));
         $invoice->with('description', $this->description->toString());
         $invoice->with('fullnumber', $this->fullNumber->toString());
