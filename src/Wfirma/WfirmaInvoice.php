@@ -30,7 +30,7 @@ final class WfirmaInvoice extends Invoice
         $series = $invoice->with('series', '');
         $series->with('id', $this->invoiceSeries->getIdentifier()->toString());
 
-        if ($this->language->isEnglish()) {
+        if (!$this->language->isPolish()) {
             $language = $invoice->with('translation_language', '');
             $language->with('id', '1');
         }
