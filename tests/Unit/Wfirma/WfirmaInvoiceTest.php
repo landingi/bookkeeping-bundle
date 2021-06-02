@@ -248,10 +248,10 @@ XML,
     <invoices>
         <invoice>
             <contractor>
-                <id>100</id>
+                <id>123</id>
             </contractor>
             <paymentmethod>transfer</paymentmethod>
-            <currency>PLN</currency>
+            <currency>EUR</currency>
             <paid>1</paid>
             <alreadypaid_initial>0</alreadypaid_initial>
             <type>normal</type>
