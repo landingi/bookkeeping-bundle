@@ -52,13 +52,12 @@ final class CreateInvoiceTest extends TestCase
                 (int) getenv('WFIRMA_API_COMPANY')
             )
         );
-
         $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), new ContractorFactory());
         $this->contractorBook = new WfirmaContractorBook($client, new ContractorFactory());
     }
 
     /**
-     * Company contractor from EU pays in EUR
+     * Company contractor from EU pays in EUR.
      */
     public function testCreateInvoiceCompany(): void
     {
@@ -74,7 +73,7 @@ final class CreateInvoiceTest extends TestCase
                     new City('Paris'),
                     new Country('FR')
                 ),
-                new Company\ValueAddedTaxIdentifier('FR50844926014')
+                new Company\ValueAddedTaxIdentifier('50844926014')
             )
         );
 
