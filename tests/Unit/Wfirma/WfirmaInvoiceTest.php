@@ -108,11 +108,6 @@ final class WfirmaInvoiceTest extends TestCase
                     </vat_code>
                 </invoicecontent>
             </invoicecontents>
-            <vat_moss_details>
-                <type>SA</type>
-                <evidence1_type>A</evidence1_type>
-                <evidence2_type>F</evidence2_type>
-            </vat_moss_details>
         </invoice>
     </invoices>
 </api>
@@ -190,11 +185,6 @@ XML,
                     </vat_code>
                 </invoicecontent>
             </invoicecontents>
-            <vat_moss_details>
-                <type>SA</type>
-                <evidence1_type>A</evidence1_type>
-                <evidence2_type>F</evidence2_type>
-            </vat_moss_details>
         </invoice>
     </invoices>
 </api>
