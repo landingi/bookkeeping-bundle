@@ -13,6 +13,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\AddressException;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 
 final class ContractorFactory
 {
@@ -22,7 +23,7 @@ final class ContractorFactory
     public function getContractor(array $data): Contractor
     {
         if (empty($data['nip'])) {
-            return new Contractor\Person(
+            return new Person(
                 new Contractor\ContractorIdentifier((string) $data['id']),
                 new ContractorName((string) $data['name']),
                 new Contractor\ContractorEmail((string) $data['email']),
@@ -30,12 +31,14 @@ final class ContractorFactory
             );
         }
 
+        $id = str_replace((string) $data['country'], '', (string) $data['nip']);
+
         return new Company(
             new Contractor\ContractorIdentifier((string) $data['id']),
             new Contractor\ContractorName((string) $data['name']),
             new Contractor\ContractorEmail((string) $data['email']),
             $this->getContractorAddress($data),
-            new Company\ValueAddedTaxIdentifier((string) $data['nip'])
+            new Company\ValueAddedTaxIdentifier((string) $id)
         );
     }
 

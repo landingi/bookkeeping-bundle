@@ -14,4 +14,5 @@ interface Contractor
     public function isEuropeanUnionCompany(): bool;
     public function print(Media $media): Media;
     public function getIdentifier(): ContractorIdentifier;
+    public function isPolish(): bool;
 }

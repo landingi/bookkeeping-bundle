@@ -41,10 +41,14 @@ final class Company implements Contractor
         $contractor->with('country', $this->address->getCountry()->toString());
         $contractor->with('email', $this->email->toString());
 
+//        dump($this->address->getCountry()->toString());
+
         if ($this->address->getCountry()->isPoland()) {
+//            dump('c');
             $contractor->with('tax_id_type', 'nip');
             $contractor->with('nip', $this->valueAddedTaxIdentifier->toString());
         } elseif ($this->address->getCountry()->isEuropeanUnion()) {
+//            dump('b');
             $contractor->with('tax_id_type', 'vat');
             $contractor->with(
                 'nip',
@@ -55,6 +59,7 @@ final class Company implements Contractor
                 )
             );
         } else {
+//            dump('a');
             $contractor->with('tax_id_type', 'custom');
         }
 
@@ -64,6 +69,11 @@ final class Company implements Contractor
     public function getIdentifier(): ContractorIdentifier
     {
         return $this->identifier;
+    }
+
+    public function isPolish(): bool
+    {
+        return $this->address->getCountry()->isPoland();
     }
 
     public function isEuropeanUnionCitizen(): bool

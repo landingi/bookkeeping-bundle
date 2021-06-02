@@ -31,6 +31,7 @@ final class WfirmaInvoiceItem extends InvoiceItem
         $content->with('count', $this->numberOfUnits->toString());
         $content->with('price', $this->price->toString());
 
+        //NP id in wfirma is 230
         if (WfirmaValueAddedTax::NO_TAX === $this->vatId) {
             $content->with('vat', WfirmaValueAddedTax::NO_TAX);
         } elseif ($this->vatId) {

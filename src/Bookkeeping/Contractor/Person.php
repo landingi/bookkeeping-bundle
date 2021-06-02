@@ -40,6 +40,11 @@ final class Person implements Contractor
         return $media;
     }
 
+    public function isPolish(): bool
+    {
+        return $this->address->getCountry()->isPoland();
+    }
+
     public function getIdentifier(): ContractorIdentifier
     {
         return $this->identifier;
