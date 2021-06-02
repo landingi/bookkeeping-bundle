@@ -271,7 +271,7 @@ XML,
                     <unit>szt.</unit>
                     <count>1</count>
                     <price>0.1</price>
-                    <vat_code>NP</vat_code>
+                    <vat>NP</vat>
                 </invoicecontent>
             </invoicecontents>
             <vat_moss_details>
