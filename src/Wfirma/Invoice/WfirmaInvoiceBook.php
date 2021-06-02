@@ -66,7 +66,6 @@ final class WfirmaInvoiceBook implements InvoiceBook
      */
     public function create(Invoice $invoice): Invoice
     {
-//        dump($invoice->print(WfirmaMedia::api())->toString());die;
         $invoiceResult = $this->getInvoiceResult(
             $this->client->requestPOST(
                 sprintf(
