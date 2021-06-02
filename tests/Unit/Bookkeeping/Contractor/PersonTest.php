@@ -58,7 +58,7 @@ final class PersonTest extends TestCase
                 new Country('PL')
             )
         );
-        self::assertTrue($person->isEuropeanUnionCompany());
+        self::assertFalse($person->isEuropeanUnionCompany());
     }
 
     public function testItPrints(): void
