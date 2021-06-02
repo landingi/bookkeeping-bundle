@@ -7,7 +7,10 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 
 interface Contractor
 {
-    public function getIdentifier(): ContractorIdentifier;
+    /**
+     * This is a representation of a physical person that lives in the European Union.
+     */
     public function isEuropeanUnionCitizen(): bool;
     public function print(Media $media): Media;
+    public function getIdentifier(): ContractorIdentifier;
 }

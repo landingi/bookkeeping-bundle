@@ -52,7 +52,6 @@ final class WfirmaInvoiceBookTest extends TestCase
                 (int) getenv('WFIRMA_API_COMPANY')
             )
         );
-
         $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), new ContractorFactory());
         $this->contractorBook = new WfirmaContractorBook($client, new ContractorFactory());
     }

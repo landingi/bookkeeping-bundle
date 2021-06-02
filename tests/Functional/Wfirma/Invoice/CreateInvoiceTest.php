@@ -58,6 +58,9 @@ final class CreateInvoiceTest extends TestCase
 
     /**
      * Company contractor from EU pays in EUR.
+     *
+     * @see /tests/Functional/payloads/CreateInvoice/contractor.xml
+     * @see /tests/Functional/payloads/CreateInvoice/invoice.xml
      */
     public function testCreateInvoiceCompany(): void
     {
@@ -106,10 +109,7 @@ final class CreateInvoiceTest extends TestCase
 
         self::assertNotEmpty($invoice->getIdentifier()->toString());
 
-        //test find
         $invoice = $this->invoiceBook->find($invoice->getIdentifier());
-
-        //test delete
         $this->invoiceBook->delete($invoice->getIdentifier());
         $this->contractorBook->delete($contractor->getIdentifier());
     }
