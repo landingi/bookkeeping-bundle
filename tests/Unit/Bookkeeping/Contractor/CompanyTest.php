@@ -32,7 +32,7 @@ final class CompanyTest extends TestCase
             ),
             new ValueAddedTaxIdentifier('id')
         );
-        self::assertTrue($company->isEuropeanUnionCitizen());
+        self::assertFalse($company->isEuropeanUnionCitizen());
     }
 
     public function testItPrintsPolishCompany(): void

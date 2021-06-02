@@ -1,19 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Functional\Wfirma\Invoice;
+namespace Functional\Wfirma\Invoice;
 
 use DateTime;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
@@ -38,9 +38,9 @@ use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItemCollection;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoice;
 use PHPUnit\Framework\TestCase;
 
-final class WfirmaInvoiceBookTest extends TestCase
+final class CreateInvoiceTest extends TestCase
 {
-    private Contractor\ContractorBook $contractorBook;
+    private ContractorBook $contractorBook;
     private InvoiceBook $invoiceBook;
 
     public function setUp(): void
@@ -56,10 +56,33 @@ final class WfirmaInvoiceBookTest extends TestCase
         $this->contractorBook = new WfirmaContractorBook($client, new ContractorFactory());
     }
 
-    public function testInvoiceWorkflow(): void
+    /**
+     * Company contractor from EU pays in EUR.
+     *
+     * @see /tests/Functional/payloads/CreateInvoice/contractor.xml
+     * @see /tests/Functional/payloads/CreateInvoice/invoice.xml
+     */
+    public function testCreateInvoiceCompany(): void
     {
-        $contractor = $this->getContractor();
+        //CREATE CONTRACTOR
+        $contractor = $this->contractorBook->create(
+            new Company(
+                new ContractorIdentifier('123'),
+                new ContractorName('EUR FR Company Contractor'),
+                new ContractorEmail('test@landingi.com'),
+                new ContractorAddress(
+                    new Street('Parisian Street'),
+                    new PostalCode('38330'),
+                    new City('Paris'),
+                    new Country('FR')
+                ),
+                new Company\ValueAddedTaxIdentifier('50844926014')
+            )
+        );
 
+        self::assertNotEmpty($contractor->getIdentifier()->toString());
+
+        //CREATE INVOICE
         $invoice = $this->invoiceBook->create(
             new WfirmaInvoice(
                 new InvoiceIdentifier('123'),
@@ -71,12 +94,12 @@ final class WfirmaInvoiceBookTest extends TestCase
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),
                         new Price((int) (100.55 * 100)),
-                        new WfirmaValueAddedTax('222', new ValueAddedTax(23)),
+                        new WfirmaValueAddedTax(WfirmaValueAddedTax::NO_TAX, new ValueAddedTax(0)),
                         new NumberOfUnits(2)
                     ),
                 ]),
                 $contractor,
-                new Currency('PLN'),
+                new Currency('EUR'),
                 new DateTime(),
                 new DateTime(),
                 new DateTime(),
@@ -86,28 +109,8 @@ final class WfirmaInvoiceBookTest extends TestCase
 
         self::assertNotEmpty($invoice->getIdentifier()->toString());
 
-        //test find
         $invoice = $this->invoiceBook->find($invoice->getIdentifier());
-
-        //test delete
         $this->invoiceBook->delete($invoice->getIdentifier());
         $this->contractorBook->delete($contractor->getIdentifier());
-    }
-
-    private function getContractor(): Contractor
-    {
-        return $this->contractorBook->create(
-            new Person(
-                new ContractorIdentifier('123'),
-                new ContractorName('test foo'),
-                new ContractorEmail('test@landingi.com'),
-                new ContractorAddress(
-                    new Street('test 123'),
-                    new PostalCode('111-111'),
-                    new City('test'),
-                    new Country('PL')
-                )
-            )
-        );
     }
 }

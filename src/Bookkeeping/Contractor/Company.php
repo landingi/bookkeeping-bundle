@@ -68,6 +68,6 @@ final class Company implements Contractor
 
     public function isEuropeanUnionCitizen(): bool
     {
-        return true;
+        return false;
     }
 }

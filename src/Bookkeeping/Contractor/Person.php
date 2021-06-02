@@ -47,6 +47,6 @@ final class Person implements Contractor
 
     public function isEuropeanUnionCitizen(): bool
     {
-        return true;
+        return $this->address->getCountry()->isEuropeanUnion();
     }
 }
