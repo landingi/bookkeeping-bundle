@@ -49,4 +49,9 @@ final class Person implements Contractor
     {
         return $this->address->getCountry()->isEuropeanUnion();
     }
+
+    public function isEuropeanUnionCompany(): bool
+    {
+        return false;
+    }
 }

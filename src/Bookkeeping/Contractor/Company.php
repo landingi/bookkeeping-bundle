@@ -70,4 +70,9 @@ final class Company implements Contractor
     {
         return false;
     }
+
+    public function isEuropeanUnionCompany(): bool
+    {
+        return $this->address->getCountry()->isEuropeanUnion();
+    }
 }
