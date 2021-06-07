@@ -1,3 +1,6 @@
+# Menu
+* [Home](../README.md)
+
 # Bookkeeping logic
 
 ## Company

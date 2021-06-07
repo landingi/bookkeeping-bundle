@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Functional\Wfirma\Invoice;
 
 use DateTime;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
@@ -16,6 +17,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceFullNumber;
@@ -56,6 +58,12 @@ final class CreateInvoiceTest extends TestCase
         );
         $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), new ContractorFactory());
         $this->contractorBook = new WfirmaContractorBook($client, new ContractorFactory());
+    }
+
+    private function cleanUp(Invoice $invoice, Contractor $contractor): void
+    {
+        $this->invoiceBook->delete($invoice->getIdentifier());
+        $this->contractorBook->delete($contractor->getIdentifier());
     }
 
     /**
@@ -165,6 +173,7 @@ XML;
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($invoiceRequest, $invoice->print(WfirmaMedia::api())->toString());
+        $this->cleanUp($invoice, $contractor);
     }
 
     /**
@@ -274,6 +283,7 @@ XML;
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($invoiceRequest, $invoice->print(WfirmaMedia::api())->toString());
+        $this->cleanUp($invoice, $contractor);
     }
 
     /**
@@ -382,6 +392,7 @@ XML;
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($invoiceRequest, $invoice->print(WfirmaMedia::api())->toString());
+        $this->cleanUp($invoice, $contractor);
     }
 
     /**
@@ -488,6 +499,7 @@ XML;
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($invoiceRequest, $invoice->print(WfirmaMedia::api())->toString());
+        $this->cleanUp($invoice, $contractor);
     }
 
     /**
@@ -599,6 +611,7 @@ XML;
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($invoiceRequest, $invoice->print(WfirmaMedia::api())->toString());
+        $this->cleanUp($invoice, $contractor);
     }
 
     /**
@@ -705,5 +718,6 @@ XML;
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($invoiceRequest, $invoice->print(WfirmaMedia::api())->toString());
+        $this->cleanUp($invoice, $contractor);
     }
 }
