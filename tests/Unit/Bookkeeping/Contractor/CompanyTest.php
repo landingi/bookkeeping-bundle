@@ -35,6 +35,36 @@ final class CompanyTest extends TestCase
         self::assertFalse($company->isEuropeanUnionCitizen());
     }
 
+    public function testItIsEuropeanUnionCompany(): void
+    {
+        $company = new Company(
+            new ContractorIdentifier('id'),
+            new ContractorName('name'),
+            new ContractorEmail('name@foo.bar'),
+            new ContractorAddress(
+                new Street('name'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('PL')
+            ),
+            new ValueAddedTaxIdentifier('id')
+        );
+        self::assertTrue($company->isEuropeanUnionCompany());
+        $company = new Company(
+            new ContractorIdentifier('id'),
+            new ContractorName('name'),
+            new ContractorEmail('name@foo.bar'),
+            new ContractorAddress(
+                new Street('name'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('AG')
+            ),
+            new ValueAddedTaxIdentifier('id')
+        );
+        self::assertFalse($company->isEuropeanUnionCompany());
+    }
+
     public function testItPrintsPolishCompany(): void
     {
         $company = new Company(

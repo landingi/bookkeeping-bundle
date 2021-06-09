@@ -13,16 +13,19 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\AddressException;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\InvalidEmailAddressException;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 
 final class ContractorFactory
 {
     /**
      * @throws ContractorException
+     * @throws InvalidEmailAddressException
      */
     public function getContractor(array $data): Contractor
     {
         if (empty($data['nip'])) {
-            return new Contractor\Person(
+            return new Person(
                 new Contractor\ContractorIdentifier((string) $data['id']),
                 new ContractorName((string) $data['name']),
                 new Contractor\ContractorEmail((string) $data['email']),
@@ -35,7 +38,7 @@ final class ContractorFactory
             new Contractor\ContractorName((string) $data['name']),
             new Contractor\ContractorEmail((string) $data['email']),
             $this->getContractorAddress($data),
-            new Company\ValueAddedTaxIdentifier((string) $data['nip'])
+            new Company\ValueAddedTaxIdentifier($this->trimCountryFromValueAddedTaxIdentifier($data))
         );
     }
 
@@ -50,5 +53,13 @@ final class ContractorFactory
             new City((string) $data['city']),
             new Country((string) $data['country'])
         );
+    }
+
+    /**
+     * $data['nip'] example PL6482791634 and we want to extract only the numeric value
+     */
+    private function trimCountryFromValueAddedTaxIdentifier(array $data): string
+    {
+        return \str_replace((string) $data['country'], '', (string) $data['nip']);
     }
 }

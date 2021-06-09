@@ -45,6 +45,22 @@ final class PersonTest extends TestCase
         self::assertFalse($person->isEuropeanUnionCitizen());
     }
 
+    public function testItIsEuropeanUnionCompany(): void
+    {
+        $person = new Person(
+            new ContractorIdentifier('id'),
+            new ContractorName('name'),
+            new ContractorEmail('name@foo.bar'),
+            new ContractorAddress(
+                new Street('name'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('PL')
+            )
+        );
+        self::assertFalse($person->isEuropeanUnionCompany());
+    }
+
     public function testItPrints(): void
     {
         $person = new Person(

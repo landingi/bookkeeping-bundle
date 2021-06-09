@@ -66,8 +66,18 @@ final class Company implements Contractor
         return $this->identifier;
     }
 
+    public function isPolish(): bool
+    {
+        return $this->address->getCountry()->isPoland();
+    }
+
     public function isEuropeanUnionCitizen(): bool
     {
         return false;
+    }
+
+    public function isEuropeanUnionCompany(): bool
+    {
+        return $this->address->getCountry()->isEuropeanUnion();
     }
 }
