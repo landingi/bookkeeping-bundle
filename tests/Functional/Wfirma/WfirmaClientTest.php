@@ -31,7 +31,6 @@ final class WfirmaClientTest extends TestCase
         $this->expectNotToPerformAssertions();
     }
 
-    //@phpstan-ignore-next-line
     public function getCountriesValueAddedTaxRate(): \Generator
     {
         yield ['AT', 20];
