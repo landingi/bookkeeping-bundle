@@ -32,7 +32,7 @@ final class WfirmaClientTest extends TestCase
     }
 
     //@phpstan-ignore-next-line
-    private function getCountriesValueAddedTaxRate(): \Generator
+    public function getCountriesValueAddedTaxRate(): \Generator
     {
         yield ['AT' => 20];
         yield ['BE' => 21];
