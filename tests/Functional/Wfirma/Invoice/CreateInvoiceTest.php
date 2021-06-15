@@ -46,6 +46,7 @@ final class CreateInvoiceTest extends TestCase
 {
     private ContractorBook $contractorBook;
     private InvoiceBook $invoiceBook;
+    private DateTime $today;
 
     public function setUp(): void
     {
@@ -58,6 +59,7 @@ final class CreateInvoiceTest extends TestCase
         );
         $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), new ContractorFactory());
         $this->contractorBook = new WfirmaContractorBook($client, new ContractorFactory());
+        $this->today = new DateTime();
     }
 
     private function cleanUp(Invoice $invoice, Contractor $contractor): void
@@ -125,9 +127,9 @@ XML;
                 ]),
                 $contractor,
                 new Currency('PLN'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
+                $this->today,
+                $this->today,
+                $this->today,
                 new Language('PL')
             )
         );
@@ -145,9 +147,9 @@ XML;
          <alreadypaid_initial>0</alreadypaid_initial>
          <type>normal</type>
          <price_type>netto</price_type>
-         <date>2021-06-02</date>
-         <paymentdate>2021-06-02</paymentdate>
-         <disposaldate>2021-06-02</disposaldate>
+         <date>{$this->today->format('Y-m-d')}</date>
+         <paymentdate>{$this->today->format('Y-m-d')}</paymentdate>
+         <disposaldate>{$this->today->format('Y-m-d')}</disposaldate>
          <description>testCompanyInPoland</description>
          <fullnumber>{$invoice->getFullNumber()->toString()}</fullnumber>
          <total>247.35</total>
@@ -235,9 +237,9 @@ XML;
                 ]),
                 $contractor,
                 new Currency('EUR'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
+                $this->today,
+                $this->today,
+                $this->today,
                 new Language('EN')
             )
         );
@@ -255,9 +257,9 @@ XML;
          <alreadypaid_initial>0</alreadypaid_initial>
          <type>normal</type>
          <price_type>netto</price_type>
-         <date>2021-06-02</date>
-         <paymentdate>2021-06-02</paymentdate>
-         <disposaldate>2021-06-02</disposaldate>
+         <date>{$this->today->format('Y-m-d')}</date>
+         <paymentdate>{$this->today->format('Y-m-d')}</paymentdate>
+         <disposaldate>{$this->today->format('Y-m-d')}</disposaldate>
          <description>testCompanyInEuropeanUnion</description>
          <fullnumber>{$invoice->getFullNumber()->toString()}</fullnumber>
          <total>201.1</total>
@@ -308,7 +310,7 @@ XML;
                 new Company\ValueAddedTaxIdentifier('333444555')
             )
         );
-        //the <tax_id_type>custom</tax_id_type> is sent, but not retrived
+        //the <tax_id_type>custom</tax_id_type> is sent, but not retrieved
         $contractorRequest = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
@@ -344,9 +346,9 @@ XML;
                 ]),
                 $contractor,
                 new Currency('EUR'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
+                $this->today,
+                $this->today,
+                $this->today,
                 new Language('EN')
             )
         );
@@ -364,9 +366,9 @@ XML;
          <alreadypaid_initial>0</alreadypaid_initial>
          <type>normal</type>
          <price_type>netto</price_type>
-         <date>2021-06-02</date>
-         <paymentdate>2021-06-02</paymentdate>
-         <disposaldate>2021-06-02</disposaldate>
+         <date>{$this->today->format('Y-m-d')}</date>
+         <paymentdate>{$this->today->format('Y-m-d')}</paymentdate>
+         <disposaldate>{$this->today->format('Y-m-d')}</disposaldate>
          <description>testCompanyInTheWorld</description>
          <fullnumber>{$invoice->getFullNumber()->toString()}</fullnumber>
          <total>201.1</total>
@@ -451,9 +453,9 @@ XML;
                 ]),
                 $contractor,
                 new Currency('PLN'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
+                $this->today,
+                $this->today,
+                $this->today,
                 new Language('PL')
             )
         );
@@ -471,9 +473,9 @@ XML;
             <alreadypaid_initial>0</alreadypaid_initial>
             <type>normal</type>
             <price_type>netto</price_type>
-            <date>2021-06-02</date>
-            <paymentdate>2021-06-02</paymentdate>
-            <disposaldate>2021-06-02</disposaldate>
+            <date>{$this->today->format('Y-m-d')}</date>
+            <paymentdate>{$this->today->format('Y-m-d')}</paymentdate>
+            <disposaldate>{$this->today->format('Y-m-d')}</disposaldate>
             <description>testPersonInPoland</description>
             <fullnumber>{$invoice->getFullNumber()->toString()}</fullnumber>
             <total>247.35</total>
@@ -558,9 +560,9 @@ XML;
                 ]),
                 $contractor,
                 new Currency('EUR'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
+                $this->today,
+                $this->today,
+                $this->today,
                 new Language('EN')
             )
         );
@@ -578,9 +580,9 @@ XML;
             <alreadypaid_initial>0</alreadypaid_initial>
             <type>normal</type>
             <price_type>netto</price_type>
-            <date>2021-06-02</date>
-            <paymentdate>2021-06-02</paymentdate>
-            <disposaldate>2021-06-02</disposaldate>
+            <date>{$this->today->format('Y-m-d')}</date>
+            <paymentdate>{$this->today->format('Y-m-d')}</paymentdate>
+            <disposaldate>{$this->today->format('Y-m-d')}</disposaldate>
             <description>testPersonInEuropeanUnion</description>
             <fullnumber>{$invoice->getFullNumber()->toString()}</fullnumber>
             <total>239.31</total>
@@ -670,9 +672,9 @@ XML;
                 ]),
                 $contractor,
                 new Currency('USD'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
-                new DateTime('2021-06-02'),
+                $this->today,
+                $this->today,
+                $this->today,
                 new Language('EN')
             )
         );
@@ -690,9 +692,9 @@ XML;
             <alreadypaid_initial>0</alreadypaid_initial>
             <type>normal</type>
             <price_type>netto</price_type>
-            <date>2021-06-02</date>
-            <paymentdate>2021-06-02</paymentdate>
-            <disposaldate>2021-06-02</disposaldate>
+            <date>{$this->today->format('Y-m-d')}</date>
+            <paymentdate>{$this->today->format('Y-m-d')}</paymentdate>
+            <disposaldate>{$this->today->format('Y-m-d')}</disposaldate>
             <description>testPersonInTheWorld</description>
             <fullnumber>{$invoice->getFullNumber()->toString()}</fullnumber>
             <total>201.1</total>

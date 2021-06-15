@@ -53,6 +53,13 @@ final class WfirmaClient
 
     public function getVatId(string $countryCode, int $vatRate): int
     {
+        /**
+         * WFirma API does not recognize PL VAT tax, but the VAT id is 0
+         */
+        if ($countryCode === 'PL') {
+            return 0;
+        }
+
         $country = $this->requestPOST(
             'declaration_countries/find',
             (string) (new Request\DeclarationCountries\Find($countryCode))
