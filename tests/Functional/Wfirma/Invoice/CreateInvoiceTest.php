@@ -246,42 +246,42 @@ XML;
         $invoiceRequest = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
-   <invoices>
-      <invoice>
-         <contractor>
-            <id>{$contractor->getIdentifier()->toString()}</id>
-         </contractor>
-         <paymentmethod>transfer</paymentmethod>
-         <currency>EUR</currency>
-         <paid>1</paid>
-         <alreadypaid_initial>0</alreadypaid_initial>
-         <type>normal</type>
-         <price_type>netto</price_type>
-         <date>{$this->today->format('Y-m-d')}</date>
-         <paymentdate>{$this->today->format('Y-m-d')}</paymentdate>
-         <disposaldate>{$this->today->format('Y-m-d')}</disposaldate>
-         <description>testCompanyInEuropeanUnion</description>
-         <fullnumber>{$invoice->getFullNumber()->toString()}</fullnumber>
-         <total>201.1</total>
-         <series>
-            <id>2539307</id>
-         </series>
-         <translation_language>
-            <id>1</id>
-         </translation_language>
-         <invoicecontents>
-            <invoicecontent>
-               <name>foo 1</name>
-               <unit>szt.</unit>
-               <count>2</count>
-               <price>100.55</price>
-               <vat_code>
-                   <id>230</id>
-               </vat_code>
-            </invoicecontent>
-         </invoicecontents>
-      </invoice>
-   </invoices>
+    <invoices>
+        <invoice>
+            <contractor>
+                <id>{$contractor->getIdentifier()->toString()}</id>
+            </contractor>
+            <paymentmethod>transfer</paymentmethod>
+            <currency>EUR</currency>
+            <paid>1</paid>
+            <alreadypaid_initial>0</alreadypaid_initial>
+            <type>normal</type>
+            <price_type>netto</price_type>
+            <date>{$this->today->format('Y-m-d')}</date>
+            <paymentdate>{$this->today->format('Y-m-d')}</paymentdate>
+            <disposaldate>{$this->today->format('Y-m-d')}</disposaldate>
+            <description>testCompanyInEuropeanUnion</description>
+            <fullnumber>{$invoice->getFullNumber()->toString()}</fullnumber>
+            <total>201.1</total>
+            <series>
+                <id>2539307</id>
+            </series>
+            <translation_language>
+                <id>1</id>
+            </translation_language>
+            <invoicecontents>
+                <invoicecontent>
+                    <name>foo 1</name>
+                    <unit>szt.</unit>
+                    <count>2</count>
+                    <price>100.55</price>
+                    <vat_code>
+                        <id>230</id>
+                    </vat_code>
+                </invoicecontent>
+            </invoicecontents>
+        </invoice>
+    </invoices>
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($invoiceRequest, $invoice->print(WfirmaMedia::api())->toString());
@@ -313,19 +313,19 @@ XML;
         $contractorRequest = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
-   <contractors>
-      <contractor>
-         <name>test foo</name>
-         <altname>test foo</altname>
-         <street>test 123</street>
-         <zip>11-111</zip>
-         <city>London</city>
-         <country>GB</country>
-         <email>test@landingi.com</email>
-         <tax_id_type>custom</tax_id_type>
-         <nip>GB50844926014</nip>
-      </contractor>
-   </contractors>
+    <contractors>
+        <contractor>
+            <name>test foo</name>
+            <altname>test foo</altname>
+            <street>test 123</street>
+            <zip>11-111</zip>
+            <city>London</city>
+            <country>GB</country>
+            <email>test@landingi.com</email>
+            <tax_id_type>custom</tax_id_type>
+            <nip>GB50844926014</nip>
+        </contractor>
+    </contractors>
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($contractorRequest, $contractor->print(WfirmaMedia::api())->toString());
