@@ -426,13 +426,15 @@ XML;
 <api>
     <contractors>
         <contractor>
-             <name>test foo</name>
-             <altname>test foo</altname>
-             <street>test 123</street>
-             <zip>11-111</zip>
-             <city>New York</city>
-             <country>US</country>
-             <email>test@landingi.com</email>
+            <name>test foo</name>
+            <altname>test foo</altname>
+            <street>test 123</street>
+            <zip>11-111</zip>
+            <city>New York</city>
+            <country>US</country>
+            <email>test@landingi.com</email>
+            <tax_id_type>custom</tax_id_type>
+            <nip>US333444555</nip>
         </contractor>
     </contractors>
 </api>
