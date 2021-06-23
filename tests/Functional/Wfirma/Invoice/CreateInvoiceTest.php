@@ -93,19 +93,19 @@ final class CreateInvoiceTest extends TestCase
         $contractorRequest = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
-   <contractors>
-      <contractor>
-         <name>test foo</name>
-         <altname>test foo</altname>
-         <street>test 123</street>
-         <zip>11-111</zip>
-         <city>test</city>
-         <country>PL</country>
-         <email>test@landingi.com</email>
-         <tax_id_type>nip</tax_id_type>
-         <nip>6482791634</nip>
-      </contractor>
-   </contractors>
+    <contractors>
+        <contractor>
+            <name>test foo</name>
+            <altname>test foo</altname>
+            <street>test 123</street>
+            <zip>11-111</zip>
+            <city>test</city>
+            <country>PL</country>
+            <email>test@landingi.com</email>
+            <tax_id_type>nip</tax_id_type>
+            <nip>6482791634</nip>
+        </contractor>
+    </contractors>
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($contractorRequest, $contractor->print(WfirmaMedia::api())->toString());
@@ -203,19 +203,19 @@ XML;
         $contractorRequest = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
-   <contractors>
-      <contractor>
-         <name>test foo</name>
-         <altname>test foo</altname>
-         <street>test 123</street>
-         <zip>11-111</zip>
-         <city>Paris</city>
-         <country>FR</country>
-         <email>test@landingi.com</email>
-         <tax_id_type>vat</tax_id_type>
-         <nip>FR50844926014</nip>
-      </contractor>
-   </contractors>
+    <contractors>
+        <contractor>
+            <name>test foo</name>
+            <altname>test foo</altname>
+            <street>test 123</street>
+            <zip>11-111</zip>
+            <city>Paris</city>
+            <country>FR</country>
+            <email>test@landingi.com</email>
+            <tax_id_type>vat</tax_id_type>
+            <nip>FR50844926014</nip>
+        </contractor>
+    </contractors>
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($contractorRequest, $contractor->print(WfirmaMedia::api())->toString());
