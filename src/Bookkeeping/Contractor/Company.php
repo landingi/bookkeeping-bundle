@@ -56,6 +56,14 @@ final class Company implements Contractor
             );
         } else {
             $contractor->with('tax_id_type', 'custom');
+            $contractor->with(
+                'nip',
+                sprintf(
+                    '%s%s',
+                    $this->address->getCountry()->toString(),
+                    $this->valueAddedTaxIdentifier->toString()
+                )
+            );
         }
 
         return $media;

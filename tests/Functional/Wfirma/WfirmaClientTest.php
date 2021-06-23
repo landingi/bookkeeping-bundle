@@ -44,7 +44,6 @@ final class WfirmaClientTest extends TestCase
         yield ['ES', 21];
         yield ['FI', 24];
         yield ['FR', 20];
-        yield ['GB', 20];
         yield ['GR', 24];
         yield ['HR', 25];
         yield ['HU', 27];

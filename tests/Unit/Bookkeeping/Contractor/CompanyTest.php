@@ -170,6 +170,7 @@ XML,
             <country>UY</country>
             <email>name@foo.bar</email>
             <tax_id_type>custom</tax_id_type>
+            <nip>UY333444555</nip>
         </contractor>
     </contractors>
 </api>

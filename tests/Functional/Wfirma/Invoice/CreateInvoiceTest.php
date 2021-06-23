@@ -93,19 +93,19 @@ final class CreateInvoiceTest extends TestCase
         $contractorRequest = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
-   <contractors>
-      <contractor>
-         <name>test foo</name>
-         <altname>test foo</altname>
-         <street>test 123</street>
-         <zip>11-111</zip>
-         <city>test</city>
-         <country>PL</country>
-         <email>test@landingi.com</email>
-         <tax_id_type>nip</tax_id_type>
-         <nip>6482791634</nip>
-      </contractor>
-   </contractors>
+    <contractors>
+        <contractor>
+            <name>test foo</name>
+            <altname>test foo</altname>
+            <street>test 123</street>
+            <zip>11-111</zip>
+            <city>test</city>
+            <country>PL</country>
+            <email>test@landingi.com</email>
+            <tax_id_type>nip</tax_id_type>
+            <nip>6482791634</nip>
+        </contractor>
+    </contractors>
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($contractorRequest, $contractor->print(WfirmaMedia::api())->toString());
@@ -203,19 +203,19 @@ XML;
         $contractorRequest = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
-   <contractors>
-      <contractor>
-         <name>test foo</name>
-         <altname>test foo</altname>
-         <street>test 123</street>
-         <zip>11-111</zip>
-         <city>Paris</city>
-         <country>FR</country>
-         <email>test@landingi.com</email>
-         <tax_id_type>vat</tax_id_type>
-         <nip>FR50844926014</nip>
-      </contractor>
-   </contractors>
+    <contractors>
+        <contractor>
+            <name>test foo</name>
+            <altname>test foo</altname>
+            <street>test 123</street>
+            <zip>11-111</zip>
+            <city>Paris</city>
+            <country>FR</country>
+            <email>test@landingi.com</email>
+            <tax_id_type>vat</tax_id_type>
+            <nip>FR50844926014</nip>
+        </contractor>
+    </contractors>
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($contractorRequest, $contractor->print(WfirmaMedia::api())->toString());
@@ -246,13 +246,123 @@ XML;
         $invoiceRequest = <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
+    <invoices>
+        <invoice>
+            <contractor>
+                <id>{$contractor->getIdentifier()->toString()}</id>
+            </contractor>
+            <paymentmethod>transfer</paymentmethod>
+            <currency>EUR</currency>
+            <paid>1</paid>
+            <alreadypaid_initial>0</alreadypaid_initial>
+            <type>normal</type>
+            <price_type>netto</price_type>
+            <date>{$this->today->format('Y-m-d')}</date>
+            <paymentdate>{$this->today->format('Y-m-d')}</paymentdate>
+            <disposaldate>{$this->today->format('Y-m-d')}</disposaldate>
+            <description>testCompanyInEuropeanUnion</description>
+            <fullnumber>{$invoice->getFullNumber()->toString()}</fullnumber>
+            <total>201.1</total>
+            <series>
+                <id>2539307</id>
+            </series>
+            <translation_language>
+                <id>1</id>
+            </translation_language>
+            <invoicecontents>
+                <invoicecontent>
+                    <name>foo 1</name>
+                    <unit>szt.</unit>
+                    <count>2</count>
+                    <price>100.55</price>
+                    <vat_code>
+                        <id>230</id>
+                    </vat_code>
+                </invoicecontent>
+            </invoicecontents>
+        </invoice>
+    </invoices>
+</api>
+XML;
+        self::assertXmlStringEqualsXmlString($invoiceRequest, $invoice->print(WfirmaMedia::api())->toString());
+        $this->cleanUp($invoice, $contractor);
+    }
+
+    /**
+     * Case 1.3 UK/GB
+     *
+     * VAT NP - It is not subject to VAT
+     * MOSS not applicable
+     */
+    public function testCompanyInGreatBritain(): void
+    {
+        $contractor = $this->contractorBook->create(
+            new Company(
+                new ContractorIdentifier('123'),
+                new ContractorName('test foo'),
+                new ContractorEmail('test@landingi.com'),
+                new ContractorAddress(
+                    new Street('test 123'),
+                    new PostalCode('11-111'),
+                    new City('London'),
+                    new Country('GB')
+                ),
+                new Company\ValueAddedTaxIdentifier('50844926014')
+            )
+        );
+        $contractorRequest = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<api>
+    <contractors>
+        <contractor>
+            <name>test foo</name>
+            <altname>test foo</altname>
+            <street>test 123</street>
+            <zip>11-111</zip>
+            <city>London</city>
+            <country>GB</country>
+            <email>test@landingi.com</email>
+            <tax_id_type>custom</tax_id_type>
+            <nip>GB50844926014</nip>
+        </contractor>
+    </contractors>
+</api>
+XML;
+        self::assertXmlStringEqualsXmlString($contractorRequest, $contractor->print(WfirmaMedia::api())->toString());
+
+        $invoice = $this->invoiceBook->create(
+            new WfirmaInvoice(
+                new InvoiceIdentifier('123'),
+                new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
+                new InvoiceDescription('testCompanyInGreatBritain'),
+                new InvoiceFullNumber('FV 69/2021'),
+                new InvoiceTotalValue(100),
+                new WfirmaInvoiceItemCollection([
+                    new WfirmaInvoiceItem(
+                        new Name('foo 1'),
+                        new Price((int) (100.55 * 100)),
+                        new WfirmaValueAddedTax(WfirmaValueAddedTax::NO_TAX, new ValueAddedTax(0)),
+                        new NumberOfUnits(2)
+                    ),
+                ]),
+                $contractor,
+                new Currency('GBP'),
+                $this->today,
+                $this->today,
+                $this->today,
+                new Language('EN')
+            )
+        );
+        $invoiceRequest = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<api>
    <invoices>
       <invoice>
          <contractor>
             <id>{$contractor->getIdentifier()->toString()}</id>
          </contractor>
          <paymentmethod>transfer</paymentmethod>
-         <currency>EUR</currency>
+         <currency>GBP</currency>
          <paid>1</paid>
          <alreadypaid_initial>0</alreadypaid_initial>
          <type>normal</type>
@@ -260,7 +370,7 @@ XML;
          <date>{$this->today->format('Y-m-d')}</date>
          <paymentdate>{$this->today->format('Y-m-d')}</paymentdate>
          <disposaldate>{$this->today->format('Y-m-d')}</disposaldate>
-         <description>testCompanyInEuropeanUnion</description>
+         <description>testCompanyInGreatBritain</description>
          <fullnumber>{$invoice->getFullNumber()->toString()}</fullnumber>
          <total>201.1</total>
          <series>
@@ -316,13 +426,15 @@ XML;
 <api>
     <contractors>
         <contractor>
-             <name>test foo</name>
-             <altname>test foo</altname>
-             <street>test 123</street>
-             <zip>11-111</zip>
-             <city>New York</city>
-             <country>US</country>
-             <email>test@landingi.com</email>
+            <name>test foo</name>
+            <altname>test foo</altname>
+            <street>test 123</street>
+            <zip>11-111</zip>
+            <city>New York</city>
+            <country>US</country>
+            <email>test@landingi.com</email>
+            <tax_id_type>custom</tax_id_type>
+            <nip>US333444555</nip>
         </contractor>
     </contractors>
 </api>
