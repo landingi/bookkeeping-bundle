@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Memory;
 
+use Landingi\BookkeepingBundle\Bookkeeping\BookkeepingException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
 use Landingi\BookkeepingBundle\Bookkeeping\ValueAddedTaxStorage;
@@ -21,7 +22,6 @@ final class MemoryValueAddedTaxStorage implements ValueAddedTaxStorage
         'ES' =>  21,
         'FI' =>  24,
         'FR' =>  20,
-        'GB' =>  20,
         'GR' =>  24,
         'HR' =>  25,
         'HU' =>  27,
@@ -40,8 +40,17 @@ final class MemoryValueAddedTaxStorage implements ValueAddedTaxStorage
         'SE' =>  25,
     ];
 
+    /**
+     * @throws \Landingi\BookkeepingBundle\Bookkeeping\BookkeepingException
+     */
     public function getByCountry(Country $country): ValueAddedTax
     {
+        if (!$country->isEuropeanUnion()) {
+            throw new BookkeepingException(
+                \sprintf('Country %s is outside European Union and is not eligible for VAT', $country->toString())
+            );
+        }
+
         return new ValueAddedTax(self::MEMORY[$country->getAlpha2Code()]);
     }
 }

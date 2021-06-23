@@ -5,6 +5,7 @@ namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\AddressException;
 use function in_array;
+use function strlen;
 
 final class Country
 {
