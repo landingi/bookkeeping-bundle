@@ -69,7 +69,7 @@ final class WfirmaClient
             (string) (new Request\DeclarationCountries\Find($countryCode))
         );
 
-        if (empty($country['declaration_countries'])) {
+        if (empty($country['declaration_countries'][0])) {
             throw new WfirmaClientException(
                 'declaration_countries/find',
                 $country,
@@ -86,7 +86,7 @@ final class WfirmaClient
             ))
         );
 
-        if (empty($vatCode['vat_codes'])) {
+        if (empty($vatCode['vat_codes'][0])) {
             throw new WfirmaClientException(
                 'vat_codes/find',
                 $vatCode,
