@@ -12,9 +12,7 @@ unit:
 functional:
 	vendor/bin/phpunit --color=always --testsuite functional-tests
 coverage:
-	vendor/bin/phpunit --coverage-text
-coverage-html:
-	vendor/bin/phpunit --coverage-html=build/coverage/
+	vendor/bin/phpunit --coverage-clover coverage.xml
 analyse:
 	vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=256M
 	vendor/bin/ecs check --config vendor/landingi/php-coding-standards/ecs.php

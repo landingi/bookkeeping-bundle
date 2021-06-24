@@ -12,3 +12,7 @@ jobs:
 
         - stage: Functional Tests
           script: make functional
+
+        - stage: Coverage
+          script: make coverage
+          if: TRAVIS_EVENT_TYPE = cron
