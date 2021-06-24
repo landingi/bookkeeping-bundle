@@ -32,7 +32,7 @@ final class WfirmaClientTest extends TestCase
     public function testItDoesNotFindValueAddedTaxRate(): void
     {
         $this->expectException(WfirmaClientException::class);
-        $this->client->getVatId('PL', 999);
+        $this->client->getVatId('DE', 999);
     }
 
     /**
