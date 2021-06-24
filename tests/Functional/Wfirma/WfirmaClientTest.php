@@ -5,6 +5,7 @@ namespace Functional\Wfirma;
 
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
+use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
 use PHPUnit\Framework\TestCase;
 
 final class WfirmaClientTest extends TestCase
@@ -20,6 +21,18 @@ final class WfirmaClientTest extends TestCase
                 (int) getenv('WFIRMA_API_COMPANY')
             )
         );
+    }
+
+    public function testItDoesNotFindCountry(): void
+    {
+        $this->expectException(WfirmaClientException::class);
+        $this->client->getVatId('ZZ', 0);
+    }
+
+    public function testItDoesNotFindValueAddedTaxRate(): void
+    {
+        $this->expectException(WfirmaClientException::class);
+        $this->client->getVatId('PL', 999);
     }
 
     /**
