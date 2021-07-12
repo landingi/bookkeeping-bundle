@@ -14,3 +14,7 @@ jobs:
 
         - stage: Functional Tests
           script: make functional
+
+env:
+    global:
+        - XDEBUG_MODE=coverage
