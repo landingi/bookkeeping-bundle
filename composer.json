@@ -21,8 +21,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Landingi\\BookkeepingBundle\\Unit\\" : "tests/Unit",
-            "Landingi\\BookkeepingBundle\\Functional\\" : "tests/Functional"
+            "Landingi\\BookkeepingBundle\\" : "tests"
         }
     },
     "minimum-stability": "stable"

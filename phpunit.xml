@@ -18,11 +18,17 @@
         </include>
     </coverage>
     <testsuites>
-        <testsuite name="unit-tests">
+        <testsuite name="all">
+            <directory>tests</directory>
+        </testsuite>
+        <testsuite name="unit">
             <directory>tests/Unit</directory>
         </testsuite>
-        <testsuite name="functional-tests">
+        <testsuite name="functional">
             <directory>tests/Functional</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory>tests/Integration</directory>
         </testsuite>
     </testsuites>
 </phpunit>
