@@ -8,7 +8,7 @@ install:
 jobs:
     include:
         - stage: CI
-          script: make ci
+          script: vendor/bin/phpunit --testsuite unit --coverage-clover=build/coverage.xml
           after_success:
           - bash <(curl -s https://codecov.io/bash) -f "build/coverage.xml"
 
