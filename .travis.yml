@@ -10,7 +10,7 @@ jobs:
         - stage: CI
           script: make ci
           after_success:
-          - bash <(curl -s https://codecov.io/bash)
+          - bash <(curl -s https://codecov.io/bash) -f "build"
 
         - stage: Functional Tests
           script: make functional
