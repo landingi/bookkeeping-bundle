@@ -4,4 +4,3 @@ includes:
 parameters:
     excludes_analyse:
         - src/Curl/Curl
-        - vendor/phpstan/phpstan-symfony/stubs/Symfony/Component/Security/Acl/Model/MutableAclProviderInterface.stub
