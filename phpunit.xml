@@ -12,11 +12,12 @@
     bootstrap="tests/bootstrap.php"
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
 >
-    <coverage>
+    <coverage processUncoveredFiles="true">
         <include>
-            <directory>src</directory>
+            <directory suffix=".php">src</directory>
         </include>
     </coverage>
+
     <testsuites>
         <testsuite name="all">
             <directory>tests</directory>
