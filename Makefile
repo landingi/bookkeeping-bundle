@@ -1,6 +1,5 @@
 ci:
-	vendor/bin/phpunit --testsuite unit --coverage-clover=build/coverage.xml
-	bash <(curl -s https://codecov.io/bash) -f "build/coverage.xml"
+	vendor/bin/phpunit --testsuite unit --coverage-clover=coverage.xml
 	#vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=256M
 	vendor/bin/ecs check --config vendor/landingi/php-coding-standards/ecs.php
 fix:

@@ -9,9 +9,8 @@ jobs:
     include:
         - stage: CI
           script: make ci
+          after_success:
+          - bash <(curl -s https://codecov.io/bash)
 
         - stage: Functional Tests
           script: make functional
-
-after_success:
-    - bash <(curl -s https://codecov.io/bash) -f "build/coverage.xml"
