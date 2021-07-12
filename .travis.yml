@@ -13,4 +13,4 @@ jobs:
         - stage: Functional Tests
           script: make functional
 after_success:
-    - bash <(curl -s https://codecov.io/bash)
+    - bash <(curl -s https://codecov.io/bash) -f "build/coverage.xml"
