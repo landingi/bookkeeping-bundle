@@ -1,0 +1,31 @@
+codecov:
+    require_ci_to_pass: true
+
+coverage:
+    status:
+        project:
+            default:
+                target: 80%
+                threshold: 0%
+                base: auto
+                paths:
+                    - "src"
+                if_ci_failed: error
+                informational: true
+                only_pulls: false
+        patch:
+            default:
+                target: 80%
+                threshold: 0%
+                base: auto
+                if_ci_failed: error
+                informational: false
+                only_pulls: false
+                paths:
+                    - "src"
+comment:
+    layout: "reach, diff, flags, files"
+    behavior: default
+    require_changes: false
+    require_base: false        # [yes :: must have a base report to post]
+    require_head: true       # [yes :: must have a head report to post]
