@@ -69,7 +69,7 @@ final class CreateInvoiceTest extends TestCase
     }
 
     /**
-     * Case 1.1
+     * Case 1.1.
      *
      * VAT 23%
      * MOSS not applicable
@@ -179,7 +179,7 @@ XML;
     }
 
     /**
-     * Case 1.2
+     * Case 1.2.
      *
      * VAT NP - It is not subject to VAT
      * MOSS not applicable
@@ -289,7 +289,7 @@ XML;
     }
 
     /**
-     * Case 1.3 UK/GB
+     * Case 1.3 UK/GB.
      *
      * VAT NP - It is not subject to VAT
      * MOSS not applicable
@@ -399,7 +399,7 @@ XML;
     }
 
     /**
-     * Case 1.3
+     * Case 1.3.
      *
      * VAT NP - It is not subject to VAT
      * MOSS not applicable
@@ -510,7 +510,7 @@ XML;
     }
 
     /**
-     * Case 2.1
+     * Case 2.1.
      *
      * VAT 23%
      * MOSS not applicable
@@ -617,7 +617,7 @@ XML;
     }
 
     /**
-     * Case 2.2
+     * Case 2.2.
      *
      * VAT rate from the country person is from
      * MOSS is applicable
@@ -729,7 +729,7 @@ XML;
     }
 
     /**
-     * Case 2.3
+     * Case 2.3.
      *
      * VAT NP - It is not subject to VAT
      * MOSS not applicable
