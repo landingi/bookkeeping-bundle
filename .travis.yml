@@ -5,17 +5,18 @@ install:
 
 jobs:
     include:
-        - stage: CI
+        - stage: CI on 7.4
           script: make ci
-          php:
-              - '7.4'
-              - '8.0'
+          php: '7.4'
+
+        - stage: CI on 8.0
+          script: make ci
+          php: '8.0'
 
         - stage: Functional Tests
           script: make functional
           php:
               - '7.4'
-              - '8.0'
 
 after_success:
     - bash <(curl -s https://codecov.io/bash) -f "build/coverage.xml"
