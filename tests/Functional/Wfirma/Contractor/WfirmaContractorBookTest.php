@@ -37,6 +37,7 @@ final class WfirmaContractorBookTest extends TestCase
             new ContractorFactory()
         );
     }
+
     public function testPersonWorkflow(): void
     {
         $contractor = $this->book->create(

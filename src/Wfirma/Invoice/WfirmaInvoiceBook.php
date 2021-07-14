@@ -62,7 +62,6 @@ final class WfirmaInvoiceBook implements InvoiceBook
      * @throws \Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException
      * @throws \Landingi\BookkeepingBundle\Wfirma\WfirmaException
-     * @return \Landingi\BookkeepingBundle\Bookkeeping\Invoice
      */
     public function create(Invoice $invoice): Invoice
     {
@@ -97,7 +96,8 @@ final class WfirmaInvoiceBook implements InvoiceBook
     public function download(InvoiceIdentifier $identifier): string
     {
         return $this->client->requestInvoiceDownload(
-            sprintf(self::INVOICE_API_URL,
+            sprintf(
+                self::INVOICE_API_URL,
                 sprintf('%s%s', 'download/', $identifier->toString())
             )
         );

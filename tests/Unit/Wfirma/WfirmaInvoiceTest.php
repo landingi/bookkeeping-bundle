@@ -15,7 +15,6 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceFullNumber;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
@@ -194,7 +193,7 @@ XML,
     }
 
     /**
-     * European company has no VAT rate
+     * European company has no VAT rate.
      */
     public function testItPrintsForEuropeanCompanyOutsidePoland(): void
     {

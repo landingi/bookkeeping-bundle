@@ -40,13 +40,13 @@ final class InvoiceFactory
 
         foreach ($items as $key => $item) {
             $invoiceItems[] = new WfirmaInvoiceItem(
-              new Invoice\InvoiceItem\Name($item['invoicecontent']['name']),
-              new Invoice\InvoiceItem\Price((int) ($item['invoicecontent']['price'] * 100)),
-              new WfirmaValueAddedTax(
-                  (string) $item['invoicecontent']['vat_code']['id'],
-                  new Invoice\InvoiceItem\ValueAddedTax(0)
-              ),
-              new Invoice\InvoiceItem\NumberOfUnits((int) $item['invoicecontent']['count'])
+                new Invoice\InvoiceItem\Name($item['invoicecontent']['name']),
+                new Invoice\InvoiceItem\Price((int) ($item['invoicecontent']['price'] * 100)),
+                new WfirmaValueAddedTax(
+                    (string) $item['invoicecontent']['vat_code']['id'],
+                    new Invoice\InvoiceItem\ValueAddedTax(0)
+                ),
+                new Invoice\InvoiceItem\NumberOfUnits((int) $item['invoicecontent']['count'])
             );
         }
 

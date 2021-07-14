@@ -15,7 +15,7 @@ final class WfirmaInvoiceItem extends InvoiceItem
     private string $vatId;
 
     /**
-     * WfirmaValueAddedTax parameter is required as Wfirma API call needs vat_code with id value
+     * WfirmaValueAddedTax parameter is required as Wfirma API call needs vat_code with id value.
      */
     public function __construct(Name $name, Price $price, WfirmaValueAddedTax $tax, NumberOfUnits $numberOfUnits)
     {
@@ -31,7 +31,7 @@ final class WfirmaInvoiceItem extends InvoiceItem
         $content->with('count', $this->numberOfUnits->toString());
         $content->with('price', $this->price->toString());
 
-        /**
+        /*
          * NP id in wfirma is 230
          */
         if (WfirmaValueAddedTax::NO_TAX === $this->vatId) {

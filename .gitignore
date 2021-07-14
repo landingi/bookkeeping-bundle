@@ -7,4 +7,5 @@ composer.lock
 
 ###> phpunit/phpunit ###
 .phpunit.result.cache
+.phpunit.cache/
 ###< phpunit/phpunit ###
