@@ -26,6 +26,8 @@ Your company is register in Poland - EU.
 
 ### Additional
 #### VIES
+It is European VAT identifier for companies.
+
 When company provides tax identifier then we have to check the VIES status. When company has active VIES then the tax identifier
 has country's ISO code ex. PL6482791634, when VIES status is inactive then the tax identifier does not have ISO code.
 
