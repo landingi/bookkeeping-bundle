@@ -7,6 +7,8 @@ use function curl_error;
 use function curl_exec;
 use function curl_init;
 use function curl_setopt;
+use function extension_loaded;
+use function sprintf;
 
 final class Curl
 {
@@ -32,16 +34,29 @@ final class Curl
             throw new CurlException('cURL library is not loaded');
         }
 
-        $this->curl = curl_init();
+        $curl = curl_init();
+
+        if (false === $curl) {
+            throw new CurlException('Could not initialize cURL');
+        }
+
+        $this->curl = $curl;
         $this->setOpt(CURLOPT_URL, $url);
         $this->setOpt(CURLOPT_RETURNTRANSFER, true);
+        $this->setOpt(CURLOPT_SSL_VERIFYPEER, false);
     }
 
+    /**
+     * @throws \Landingi\BookkeepingBundle\Curl\CurlException
+     */
     public function requestGET(): string
     {
         return $this->exec();
     }
 
+    /**
+     * @throws \Landingi\BookkeepingBundle\Curl\CurlException
+     */
     public function requestPOST(string $data): string
     {
         $this->setOpt(CURLOPT_POST, 1);
@@ -50,6 +65,9 @@ final class Curl
         return $this->exec();
     }
 
+    /**
+     * @throws \Landingi\BookkeepingBundle\Curl\CurlException
+     */
     public function requestDELETE(): string
     {
         $this->setOpt(CURLOPT_CUSTOMREQUEST, 'DELETE');
@@ -57,9 +75,20 @@ final class Curl
         return $this->exec();
     }
 
-    private function setOpt($option, $value): bool
+    /**
+     * @throws \Landingi\BookkeepingBundle\Curl\CurlException
+     */
+    private function setOpt($option, $value): void
     {
-        return curl_setopt($this->curl, $option, $value);
+        if (false === curl_setopt($this->curl, $option, $value)) {
+            throw new CurlException(
+                sprintf(
+                    'Could not set curl option (%s) with value (%s)',
+                    (string) $option,
+                    (string) $value
+                )
+            );
+        }
     }
 
     /**
