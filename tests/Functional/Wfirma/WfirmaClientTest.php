@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Functional\Wfirma;
+namespace Landingi\BookkeepingBundle\Functional\Wfirma;
 
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
