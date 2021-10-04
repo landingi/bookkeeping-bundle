@@ -43,7 +43,6 @@ final class Curl
         $this->curl = $curl;
         $this->setOpt(CURLOPT_URL, $url);
         $this->setOpt(CURLOPT_RETURNTRANSFER, true);
-        $this->setOpt(CURLOPT_SSL_VERIFYPEER, false);
     }
 
     /**
