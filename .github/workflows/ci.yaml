@@ -21,4 +21,4 @@ jobs:
             -   run: cp phpunit.xml.dist phpunit.xml
             -   run: composer install
             -   run: make ci
-            -   run: bash <(curl -s https://codecov.io/bash) -f "var/coverage/coverage.xml" -t $CODECOV_TOKEN
+            -   run: bash <(curl -s https://codecov.io/bash) -f "build/coverage.xml" -t $CODECOV_TOKEN
