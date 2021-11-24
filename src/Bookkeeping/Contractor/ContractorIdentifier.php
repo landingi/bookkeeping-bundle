@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 
+use function trim;
+
 final class ContractorIdentifier
 {
     private string $identifier;
@@ -12,7 +14,7 @@ final class ContractorIdentifier
      */
     public function __construct(string $identifier)
     {
-        if (empty($identifier)) {
+        if (empty(trim($identifier))) {
             throw new ContractorException('Identifier value cannot be an empty value!');
         }
 

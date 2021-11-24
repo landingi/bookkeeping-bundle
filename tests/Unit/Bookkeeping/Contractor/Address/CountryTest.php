@@ -13,6 +13,7 @@ final class CountryTest extends TestCase
     {
         $country = new Country('XY');
         self::assertEquals('XY', $country->toString());
+        self::assertEquals('XY', $country->__toString());
     }
 
     public function testCreatingObjectWithEmptyCountryIso2Code(): void

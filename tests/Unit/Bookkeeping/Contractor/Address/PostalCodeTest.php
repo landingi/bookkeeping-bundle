@@ -13,6 +13,7 @@ final class PostalCodeTest extends TestCase
     {
         $postalCode = new PostalCode('111-111');
         self::assertEquals('111-111', $postalCode->toString());
+        self::assertEquals('111-111', $postalCode->__toString());
     }
 
     public function testCreatingObjectWithEmptyData(): void

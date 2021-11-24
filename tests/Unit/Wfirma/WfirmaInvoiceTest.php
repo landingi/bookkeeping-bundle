@@ -221,7 +221,7 @@ XML,
                     new City('Paris'),
                     new Country('FR')
                 ),
-                new Company\ValueAddedTaxIdentifier('50844926014')
+                new Company\ValueAddedTax\SimpleIdentifier('50844926014')
             ),
             new Currency('EUR'),
             new DateTime('2020-02-01'),

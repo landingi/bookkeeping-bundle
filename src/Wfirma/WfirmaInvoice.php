@@ -45,7 +45,7 @@ final class WfirmaInvoice extends Invoice
         }
 
         /*
-         * Landingi are polish company - only european citizens are MOSS applicable.
+         * Landingi are Polish company - only european citizens are MOSS applicable.
          */
         if ($this->contractor->isEuropeanUnionCitizen() && !$this->contractor->isPolish()) {
             $vatDetails = $invoice->with('vat_moss_details', '');

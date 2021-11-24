@@ -17,6 +17,34 @@ use PHPUnit\Framework\TestCase;
 
 final class PersonTest extends TestCase
 {
+    public function testItIsPolishCitizen(): void
+    {
+        $person = new Person(
+            new ContractorIdentifier('id'),
+            new ContractorName('name'),
+            new ContractorEmail('name@foo.bar'),
+            new ContractorAddress(
+                new Street('name'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('PL')
+            )
+        );
+        self::assertTrue($person->isPolish());
+        $person = new Person(
+            new ContractorIdentifier('id'),
+            new ContractorName('name'),
+            new ContractorEmail('name@foo.bar'),
+            new ContractorAddress(
+                new Street('name'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('US')
+            )
+        );
+        self::assertFalse($person->isPolish());
+    }
+
     public function testItIsEuropeanUnionCitizen(): void
     {
         $person = new Person(

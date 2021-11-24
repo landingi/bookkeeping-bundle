@@ -13,6 +13,7 @@ final class CityTest extends TestCase
     {
         $city = new City('foo');
         self::assertEquals('foo', $city->toString());
+        self::assertEquals('foo', $city->__toString());
     }
 
     public function testCreatingObjectWithEmptyData(): void

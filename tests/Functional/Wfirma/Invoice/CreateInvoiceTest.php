@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Functional\Wfirma\Invoice;
+namespace Landingi\BookkeepingBundle\Functional\Wfirma\Invoice;
 
 use DateTime;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
@@ -29,6 +29,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
+use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
@@ -57,8 +58,11 @@ final class CreateInvoiceTest extends TestCase
                 (int) getenv('WFIRMA_API_COMPANY')
             )
         );
-        $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), new ContractorFactory());
-        $this->contractorBook = new WfirmaContractorBook($client, new ContractorFactory());
+        $factory = new ContractorFactory(
+            new MemoryIdentifierFactory()
+        );
+        $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), $factory);
+        $this->contractorBook = new WfirmaContractorBook($client, $factory);
         $this->today = new DateTime();
     }
 
@@ -87,7 +91,7 @@ final class CreateInvoiceTest extends TestCase
                     new City('test'),
                     new Country('PL')
                 ),
-                new Company\ValueAddedTaxIdentifier('6482791634')
+                new Company\ValueAddedTax\SimpleIdentifier('6482791634')
             )
         );
         $contractorRequest = <<<XML
@@ -197,7 +201,7 @@ XML;
                     new City('Paris'),
                     new Country('FR')
                 ),
-                new Company\ValueAddedTaxIdentifier('50844926014')
+                new Company\ValueAddedTax\SimpleIdentifier('50844926014')
             )
         );
         $contractorRequest = <<<XML
@@ -307,7 +311,7 @@ XML;
                     new City('London'),
                     new Country('GB')
                 ),
-                new Company\ValueAddedTaxIdentifier('50844926014')
+                new Company\ValueAddedTax\SimpleIdentifier('50844926014')
             )
         );
         $contractorRequest = <<<XML
@@ -417,7 +421,7 @@ XML;
                     new City('New York'),
                     new Country('US')
                 ),
-                new Company\ValueAddedTaxIdentifier('333444555')
+                new Company\ValueAddedTax\SimpleIdentifier('333444555')
             )
         );
         //the <tax_id_type>custom</tax_id_type> is sent, but not retrieved

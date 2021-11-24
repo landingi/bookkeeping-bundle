@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Unit\Bookkeeping\Contractor;
 
+use Generator;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\InvalidEmailAddressException;
 use PHPUnit\Framework\TestCase;
@@ -16,15 +17,20 @@ final class ContractorEmailTest extends TestCase
         self::assertEquals('foo@bar.com', (string) $email);
     }
 
-    public function testCreatingObjectWithEmptyData(): void
+    /**
+     * @dataProvider invalidEmails
+     */
+    public function testCreatingObjectWithEmptyData(string $email): void
     {
         $this->expectException(InvalidEmailAddressException::class);
-        new ContractorEmail('');
+        new ContractorEmail($email);
+    }
 
-        $this->expectException(InvalidEmailAddressException::class);
-        new ContractorEmail(' ');
-
-        $this->expectException(InvalidEmailAddressException::class);
-        new ContractorEmail('invalid email');
+    public function invalidEmails(): Generator
+    {
+        yield [''];
+        yield [' '];
+        yield ['invalid-email'];
+        yield ['12@bar.com'];
     }
 }
