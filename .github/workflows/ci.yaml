@@ -5,6 +5,10 @@ on: [pull_request]
 jobs:
     ci:
         runs-on: ubuntu-20.04
+        env:
+            WFIRMA_API_COMPANY: ${{ secrets.WFIRMA_API_COMPANY }}
+            WFIRMA_API_LOGIN: ${{ secrets.WFIRMA_API_LOGIN }}
+            WFIRMA_API_PASSWORD: ${{ secrets.WFIRMA_API_PASSWORD }}
 
         strategy:
             matrix:
@@ -17,4 +21,4 @@ jobs:
                     php-version: ${{ matrix.php-versions }}
             -   run: composer install
             -   run: make ci
-            -   run: bash <(curl -s https://codecov.io/bash) -f "build/coverage.xml" -t $CODECOV_TOKEN
+            -   run: bash <(curl -s https://codecov.io/bash) -f "build/coverage.xml" -t ${{ secrets.CODECOV_TOKEN }}
