@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\AddressException;
+use function trim;
 
 final class PostalCode
 {
@@ -14,7 +15,7 @@ final class PostalCode
      */
     public function __construct(string $code)
     {
-        if (empty($code)) {
+        if (true === empty(trim($code))) {
             throw new AddressException('Postal code cannot be an empty value!');
         }
 

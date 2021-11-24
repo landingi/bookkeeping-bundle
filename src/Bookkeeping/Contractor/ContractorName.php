@@ -14,7 +14,7 @@ final class ContractorName
      */
     public function __construct(string $name)
     {
-        if (empty(trim($name))) {
+        if (true === empty(trim($name))) {
             throw new ContractorException('Contractor name cannot be an empty value!');
         }
 

@@ -14,7 +14,7 @@ final class Name
      */
     public function __construct(string $name)
     {
-        if (empty($name)) {
+        if (true === empty(trim($name))) {
             throw new InvoiceItemException('Name cannot be an empty value!');
         }
 

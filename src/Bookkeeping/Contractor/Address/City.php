@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\AddressException;
+use function trim;
 
 final class City
 {
@@ -14,7 +15,7 @@ final class City
      */
     public function __construct(string $name)
     {
-        if (empty($name)) {
+        if (true === empty(trim($name))) {
             throw new AddressException('City name cannot be an empty value!');
         }
 

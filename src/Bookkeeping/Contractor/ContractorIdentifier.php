@@ -14,7 +14,7 @@ final class ContractorIdentifier
      */
     public function __construct(string $identifier)
     {
-        if (empty(trim($identifier))) {
+        if (true === empty(trim($identifier))) {
             throw new ContractorException('Identifier value cannot be an empty value!');
         }
 

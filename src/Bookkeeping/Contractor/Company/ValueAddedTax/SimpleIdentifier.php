@@ -5,6 +5,7 @@ namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTa
 
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTaxIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException;
+use function trim;
 
 /**
  * The class represents NOT validated tax identifier.
@@ -18,7 +19,7 @@ final class SimpleIdentifier implements ValueAddedTaxIdentifier
      */
     public function __construct(string $identifier)
     {
-        if (empty($identifier)) {
+        if (true === empty(trim($identifier))) {
             throw new ContractorException('Value added tax identifier cannot be an empty value!');
         }
 
