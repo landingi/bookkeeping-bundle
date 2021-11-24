@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Unit\Bookkeeping\Contractor\Company\ValueAddedTax;
 
-use Landingi\BookkeepingBundle\Bookkeeping\BookkeepingException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\SimpleIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\ValidatedIdentifier;
