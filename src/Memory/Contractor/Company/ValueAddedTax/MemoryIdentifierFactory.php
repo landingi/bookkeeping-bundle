@@ -17,9 +17,9 @@ final class MemoryIdentifierFactory implements IdentifierFactory
     public function create(string $identifier, string $country): ValueAddedTaxIdentifier
     {
         if (true === empty($country)) {
-            return new ValidatedIdentifier(new SimpleIdentifier($identifier), new Country($country));
+            return new SimpleIdentifier($identifier);
         }
 
-        return new SimpleIdentifier($identifier);
+        return new ValidatedIdentifier(new SimpleIdentifier($identifier), new Country($country));
     }
 }
