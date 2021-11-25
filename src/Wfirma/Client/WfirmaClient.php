@@ -101,9 +101,9 @@ final class WfirmaClient
     /**
      * @throws WfirmaClientException
      */
-    public function requestInvoiceDownload(int $invoiceId): string
+    public function requestInvoiceDownload(string $invoiceId): string
     {
-        $url = sprintf('invoices/download/%d', $invoiceId);
+        $url = sprintf('invoices/download/%s', $invoiceId);
         $result = $this->getCurl($url)->requestPOST((string) new Download());
 
         if (!is_string($result)) {
