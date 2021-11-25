@@ -42,22 +42,21 @@ use PHPUnit\Framework\TestCase;
 
 class DownloadInvoiceTest extends TestCase
 {
-    private WfirmaClient $client;
     private ContractorBook $contractorBook;
     private InvoiceBook $invoiceBook;
     private DateTime $today;
 
     public function setUp(): void
     {
-        $this->client = new WfirmaClient(
+        $client = new WfirmaClient(
             new WfirmaCredentials(
                 (string) getenv('WFIRMA_API_LOGIN'),
                 (string) getenv('WFIRMA_API_PASSWORD'),
                 (int) getenv('WFIRMA_API_COMPANY')
             )
         );
-        $this->invoiceBook = new WfirmaInvoiceBook($this->client, new InvoiceFactory(), new ContractorFactory());
-        $this->contractorBook = new WfirmaContractorBook($this->client, new ContractorFactory());
+        $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), new ContractorFactory());
+        $this->contractorBook = new WfirmaContractorBook($client, new ContractorFactory());
         $this->today = new DateTime();
     }
 
@@ -103,11 +102,11 @@ class DownloadInvoiceTest extends TestCase
         );
 
         // Act
-        $invoiceFile = base64_encode($this->client->requestInvoiceDownload((string) $invoice->getIdentifier()));
+        $invoiceFile = base64_encode($this->invoiceBook->download($invoice->getIdentifier()));
 
         //Assert
-        $this->assertIsString($invoiceFile);
         $this->assertNotEmpty($invoiceFile);
+        $this->assertIsString($invoiceFile);
 
         $this->cleanUp($invoice, $contractor);
     }
