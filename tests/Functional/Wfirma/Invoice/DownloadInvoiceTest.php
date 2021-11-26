@@ -28,6 +28,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
+use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
@@ -55,8 +56,11 @@ class DownloadInvoiceTest extends TestCase
                 (int) getenv('WFIRMA_API_COMPANY')
             )
         );
-        $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), new ContractorFactory());
-        $this->contractorBook = new WfirmaContractorBook($client, new ContractorFactory());
+        $factory = new ContractorFactory(
+            new MemoryIdentifierFactory()
+        );
+        $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), $factory);
+        $this->contractorBook = new WfirmaContractorBook($client, $factory);
         $this->today = new DateTime();
     }
 
@@ -74,7 +78,7 @@ class DownloadInvoiceTest extends TestCase
                     new City('test'),
                     new Country('PL')
                 ),
-                new Company\ValueAddedTaxIdentifier('6482791634')
+                new Company\ValueAddedTax\SimpleIdentifier('6482791634')
             )
         );
         $invoice = $this->invoiceBook->create(

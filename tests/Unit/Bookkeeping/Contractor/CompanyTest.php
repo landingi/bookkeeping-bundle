@@ -8,7 +8,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTaxIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
@@ -18,6 +18,36 @@ use PHPUnit\Framework\TestCase;
 
 final class CompanyTest extends TestCase
 {
+    public function testItIsPolishCompany(): void
+    {
+        $company = new Company(
+            new ContractorIdentifier('id'),
+            new ContractorName('name'),
+            new ContractorEmail('name@foo.bar'),
+            new ContractorAddress(
+                new Street('name'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('PL')
+            ),
+            new ValueAddedTax\SimpleIdentifier('id')
+        );
+        self::assertTrue($company->isPolish());
+        $company = new Company(
+            new ContractorIdentifier('id'),
+            new ContractorName('name'),
+            new ContractorEmail('name@foo.bar'),
+            new ContractorAddress(
+                new Street('name'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('GB')
+            ),
+            new ValueAddedTax\SimpleIdentifier('id')
+        );
+        self::assertFalse($company->isPolish());
+    }
+
     public function testItIsEuropeanUnionCitizen(): void
     {
         $company = new Company(
@@ -30,7 +60,7 @@ final class CompanyTest extends TestCase
                 new City('city'),
                 new Country('PL')
             ),
-            new ValueAddedTaxIdentifier('id')
+            new ValueAddedTax\SimpleIdentifier('id')
         );
         self::assertFalse($company->isEuropeanUnionCitizen());
     }
@@ -47,7 +77,7 @@ final class CompanyTest extends TestCase
                 new City('city'),
                 new Country('PL')
             ),
-            new ValueAddedTaxIdentifier('id')
+            new ValueAddedTax\SimpleIdentifier('id')
         );
         self::assertTrue($company->isEuropeanUnionCompany());
         $company = new Company(
@@ -60,7 +90,7 @@ final class CompanyTest extends TestCase
                 new City('city'),
                 new Country('AG')
             ),
-            new ValueAddedTaxIdentifier('id')
+            new ValueAddedTax\SimpleIdentifier('id')
         );
         self::assertFalse($company->isEuropeanUnionCompany());
     }
@@ -77,7 +107,7 @@ final class CompanyTest extends TestCase
                 new City('city'),
                 new Country('PL')
             ),
-            new ValueAddedTaxIdentifier('333444555')
+            new ValueAddedTax\SimpleIdentifier('333444555')
         );
 
         self::assertXmlStringEqualsXmlString(
@@ -115,7 +145,7 @@ XML,
                 new City('city'),
                 new Country('DE')
             ),
-            new ValueAddedTaxIdentifier('333444555')
+            new ValueAddedTax\SimpleIdentifier('333444555')
         );
 
         self::assertXmlStringEqualsXmlString(
@@ -132,7 +162,7 @@ XML,
             <country>DE</country>
             <email>name@foo.bar</email>
             <tax_id_type>vat</tax_id_type>
-            <nip>DE333444555</nip>
+            <nip>333444555</nip>
         </contractor>
     </contractors>
 </api>
@@ -153,7 +183,7 @@ XML,
                 new City('city'),
                 new Country('UY') //Uruguay
             ),
-            new ValueAddedTaxIdentifier('333444555')
+            new ValueAddedTax\SimpleIdentifier('333444555')
         );
 
         self::assertXmlStringEqualsXmlString(
@@ -170,7 +200,7 @@ XML,
             <country>UY</country>
             <email>name@foo.bar</email>
             <tax_id_type>custom</tax_id_type>
-            <nip>UY333444555</nip>
+            <nip>333444555</nip>
         </contractor>
     </contractors>
 </api>

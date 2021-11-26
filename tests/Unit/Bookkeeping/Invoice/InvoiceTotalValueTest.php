@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Unit\Bookkeeping\Invoice;
 
+use Generator;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceException;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 use PHPUnit\Framework\TestCase;
@@ -22,15 +23,19 @@ final class InvoiceTotalValueTest extends TestCase
         self::assertEquals(10, $totalValue->toFloat());
     }
 
-    public function testItIsNotEmptyString(): void
+    /**
+     * @dataProvider values
+     */
+    public function testItIsNotEmptyString(int $value): void
     {
         $this->expectException(InvoiceException::class);
-        new InvoiceTotalValue(0);
+        new InvoiceTotalValue($value);
+    }
 
-        $this->expectException(InvoiceException::class);
-        new InvoiceTotalValue(-1);
-
-        $this->expectException(InvoiceException::class);
-        new InvoiceTotalValue(-1000);
+    public function values(): Generator
+    {
+        yield [0];
+        yield [-1];
+        yield [-1000];
     }
 }

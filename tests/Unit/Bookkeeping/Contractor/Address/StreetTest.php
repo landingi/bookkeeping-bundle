@@ -13,6 +13,7 @@ final class StreetTest extends TestCase
     {
         $street = new Street('foo bar 123');
         self::assertEquals('foo bar 123', $street->toString());
+        self::assertEquals('foo bar 123', $street->__toString());
     }
 
     public function testCreatingObjectWithEmptyData(): void

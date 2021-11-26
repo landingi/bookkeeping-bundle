@@ -9,6 +9,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\IdentifierFactory;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
@@ -18,6 +19,13 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 
 final class ContractorFactory
 {
+    private IdentifierFactory $identifierFactory;
+
+    public function __construct(IdentifierFactory $identifierFactory)
+    {
+        $this->identifierFactory = $identifierFactory;
+    }
+
     /**
      * @throws ContractorException
      * @throws InvalidEmailAddressException
@@ -38,7 +46,7 @@ final class ContractorFactory
             new Contractor\ContractorName((string) $data['name']),
             new Contractor\ContractorEmail((string) $data['email']),
             $this->getContractorAddress($data),
-            new Company\ValueAddedTaxIdentifier($this->trimCountryFromValueAddedTaxIdentifier($data))
+            $this->identifierFactory->create($this->trimCountryFromValueAddedTaxIdentifier($data), (string) $data['country'])
         );
     }
 
@@ -56,7 +64,7 @@ final class ContractorFactory
     }
 
     /**
-     * $data['nip'] example PL6482791634 and we want to extract only the numeric value.
+     * $data['nip'] example PL6482791634, and we want to extract only the numeric value.
      */
     private function trimCountryFromValueAddedTaxIdentifier(array $data): string
     {

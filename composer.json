@@ -7,7 +7,8 @@
         "php": ">=7.4",
         "ext-simplexml": "*",
         "ext-curl": "*",
-        "ext-json": "*"
+        "ext-json": "*",
+        "dragonbe/vies": "2.2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",

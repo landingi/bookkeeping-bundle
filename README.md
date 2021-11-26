@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/landingi/bookkeeping-bundle.svg?branch=master)](https://travis-ci.com/landingi/bookkeeping-bundle)
+[![Build Status](https://github.com/landingi/bookkeeping-bundle/actions/workflows/ci.yaml/badge.svg)](https://github.com/landingi/bookkeeping-bundle/actions/workflows/ci.yaml)
 [![Latest Stable Version](https://poser.pugx.org/landingi/bookkeeping-bundle/v)](https://packagist.org/packages/landingi/bookkeeping-bundle)
 [![Total Downloads](https://poser.pugx.org/landingi/bookkeeping-bundle/downloads)](https://packagist.org/packages/landingi/bookkeeping-bundle)
 [![License](https://poser.pugx.org/landingi/bookkeeping-bundle/license)](https://packagist.org/packages/landingi/bookkeeping-bundle)

@@ -14,6 +14,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
+use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
@@ -34,7 +35,9 @@ final class WfirmaContractorBookTest extends TestCase
                     (int) getenv('WFIRMA_API_COMPANY')
                 )
             ),
-            new ContractorFactory()
+            new ContractorFactory(
+                new MemoryIdentifierFactory()
+            )
         );
     }
 
@@ -76,7 +79,7 @@ final class WfirmaContractorBookTest extends TestCase
                     new City('test'),
                     new Country('PL')
                 ),
-                new Company\ValueAddedTaxIdentifier('6482791634')
+                new Company\ValueAddedTax\SimpleIdentifier('6482791634')
             )
         );
 

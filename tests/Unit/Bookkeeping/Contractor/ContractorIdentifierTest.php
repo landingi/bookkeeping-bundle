@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Unit\Bookkeeping\Contractor;
 
-use Landingi\BookkeepingBundle\Bookkeeping\BookkeepingException;
+use Generator;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use PHPUnit\Framework\TestCase;
 
@@ -13,14 +14,21 @@ final class ContractorIdentifierTest extends TestCase
     {
         $identifier = new ContractorIdentifier('foo123');
         self::assertEquals('foo123', $identifier->toString());
+        self::assertEquals('foo123', $identifier->__toString());
     }
 
-    public function testCreatingObjectWithEmptyData(): void
+    /**
+     * @dataProvider values
+     */
+    public function testCreatingObjectWithEmptyData(string $value): void
     {
-        $this->expectException(BookkeepingException::class);
-        new ContractorIdentifier('');
+        $this->expectException(ContractorException::class);
+        new ContractorIdentifier($value);
+    }
 
-        $this->expectException(BookkeepingException::class);
-        new ContractorIdentifier(' ');
+    public function values(): Generator
+    {
+        yield [''];
+        yield [' '];
     }
 }
