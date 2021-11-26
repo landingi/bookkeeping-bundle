@@ -107,7 +107,7 @@ final class CreateInvoiceTest extends TestCase
             <country>PL</country>
             <email>test@landingi.com</email>
             <tax_id_type>nip</tax_id_type>
-            <nip>6482791634</nip>
+            <nip>PL6482791634</nip>
         </contractor>
     </contractors>
 </api>
