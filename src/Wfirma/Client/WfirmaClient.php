@@ -109,7 +109,7 @@ final class WfirmaClient
             throw new WfirmaClientException($url, [$result], 'invoice_download', 'Invalid response');
         }
 
-        return $result;
+        return $this->handleFileResponse($result, $url, 'invoice_download');
     }
 
     private function getCurl(string $url): Curl
@@ -147,5 +147,20 @@ final class WfirmaClient
             default:
                 throw new FatalException($url, $result, $data);
         }
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws WfirmaClientException
+     */
+    private function handleFileResponse(string $result, string $url, string $data = ''): string
+    {
+        if (null !== $jsonResult = json_decode($result, true)) {
+            if ('ERROR' === $jsonResult['status']['code']) {
+                throw new NotFoundException($url, [$result], $data);
+            }
+        }
+
+        return $result;
     }
 }
