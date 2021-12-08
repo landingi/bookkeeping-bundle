@@ -163,12 +163,11 @@ final class WfirmaClient
     }
 
     /**
-     * @throws \JsonException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
      */
     private function handleFileResponse(string $result, string $url, string $data = ''): string
     {
-        $jsonResult = json_decode($result, true, 512, JSON_THROW_ON_ERROR);
+        $jsonResult = json_decode($result, true);
 
         if (null !== $jsonResult && 'ERROR' === $jsonResult['status']['code']) {
             throw new NotFoundException($url, [$result], $data);
