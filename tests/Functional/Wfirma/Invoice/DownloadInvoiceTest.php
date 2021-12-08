@@ -30,6 +30,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
+use Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\WfirmaContractorBook;
@@ -113,6 +114,15 @@ class DownloadInvoiceTest extends TestCase
         $this->assertIsString($invoiceFile);
 
         $this->cleanUp($invoice, $contractor);
+    }
+
+    public function testItFailsOnDownloadFile(): void
+    {
+        // Arrange
+        $this->expectException(NotFoundException::class);
+
+        // Act
+        $this->invoiceBook->download(new InvoiceIdentifier('1'));
     }
 
     private function cleanUp(Invoice $invoice, Contractor $contractor): void

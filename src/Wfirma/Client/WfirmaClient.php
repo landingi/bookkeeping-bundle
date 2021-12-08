@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Client;
 
-use JsonException;
 use Landingi\BookkeepingBundle\Curl\Curl;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException;
@@ -11,7 +10,7 @@ use Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoice\Download;
-use function is_string;
+use function json_decode;
 use function sprintf;
 
 final class WfirmaClient
@@ -25,8 +24,12 @@ final class WfirmaClient
     }
 
     /**
-     * @throws WfirmaClientException
-     * @throws JsonException
+     * @throws \JsonException
+     * @throws \Landingi\BookkeepingBundle\Curl\CurlException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException
      */
     public function requestGET(string $url): array
     {
@@ -34,8 +37,12 @@ final class WfirmaClient
     }
 
     /**
-     * @throws WfirmaClientException
-     * @throws JsonException
+     * @throws \JsonException
+     * @throws \Landingi\BookkeepingBundle\Curl\CurlException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException
      */
     public function requestPOST(string $url, string $data): array
     {
@@ -43,8 +50,12 @@ final class WfirmaClient
     }
 
     /**
-     * @throws WfirmaClientException
-     * @throws JsonException
+     * @throws \JsonException
+     * @throws \Landingi\BookkeepingBundle\Curl\CurlException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException
      */
     public function requestDELETE(string $url): array
     {
@@ -53,6 +64,11 @@ final class WfirmaClient
 
     /**
      * @throws \JsonException
+     * @throws \Landingi\BookkeepingBundle\Curl\CurlException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException
      */
     public function getVatId(string $countryCode, int $vatRate): int
@@ -99,17 +115,14 @@ final class WfirmaClient
     }
 
     /**
-     * @throws WfirmaClientException
+     * @throws \JsonException
+     * @throws \Landingi\BookkeepingBundle\Curl\CurlException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException
      */
     public function requestInvoiceDownload(string $url): string
     {
-        $result = $this->getCurl($url)->requestPOST((string) new Download());
-
-        if (!is_string($result)) {
-            throw new WfirmaClientException($url, [$result], 'invoice_download', 'Invalid response');
-        }
-
-        return $result;
+        return $this->handleFileResponse($this->getCurl($url)->requestPOST((string) new Download()), $url, 'invoice_download');
     }
 
     private function getCurl(string $url): Curl
@@ -126,10 +139,10 @@ final class WfirmaClient
     }
 
     /**
-     * @throws AuthorizationException
-     * @throws FatalException
-     * @throws NotFoundException
-     * @throws OutOfServiceException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException
      */
     private function handleResponse(array $result, string $url, string $data = ''): array
     {
@@ -144,8 +157,23 @@ final class WfirmaClient
             case 'OUT OF SERVICE':
                 throw new OutOfServiceException($url, $result, $data);
             case 'FATAL':
+            case 'ERROR':
             default:
                 throw new FatalException($url, $result, $data);
         }
+    }
+
+    /**
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
+     */
+    private function handleFileResponse(string $result, string $url, string $data = ''): string
+    {
+        $jsonResult = json_decode($result, true);
+
+        if (null !== $jsonResult && 'ERROR' === $jsonResult['status']['code']) {
+            throw new NotFoundException($url, [$result], $data);
+        }
+
+        return $result;
     }
 }
