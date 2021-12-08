@@ -10,6 +10,7 @@ use Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoice\Download;
+use function json_decode;
 use function sprintf;
 
 final class WfirmaClient
