@@ -106,7 +106,7 @@ final class CreateInvoiceTest extends TestCase
             <city>test</city>
             <country>PL</country>
             <email>test@landingi.com</email>
-            <tax_id_type>nip</tax_id_type>
+            <tax_id_type>custom</tax_id_type>
             <nip>PL6482791634</nip>
         </contractor>
     </contractors>
@@ -216,7 +216,7 @@ XML;
             <city>Paris</city>
             <country>FR</country>
             <email>test@landingi.com</email>
-            <tax_id_type>vat</tax_id_type>
+            <tax_id_type>custom</tax_id_type>
             <nip>FR50844926014</nip>
         </contractor>
     </contractors>
