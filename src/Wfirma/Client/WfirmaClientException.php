@@ -17,7 +17,7 @@ class WfirmaClientException extends WfirmaException
         $this->result = $result;
         $this->url = $url;
 
-        parent::__construct($message . '' . json_encode($result, JSON_THROW_ON_ERROR));
+        parent::__construct($message);
     }
 
     public function getUrl(): string
