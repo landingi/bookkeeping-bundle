@@ -117,6 +117,6 @@ final class WfirmaContractorBookTest extends TestCase
 
         self::assertInstanceOf(Company::class, $contractor);
 
-//        $this->book->delete($contractor->getIdentifier());
+        $this->book->delete($contractor->getIdentifier());
     }
 }
