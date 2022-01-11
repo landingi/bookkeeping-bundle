@@ -1,0 +1,31 @@
+{
+    "people": [
+        {
+            "id": "1234",
+            "name": "Polish Person",
+            "email": "polish.person@gmail.com",
+            "street": "Witkiewicza",
+            "zip": "44-100",
+            "city": "Gliwice",
+            "country": "PL"
+        },
+        {
+            "id": "1234",
+            "name": "European Person",
+            "email": "european.person@gmail.com",
+            "street": "Stree Le Fumeur",
+            "zip": "75008",
+            "city": "Paris",
+            "country": "FR"
+        },
+        {
+            "id": "1234",
+            "name": "World Person",
+            "email": "world.person@gmail.com",
+            "street": "Wall Street",
+            "zip": "53008",
+            "city": "New York",
+            "country": "US"
+        }
+    ]
+}

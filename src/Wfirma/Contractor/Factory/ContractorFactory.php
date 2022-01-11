@@ -68,6 +68,6 @@ final class ContractorFactory
      */
     private function trimCountryFromValueAddedTaxIdentifier(array $data): string
     {
-        return \str_replace((string) $data['country'], '', (string) $data['nip']);
+        return str_replace((string) $data['country'], '', (string) $data['nip']);
     }
 }

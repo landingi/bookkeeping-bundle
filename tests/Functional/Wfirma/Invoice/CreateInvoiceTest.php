@@ -10,6 +10,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\SimpleIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
@@ -91,7 +92,7 @@ final class CreateInvoiceTest extends TestCase
                     new City('test'),
                     new Country('PL')
                 ),
-                new Company\ValueAddedTax\SimpleIdentifier('6482791634')
+                new SimpleIdentifier('6482791634')
             )
         );
         $contractorRequest = <<<XML
@@ -107,7 +108,7 @@ final class CreateInvoiceTest extends TestCase
             <country>PL</country>
             <email>test@landingi.com</email>
             <tax_id_type>nip</tax_id_type>
-            <nip>PL6482791634</nip>
+            <nip>6482791634</nip>
         </contractor>
     </contractors>
 </api>
