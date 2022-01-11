@@ -33,7 +33,13 @@ final class ViesIdentifierFactory implements IdentifierFactory
         }
 
         if ($validation->isValid()) {
-            return new ValidatedIdentifier(new SimpleIdentifier($identifier), new Country($country));
+            $country = new Country($country);
+
+            if ($country->isPoland()) {
+                return new SimpleIdentifier($identifier);
+            }
+
+            return new ValidatedIdentifier(new SimpleIdentifier($identifier), $country);
         }
 
         return new SimpleIdentifier($identifier);

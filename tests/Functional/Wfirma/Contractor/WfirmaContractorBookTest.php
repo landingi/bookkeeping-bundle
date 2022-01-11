@@ -105,9 +105,9 @@ final class WfirmaContractorBookTest extends TestCase
                     new Street('test 123'),
                     new PostalCode('11-111'),
                     new City('test'),
-                    new Country('PL')
+                    new Country('FR')
                 ),
-                new ValidatedIdentifier(new SimpleIdentifier('6482791634'), new Country('PL'))
+                new ValidatedIdentifier(new SimpleIdentifier('29480969591'), new Country('FR'))
             )
         );
 
@@ -117,6 +117,6 @@ final class WfirmaContractorBookTest extends TestCase
 
         self::assertInstanceOf(Company::class, $contractor);
 
-        $this->book->delete($contractor->getIdentifier());
+//        $this->book->delete($contractor->getIdentifier());
     }
 }
