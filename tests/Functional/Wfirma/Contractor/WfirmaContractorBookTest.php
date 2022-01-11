@@ -8,6 +8,8 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\SimpleIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\ValidatedIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
@@ -80,6 +82,32 @@ final class WfirmaContractorBookTest extends TestCase
                     new Country('PL')
                 ),
                 new Company\ValueAddedTax\SimpleIdentifier('6482791634')
+            )
+        );
+
+        self::assertNotEmpty($contractor->getIdentifier()->toString());
+
+        $contractor = $this->book->find($contractor->getIdentifier());
+
+        self::assertInstanceOf(Company::class, $contractor);
+
+        $this->book->delete($contractor->getIdentifier());
+    }
+
+    public function testCompanyWorkflowWithVies(): void
+    {
+        $contractor = $this->book->create(
+            new Company(
+                new ContractorIdentifier('12345'),
+                new ContractorName('test foo'),
+                new ContractorEmail('test@landingi.com'),
+                new ContractorAddress(
+                    new Street('test 123'),
+                    new PostalCode('11-111'),
+                    new City('test'),
+                    new Country('PL')
+                ),
+                new ValidatedIdentifier(new SimpleIdentifier('6482791634'), new Country('PL'))
             )
         );
 
