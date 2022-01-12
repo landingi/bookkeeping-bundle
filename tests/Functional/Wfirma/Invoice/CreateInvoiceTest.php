@@ -92,7 +92,7 @@ final class CreateInvoiceTest extends TestCase
                     new City('test'),
                     new Country('PL')
                 ),
-                new SimpleIdentifier('6482791634')
+                new SimpleIdentifier('6762461659')
             )
         );
         $contractorRequest = <<<XML
@@ -108,7 +108,7 @@ final class CreateInvoiceTest extends TestCase
             <country>PL</country>
             <email>test@landingi.com</email>
             <tax_id_type>nip</tax_id_type>
-            <nip>6482791634</nip>
+            <nip>6762461659</nip>
         </contractor>
     </contractors>
 </api>
