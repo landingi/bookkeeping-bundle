@@ -25,11 +25,19 @@ final class ViesValueAddedTaxIdentifierFactoryTest extends TestCase
         self::assertEquals('333111222', $identifier->toString());
     }
 
-    public function testItIsPolishIdentifier(): void
+    public function testItIsInvalidPolishIdentifier(): void
     {
         $factory = new ViesIdentifierFactory(new Vies());
         $identifier = $factory->create('333111222', 'PL');
 
         self::assertEquals('333111222', $identifier->toString());
+    }
+
+    public function testItIsValidPolishIdentifier(): void
+    {
+        $factory = new ViesIdentifierFactory(new Vies());
+        $identifier = $factory->create('6762461659', 'PL');
+
+        self::assertEquals('6762461659', $identifier->toString());
     }
 }
