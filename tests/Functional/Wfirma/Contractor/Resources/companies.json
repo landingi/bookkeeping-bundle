@@ -1,0 +1,34 @@
+{
+    "companies": [
+        {
+            "id": "1234",
+            "name": "Polish Company",
+            "email": "polish.company@gmail.com",
+            "street": "Witkiewicza",
+            "zip": "44-100",
+            "city": "Gliwice",
+            "country": "PL",
+            "nip": "6762461659"
+        },
+        {
+            "id": "1234",
+            "name": "European Company",
+            "email": "european.company@gmail.com",
+            "street": "Stree Le Fumeur",
+            "zip": "75008",
+            "city": "Paris",
+            "country": "FR",
+            "nip": "29480969591"
+        },
+        {
+            "id": "1234",
+            "name": "World Company",
+            "email": "world.company@gmail.com",
+            "street": "Wall Street",
+            "zip": "53008",
+            "city": "New York",
+            "country": "US",
+            "nip": "600500300"
+        }
+    ]
+}

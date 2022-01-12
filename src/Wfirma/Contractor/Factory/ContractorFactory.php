@@ -64,10 +64,10 @@ final class ContractorFactory
     }
 
     /**
-     * $data['nip'] example PL6482791634, and we want to extract only the numeric value.
+     * $data['nip'] example PL6762461659, and we want to extract only the numeric value.
      */
     private function trimCountryFromValueAddedTaxIdentifier(array $data): string
     {
-        return \str_replace((string) $data['country'], '', (string) $data['nip']);
+        return str_replace((string) $data['country'], '', (string) $data['nip']);
     }
 }

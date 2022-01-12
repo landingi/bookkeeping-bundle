@@ -3,16 +3,10 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Functional\Wfirma\Contractor;
 
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\City;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\PostalCode;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Street;
+use Generator;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorAddress;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
-use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
@@ -41,21 +35,12 @@ final class WfirmaContractorBookTest extends TestCase
         );
     }
 
-    public function testPersonWorkflow(): void
+    /**
+     * @dataProvider people
+     */
+    public function testPersonWorkflow(Contractor $person): void
     {
-        $contractor = $this->book->create(
-            new Person(
-                new ContractorIdentifier('123'),
-                new ContractorName('test foo'),
-                new ContractorEmail('test@landingi.com'),
-                new ContractorAddress(
-                    new Street('test 123'),
-                    new PostalCode('111-111'),
-                    new City('test'),
-                    new Country('PL')
-                )
-            )
-        );
+        $contractor = $this->book->create($person);
 
         self::assertNotEmpty($contractor->getIdentifier()->toString());
 
@@ -66,22 +51,25 @@ final class WfirmaContractorBookTest extends TestCase
         $this->book->delete($contractor->getIdentifier());
     }
 
-    public function testCompanyWorkflow(): void
+    /**
+     * @internal use only in testPersonWorkflow function
+     */
+    public function people(): Generator
     {
-        $contractor = $this->book->create(
-            new Company(
-                new ContractorIdentifier('12345'),
-                new ContractorName('test foo'),
-                new ContractorEmail('test@landingi.com'),
-                new ContractorAddress(
-                    new Street('test 123'),
-                    new PostalCode('11-111'),
-                    new City('test'),
-                    new Country('PL')
-                ),
-                new Company\ValueAddedTax\SimpleIdentifier('6482791634')
-            )
-        );
+        $factory = new ContractorFactory(new MemoryIdentifierFactory());
+        $data = json_decode((string) file_get_contents(__DIR__ . '/Resources/people.json'), true, 512, JSON_THROW_ON_ERROR);
+
+        foreach ($data['people'] as $company) {
+            yield [$factory->getContractor($company)];
+        }
+    }
+
+    /**
+     * @dataProvider companies
+     */
+    public function testCompanyWorkflow(Contractor $company): void
+    {
+        $contractor = $this->book->create($company);
 
         self::assertNotEmpty($contractor->getIdentifier()->toString());
 
@@ -90,5 +78,18 @@ final class WfirmaContractorBookTest extends TestCase
         self::assertInstanceOf(Company::class, $contractor);
 
         $this->book->delete($contractor->getIdentifier());
+    }
+
+    /**
+     * @internal use only in testCompanyWorkflow function
+     */
+    public function companies(): Generator
+    {
+        $factory = new ContractorFactory(new MemoryIdentifierFactory());
+        $data = json_decode((string) file_get_contents(__DIR__ . '/Resources/companies.json'), true, 512, JSON_THROW_ON_ERROR);
+
+        foreach ($data['companies'] as $company) {
+            yield [$factory->getContractor($company)];
+        }
     }
 }
