@@ -32,6 +32,7 @@ XML;
         $this->media->with('child', 'value');
         $this->media->with('child', '')->with('child', 'value');
         $this->media->with('child', '');
+        $this->media->with('child', 'Company & World');
 
         self::assertXmlStringEqualsXmlString(
             <<<XML
@@ -42,6 +43,7 @@ XML;
         <child>value</child>    
     </child>
     <child></child>
+    <child>Company &amp; World</child>
 </root>
 XML,
             $this->media->toString()
