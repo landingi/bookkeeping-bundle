@@ -29,6 +29,16 @@
             "city": "New York",
             "country": "US",
             "nip": "600500300"
+        },
+        {
+            "id": "1234",
+            "name": "World & Universe Company",
+            "email": "world.company@gmail.com",
+            "street": "Wall Street",
+            "zip": "53008",
+            "city": "New York",
+            "country": "US",
+            "nip": "600500300"
         }
     ]
 }
