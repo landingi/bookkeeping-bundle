@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma;
 
+use Exception;
 use Landingi\BookkeepingBundle\Bookkeeping\Media;
 use RuntimeException;
 use SimpleXMLElement;
@@ -31,13 +32,17 @@ XML
 
     public function with(string $key, string $value): self
     {
-        if ('' === $value) {
-            $child = $this->builder->addChild($key);
-        } else {
-            $child = $this->builder->addChild($key, $value);
-        }
+        try {
+            if ('' === $value) {
+                $child = $this->builder->addChild($key);
+            } else {
+                $child = $this->builder->addChild($key, htmlentities($value));
+            }
 
-        return new self($child);
+            return new self($child);
+        } catch (Exception $e) {
+            throw new RuntimeException('Invalid XML child value');
+        }
     }
 
     public function toString(): string
