@@ -36,7 +36,7 @@ XML
             if ('' === $value) {
                 $child = $this->builder->addChild($key);
             } else {
-                $child = $this->builder->addChild($key, htmlentities($value));
+                $child = $this->builder->addChild($key, htmlspecialchars($value));
             }
 
             return new self($child);
