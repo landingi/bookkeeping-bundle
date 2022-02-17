@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma;
 
+use Error;
 use Exception;
 use Landingi\BookkeepingBundle\Bookkeeping\Media;
 use RuntimeException;
@@ -36,11 +37,11 @@ XML
             if ('' === $value) {
                 $child = $this->builder->addChild($key);
             } else {
-                $child = $this->builder->addChild($key, htmlentities($value));
+                $child = $this->builder->addChild($key, htmlspecialchars($value, ENT_COMPAT, 'UTF-8'));
             }
 
             return new self($child);
-        } catch (Exception $e) {
+        } catch (Exception | Error $e) {
             throw new RuntimeException('Invalid XML child value');
         }
     }
