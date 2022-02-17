@@ -36,7 +36,7 @@ XML
             if ('' === $value) {
                 $child = $this->builder->addChild($key);
             } else {
-                $child = $this->builder->addChild($key, htmlspecialchars($value, ENT_XML1, 'UTF-8'));
+                $child = $this->builder->addChild($key, htmlspecialchars($value, ENT_COMPAT, 'UTF-8'));
             }
 
             return new self($child);
