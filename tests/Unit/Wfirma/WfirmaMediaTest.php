@@ -5,6 +5,7 @@ namespace Landingi\BookkeepingBundle\Unit\Wfirma;
 
 use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use SimpleXMLElement;
 
 final class WfirmaMediaTest extends TestCase
@@ -48,5 +49,11 @@ XML;
 XML,
             $this->media->toString()
         );
+    }
+
+    public function testItThrowsException(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->media->with('', '');
     }
 }
