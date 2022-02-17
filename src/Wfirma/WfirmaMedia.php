@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma;
 
+use Error;
 use Exception;
 use Landingi\BookkeepingBundle\Bookkeeping\Media;
 use RuntimeException;
@@ -40,7 +41,7 @@ XML
             }
 
             return new self($child);
-        } catch (Exception $e) {
+        } catch (Exception | Error $e) {
             throw new RuntimeException('Invalid XML child value');
         }
     }
