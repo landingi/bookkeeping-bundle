@@ -6,7 +6,7 @@ namespace Landingi\BookkeepingBundle\Wfirma\Client\Exception;
 
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
 
-final class TotalExecutionTimeLimitExceeded extends WfirmaClientException
+final class TotalExecutionTimeLimitExceededException extends WfirmaClientException
 {
     public function __construct(string $url, array $result, string $request)
     {

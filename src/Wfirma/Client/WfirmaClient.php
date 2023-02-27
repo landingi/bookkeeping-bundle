@@ -9,8 +9,8 @@ use Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException;
-use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceeded;
-use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceeded;
+use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceededException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceededException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoice\Download;
 use function json_decode;
 use function sprintf;
@@ -32,8 +32,8 @@ final class WfirmaClient
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException
-     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceeded
-     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceeded
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceededException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceededException
      */
     public function requestGET(string $url): array
     {
@@ -47,8 +47,8 @@ final class WfirmaClient
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException
-     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceeded
-     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceeded
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceededException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceededException
      */
     public function requestPOST(string $url, string $data): array
     {
@@ -62,8 +62,8 @@ final class WfirmaClient
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException
-     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceeded
-     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceeded
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceededException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceededException
      */
     public function requestDELETE(string $url): array
     {
@@ -77,8 +77,8 @@ final class WfirmaClient
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException
-     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceeded
-     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceeded
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceededException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceededException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException
      */
     public function getVatId(string $countryCode, int $vatRate): int
@@ -153,8 +153,8 @@ final class WfirmaClient
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException
-     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceeded
-     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceeded
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceededException
+     * @throws \Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceededException
      */
     private function handleResponse(array $result, string $url, string $data = ''): array
     {
@@ -169,9 +169,9 @@ final class WfirmaClient
             case 'OUT OF SERVICE':
                 throw new OutOfServiceException($url, $result, $data);
             case 'TOTAL EXECUTION TIME LIMIT EXCEEDED':
-                throw new TotalExecutionTimeLimitExceeded($url, $result, $data);
+                throw new TotalExecutionTimeLimitExceededException($url, $result, $data);
             case 'TOTAL REQUESTS LIMIT EXCEEDED':
-                throw new TotalRequestsLimitExceeded($url, $result, $data);
+                throw new TotalRequestsLimitExceededException($url, $result, $data);
             case 'FATAL':
             case 'ERROR':
             default:
