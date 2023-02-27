@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class NotFoundExceptionTest extends TestCase
 {
-    public function testConstructorSetsExpectedValues()
+    public function testConstructorSetsExpectedValues(): void
     {
         $exception = new NotFoundException(
             $url = 'https://test.example.com',

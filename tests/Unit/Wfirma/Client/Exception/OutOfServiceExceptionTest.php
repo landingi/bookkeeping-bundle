@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class OutOfServiceExceptionTest extends TestCase
 {
-    public function testConstructorSetsExpectedValues()
+    public function testConstructorSetsExpectedValues(): void
     {
         $exception = new OutOfServiceException(
             $url = 'https://test.example.com',

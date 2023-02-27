@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class AuthorizationExceptionTest extends TestCase
 {
-    public function testConstructorSetsExpectedValues()
+    public function testConstructorSetsExpectedValues(): void
     {
         $exception = new AuthorizationException(
             $url = 'https://test.example.com',

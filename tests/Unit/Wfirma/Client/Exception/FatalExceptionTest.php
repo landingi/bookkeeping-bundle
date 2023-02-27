@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class FatalExceptionTest extends TestCase
 {
-    public function testConstructorSetsExpectedValues()
+    public function testConstructorSetsExpectedValues(): void
     {
         $exception = new FatalException(
             $url = 'https://test.example.com',

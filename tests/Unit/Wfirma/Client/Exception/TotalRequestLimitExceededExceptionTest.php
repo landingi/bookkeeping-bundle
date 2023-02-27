@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class TotalRequestLimitExceededExceptionTest extends TestCase
 {
-    public function testConstructorSetsExpectedValues()
+    public function testConstructorSetsExpectedValues(): void
     {
         $exception = new TotalRequestsLimitExceededException(
             $url = 'https://test.example.com',

@@ -9,7 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class TotalExecutionTimeLimitExceededExceptionTest extends TestCase
 {
-    public function testConstructorSetsExpectedValues()
+    public function testConstructorSetsExpectedValues(): void
     {
         $exception = new TotalExecutionTimeLimitExceededException(
             $url = 'https://test.example.com',
