@@ -28,6 +28,10 @@ final class ViesIdentifierFactory implements IdentifierFactory
     {
         try {
             $validation = $this->vies->validateVat($country, $identifier);
+
+            if (false === $validation->isValid()) {
+                throw new Exception('Invalid Tax Id');
+            }
         } catch (Exception $e) {
             throw new ViesException('VIES external service exception: ' . $e->getMessage());
         }
