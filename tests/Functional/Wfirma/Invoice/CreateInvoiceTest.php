@@ -312,7 +312,7 @@ XML;
                     new City('London'),
                     new Country('GB')
                 ),
-                new Company\ValueAddedTax\SimpleIdentifier('50844926014')
+                new Company\ValueAddedTax\SimpleIdentifier('550844926014')
             )
         );
         $contractorRequest = <<<XML

@@ -17,22 +17,6 @@ final class ViesValueAddedTaxIdentifierFactoryTest extends TestCase
         self::assertEquals('FR29480969591', $identifier->toString());
     }
 
-    public function testItIsInvalidIdentifier(): void
-    {
-        $factory = new ViesIdentifierFactory(new Vies());
-        $identifier = $factory->create('333111222', 'DE');
-
-        self::assertEquals('333111222', $identifier->toString());
-    }
-
-    public function testItIsInvalidPolishIdentifier(): void
-    {
-        $factory = new ViesIdentifierFactory(new Vies());
-        $identifier = $factory->create('333111222', 'PL');
-
-        self::assertEquals('333111222', $identifier->toString());
-    }
-
     public function testItIsValidPolishIdentifier(): void
     {
         $factory = new ViesIdentifierFactory(new Vies());

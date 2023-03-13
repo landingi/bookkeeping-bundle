@@ -32,7 +32,11 @@ final class ViesIdentifierFactory implements IdentifierFactory
             if (false === $validation->isValid()) {
                 throw new Exception('Invalid Tax Id');
             }
+        } catch (Exception $e) {
+            throw new ViesException('VIES external service exception: ' . $e->getMessage());
+        }
 
+        if ($validation->isValid()) {
             $country = new Country($country);
 
             if ($country->isPoland()) {
@@ -40,8 +44,8 @@ final class ViesIdentifierFactory implements IdentifierFactory
             }
 
             return new ValidatedIdentifier(new SimpleIdentifier($identifier), $country);
-        } catch (Exception $e) {
-            throw new ViesException('VIES external service exception: ' . $e->getMessage());
         }
+
+        return new SimpleIdentifier($identifier);
     }
 }
