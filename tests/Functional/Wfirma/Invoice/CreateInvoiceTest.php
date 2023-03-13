@@ -328,7 +328,7 @@ XML;
             <country>GB</country>
             <email>test@landingi.com</email>
             <tax_id_type>custom</tax_id_type>
-            <nip>GB50844926014</nip>
+            <nip>GB550844926014</nip>
         </contractor>
     </contractors>
 </api>
