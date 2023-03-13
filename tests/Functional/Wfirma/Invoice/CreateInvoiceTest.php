@@ -202,7 +202,7 @@ XML;
                     new City('Paris'),
                     new Country('FR')
                 ),
-                new Company\ValueAddedTax\SimpleIdentifier('50844926014')
+                new Company\ValueAddedTax\SimpleIdentifier('99999999999')
             )
         );
         $contractorRequest = <<<XML

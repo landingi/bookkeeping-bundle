@@ -79,7 +79,7 @@ class DownloadInvoiceTest extends TestCase
                     new City('test'),
                     new Country('PL')
                 ),
-                new Company\ValueAddedTax\SimpleIdentifier('6762461659')
+                new Company\ValueAddedTax\SimpleIdentifier('1579406095')
             )
         );
         $invoice = $this->invoiceBook->create(
