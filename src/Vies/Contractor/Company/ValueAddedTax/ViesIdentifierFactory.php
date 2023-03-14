@@ -10,6 +10,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\Iden
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\SimpleIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\ValidatedIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTaxIdentifier;
+use Landingi\BookkeepingBundle\Vies\Contractor\InvalidViesIdentifierException;
 use Landingi\BookkeepingBundle\Vies\ViesException;
 
 final class ViesIdentifierFactory implements IdentifierFactory
@@ -22,7 +23,7 @@ final class ViesIdentifierFactory implements IdentifierFactory
     }
 
     /**
-     * @throws \Landingi\BookkeepingBundle\Vies\ViesException
+     * @throws ViesException
      */
     public function create(string $identifier, string $country): ValueAddedTaxIdentifier
     {
@@ -30,7 +31,7 @@ final class ViesIdentifierFactory implements IdentifierFactory
             $validation = $this->vies->validateVat($country, $identifier);
 
             if (false === $validation->isValid()) {
-                throw new Exception('Invalid Tax Id');
+                throw InvalidViesIdentifierException::validationFailed($identifier);
             }
 
             $country = new Country($country);
