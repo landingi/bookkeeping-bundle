@@ -221,7 +221,7 @@ XML;
             <country>FR</country>
             <email>test@landingi.com</email>
             <tax_id_type>vat</tax_id_type>
-            <nip>FR53438681800015</nip>
+            <nip>FR47534386818</nip>
         </contractor>
     </contractors>
 </api>
