@@ -44,6 +44,7 @@ use PHPUnit\Framework\TestCase;
 
 class DownloadInvoiceTest extends TestCase
 {
+
     private ContractorBook $contractorBook;
     private InvoiceBook $invoiceBook;
     private DateTime $today;
