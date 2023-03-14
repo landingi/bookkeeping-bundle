@@ -32,9 +32,9 @@ final class ViesValueAddedTaxIdentifierFactoryTest extends TestCase
 
     public function testItIsInvalidIdentifier(): void
     {
+        self::expectException(ViesException::class);
+
         $factory = new ViesIdentifierFactory(new Vies());
         $factory->create('333111222', 'DE');
-
-        self::expectException(ViesException::class);
     }
 }
