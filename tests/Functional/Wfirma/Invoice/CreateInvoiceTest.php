@@ -193,7 +193,7 @@ XML;
     {
         $contractor = $this->contractorBook->create(
             new Company(
-                new ContractorIdentifier('222'),
+                new ContractorIdentifier('123'),
                 new ContractorName('test foo'),
                 new ContractorEmail('test@landingi.com'),
                 new ContractorAddress(
