@@ -202,7 +202,10 @@ XML;
                     new City('Paris'),
                     new Country('FR')
                 ),
-                new Company\ValueAddedTax\SimpleIdentifier('50844926014')
+                new Company\ValueAddedTax\ValidatedIdentifier(
+                    new Company\ValueAddedTax\SimpleIdentifier('47534386818'),
+                    new Country('FR')
+                )
             )
         );
         $contractorRequest = <<<XML
@@ -218,7 +221,7 @@ XML;
             <country>FR</country>
             <email>test@landingi.com</email>
             <tax_id_type>vat</tax_id_type>
-            <nip>FR50844926014</nip>
+            <nip>FR47534386818</nip>
         </contractor>
     </contractors>
 </api>
@@ -312,7 +315,7 @@ XML;
                     new City('London'),
                     new Country('GB')
                 ),
-                new Company\ValueAddedTax\SimpleIdentifier('50844926014')
+                new Company\ValueAddedTax\SimpleIdentifier('550844926014')
             )
         );
         $contractorRequest = <<<XML
@@ -328,7 +331,7 @@ XML;
             <country>GB</country>
             <email>test@landingi.com</email>
             <tax_id_type>custom</tax_id_type>
-            <nip>GB50844926014</nip>
+            <nip>GB550844926014</nip>
         </contractor>
     </contractors>
 </api>

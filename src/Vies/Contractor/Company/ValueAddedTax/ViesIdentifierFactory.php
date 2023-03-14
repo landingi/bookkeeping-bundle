@@ -10,6 +10,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\Iden
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\SimpleIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\ValidatedIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTaxIdentifier;
+use Landingi\BookkeepingBundle\Vies\Contractor\InvalidViesIdentifierException;
 use Landingi\BookkeepingBundle\Vies\ViesException;
 
 final class ViesIdentifierFactory implements IdentifierFactory
@@ -22,17 +23,17 @@ final class ViesIdentifierFactory implements IdentifierFactory
     }
 
     /**
-     * @throws \Landingi\BookkeepingBundle\Vies\ViesException
+     * @throws ViesException
      */
     public function create(string $identifier, string $country): ValueAddedTaxIdentifier
     {
         try {
             $validation = $this->vies->validateVat($country, $identifier);
-        } catch (Exception $e) {
-            throw new ViesException('VIES external service exception: ' . $e->getMessage());
-        }
 
-        if ($validation->isValid()) {
+            if (false === $validation->isValid()) {
+                throw InvalidViesIdentifierException::validationFailed($identifier);
+            }
+
             $country = new Country($country);
 
             if ($country->isPoland()) {
@@ -40,8 +41,8 @@ final class ViesIdentifierFactory implements IdentifierFactory
             }
 
             return new ValidatedIdentifier(new SimpleIdentifier($identifier), $country);
+        } catch (Exception $e) {
+            throw new ViesException('VIES external service exception: ' . $e->getMessage());
         }
-
-        return new SimpleIdentifier($identifier);
     }
 }
