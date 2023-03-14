@@ -224,6 +224,7 @@ XML;
             <nip>FR47534386818</nip>
         </contractor>
     </contractors>
+    
 </api>
 XML;
         self::assertXmlStringEqualsXmlString($contractorRequest, $contractor->print(WfirmaMedia::api())->toString());
