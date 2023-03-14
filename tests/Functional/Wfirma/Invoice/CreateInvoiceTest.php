@@ -242,6 +242,7 @@ XML;
                         new WfirmaValueAddedTax(WfirmaValueAddedTax::NO_TAX, new ValueAddedTax(0)),
                         new NumberOfUnits(2)
                     ),
+
                 ]),
                 $contractor,
                 new Currency('EUR'),
