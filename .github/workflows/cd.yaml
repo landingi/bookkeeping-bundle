@@ -12,9 +12,6 @@ jobs:
             max-parallel: 1
             matrix:
                 php-version: [ '7.4', '8.0' ]
-        concurrency:
-            group: cd-${{ github.ref }}-${{ matrix.php-version }}
-            cancel-in-progress: true
         env:
             WFIRMA_API_COMPANY: ${{ secrets.WFIRMA_API_COMPANY }}
             WFIRMA_API_LOGIN: ${{ secrets.WFIRMA_API_LOGIN }}
