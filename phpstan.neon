@@ -2,5 +2,5 @@ includes:
     - vendor/landingi/php-coding-standards/phpstan.neon
 
 parameters:
-    excludes_analyse:
+    excludePaths:
         - src/Curl/Curl

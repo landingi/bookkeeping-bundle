@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Functional\Wfirma;
+namespace Landingi\BookkeepingBundle\Integration\Wfirma;
 
+use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
-use PHPUnit\Framework\TestCase;
 
-final class WfirmaClientTest extends TestCase
+final class WfirmaClientTest extends IntegrationTestCase
 {
     private WfirmaClient $client;
 
