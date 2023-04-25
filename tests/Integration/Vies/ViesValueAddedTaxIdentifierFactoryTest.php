@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Functional\Vies;
+namespace Landingi\BookkeepingBundle\Integration\Vies;
 
 use DragonBe\Vies\Vies;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\SimpleIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\ValidatedIdentifier;
+use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Vies\Contractor\Company\ValueAddedTax\ViesIdentifierFactory;
 use Landingi\BookkeepingBundle\Vies\ViesException;
-use PHPUnit\Framework\TestCase;
 
-final class ViesValueAddedTaxIdentifierFactoryTest extends TestCase
+final class ViesValueAddedTaxIdentifierFactoryTest extends IntegrationTestCase
 {
     public function testItIsValidIdentifier(): void
     {

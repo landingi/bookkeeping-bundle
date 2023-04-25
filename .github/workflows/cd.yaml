@@ -1,7 +1,7 @@
-name: CI
+name: CD
 
 on:
-    pull_request:
+    push:
         branches:
             - master
 
@@ -9,7 +9,7 @@ jobs:
     ci:
         runs-on: ubuntu-20.04
         concurrency:
-            group: ci-${{ github.ref }}
+            group: cd-${{ github.ref }}
             cancel-in-progress: true
         env:
             WFIRMA_API_COMPANY: ${{ secrets.WFIRMA_API_COMPANY }}

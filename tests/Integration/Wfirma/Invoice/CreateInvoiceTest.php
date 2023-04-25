@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Functional\Wfirma\Invoice;
+namespace Landingi\BookkeepingBundle\Integration\Wfirma\Invoice;
 
 use DateTime;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
@@ -30,6 +30,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
+use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
@@ -42,9 +43,8 @@ use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItemCollection;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoice;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
-use PHPUnit\Framework\TestCase;
 
-final class CreateInvoiceTest extends TestCase
+final class CreateInvoiceTest extends IntegrationTestCase
 {
     private ContractorBook $contractorBook;
     private InvoiceBook $invoiceBook;
