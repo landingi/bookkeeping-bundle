@@ -17,7 +17,7 @@ final class FindInvoices implements Request
         $this->page = $page;
     }
 
-    public function getContent() : string
+    public function getContent(): string
     {
         return <<<XML
         <?xml version="1.0" encoding="UTF-8"?>

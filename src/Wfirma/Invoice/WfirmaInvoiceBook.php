@@ -61,7 +61,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
         );
     }
 
-    public function list(int $page, Condition ...$conditions) : Collection
+    public function list(int $page, Condition ...$conditions): Collection
     {
         $result = $this->client->findInvoices(self::INVOICES_FIND_URL, $page, ...$conditions);
         $invoices = array_map(static function (array $field) {
