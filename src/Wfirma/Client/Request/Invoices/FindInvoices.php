@@ -20,20 +20,20 @@ final class FindInvoices implements Request
     public function getContent(): string
     {
         return <<<XML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <api>
-            <invoices>
-                <parameters>
-                    <conditions>
-                        <and>
-                            $this->conditionXml   
-                        </and>
-                    </conditions>
-                    <page>$this->page</page>
-                </parameters>
-            </invoices>
-        </api>
-        XML;
+<?xml version="1.0" encoding="UTF-8"?>
+<api>
+    <invoices>
+        <parameters>
+            <conditions>
+                <and>
+                    $this->conditionXml   
+                </and>
+            </conditions>
+            <page>$this->page</page>
+        </parameters>
+    </invoices>
+</api>
+XML;
     }
 
     public function __toString(): string
