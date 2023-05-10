@@ -32,33 +32,33 @@ final class WfirmaConditionTransformer
     private function buildExactDateXml(ExactDate $condition): string
     {
         return <<<XML
-        <condition>
-            <field>date</field>
-            <operator>eq</operator>
-            <value>{$condition}</value>
-        </condition>            
-        XML;
+<condition>
+    <field>date</field>
+    <operator>eq</operator>
+    <value>{$condition}</value>
+</condition>
+XML;
     }
 
     private function buildIncludeSeriesXml(IncludeSeries $condition): string
     {
         return <<<XML
-        <condition>
-            <field>fullnumber</field>
-            <operator>like</operator>
-            <value>%$condition%</value>
-        </condition>
-        XML;
+<condition>
+    <field>fullnumber</field>
+    <operator>like</operator>
+    <value>%$condition%</value>
+</condition>
+XML;
     }
 
     private function buildExcludeSeriesXml(ExcludeSeries $condition): string
     {
         return <<<XML
-        <condition>
-            <field>fullnumber</field>
-            <operator>not like</operator>
-            <value>%$condition%</value>
-        </condition>
-        XML;
+<condition>
+    <field>fullnumber</field>
+    <operator>not like</operator>
+    <value>%$condition%</value>
+</condition>
+XML;
     }
 }
