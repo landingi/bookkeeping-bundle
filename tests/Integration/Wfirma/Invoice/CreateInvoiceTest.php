@@ -34,6 +34,7 @@ use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
+use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaConditionTransformer;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\WfirmaContractorBook;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
@@ -57,7 +58,8 @@ final class CreateInvoiceTest extends IntegrationTestCase
                 (string) getenv('WFIRMA_API_LOGIN'),
                 (string) getenv('WFIRMA_API_PASSWORD'),
                 (int) getenv('WFIRMA_API_COMPANY')
-            )
+            ),
+            new WfirmaConditionTransformer()
         );
         $factory = new ContractorFactory(
             new MemoryIdentifierFactory()

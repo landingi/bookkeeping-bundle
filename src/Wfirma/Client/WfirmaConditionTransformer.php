@@ -40,7 +40,6 @@ final class WfirmaConditionTransformer
         XML;
     }
 
-
     private function buildIncludeSeriesXml(IncludeSeries $condition): string
     {
         return <<<XML

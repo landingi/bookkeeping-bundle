@@ -7,6 +7,7 @@ use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
+use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaConditionTransformer;
 
 final class WfirmaClientTest extends IntegrationTestCase
 {
@@ -19,7 +20,8 @@ final class WfirmaClientTest extends IntegrationTestCase
                 (string) getenv('WFIRMA_API_LOGIN'),
                 (string) getenv('WFIRMA_API_PASSWORD'),
                 (int) getenv('WFIRMA_API_COMPANY')
-            )
+            ),
+            new WfirmaConditionTransformer()
         );
     }
 
