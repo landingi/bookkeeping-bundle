@@ -108,6 +108,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         $this->assertCount(1, $invoices->getIterator());
         $this->assertEquals('FV 69/2021', $invoices->getAll()[0]->getFullNumber());
 
+        // test list excludes invoice
         $conditions = [
             new ExactDate(\DateTimeImmutable::createFromMutable($now)),
             new ExcludeSeries((string) $invoiceSeries->getIdentifier()),
