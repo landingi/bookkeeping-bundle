@@ -16,6 +16,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactDate;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExcludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\IncludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
@@ -96,7 +97,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
 
         //test find
         $invoice = $this->invoiceBook->find($invoice->getIdentifier());
-        $this->assertEquals('123', (string) $invoice->getIdentifier());
+        $this->assertEquals('FV 69/2021', (string) $invoice->getFullNumber());
 
         //test list
         $conditions = [
@@ -105,7 +106,14 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
         $this->assertCount(1, $invoices->getIterator());
-        $this->assertEquals('123', $invoices->getAll()[0]->getIdentifier());
+        $this->assertEquals('FV 69/2021', $invoices->getAll()[0]->getFullNumber());
+
+        $conditions = [
+            new ExactDate(\DateTimeImmutable::createFromMutable($now)),
+            new ExcludeSeries((string) $invoiceSeries->getIdentifier()),
+        ];
+        $invoices = $this->invoiceBook->list(1, ...$conditions);
+        $this->assertCount(0, $invoices->getIterator());
 
         //test delete
         $this->invoiceBook->delete($invoice->getIdentifier());
