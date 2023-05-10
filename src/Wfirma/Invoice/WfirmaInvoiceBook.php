@@ -64,11 +64,19 @@ final class WfirmaInvoiceBook implements InvoiceBook
     public function list(int $page, Condition ...$conditions): Collection
     {
         $result = $this->client->findInvoices(self::INVOICES_FIND_URL, $page, ...$conditions);
-        $invoices = array_map(static function (array $field) {
-            return $field['invoice'] ?? null;
-        }, $result['invoices']);
-
-        $invoiceCollection = new WfirmaInvoiceCollection($invoices);
+        $invoiceCollection = new WfirmaInvoiceCollection(
+            array_map(
+                function (array $invoiceResult) {
+                    return $this->invoiceFactory->getInvoiceFromApiData(
+                        $invoiceResult['invoice'],
+                        $this->contractorFactory->getContractor($invoiceResult['invoice'])
+                    );
+                },
+                array_filter($result['invoices'], static function (array $invoiceResult) {
+                    return false === empty($invoiceResult['invoice']);
+                })
+            )
+        );
 
         if ($result['invoices']['parameters']['total'] > $page * (int) $result['invoices']['parameters']['limit']) {
             $invoiceCollection->merge($this->list($page + 1, ...$conditions));

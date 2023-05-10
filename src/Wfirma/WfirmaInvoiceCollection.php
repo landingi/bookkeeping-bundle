@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Wfirma;
 
 use Landingi\BookkeepingBundle\Bookkeeping\Collection;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 
 final class WfirmaInvoiceCollection extends Collection
 {
     /**
-     * @param WfirmaInvoice[] $invoices
+     * @param Invoice[] $invoices
      *
      * @throws WfirmaException
      */

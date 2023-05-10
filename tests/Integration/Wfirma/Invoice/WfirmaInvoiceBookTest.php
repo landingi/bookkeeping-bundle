@@ -15,6 +15,8 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactDate;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\IncludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceFullNumber;
@@ -69,7 +71,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         $invoice = $this->invoiceBook->create(
             new WfirmaInvoice(
                 new InvoiceIdentifier('123'),
-                new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
+                $invoiceSeries = new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
                 new InvoiceDescription('test description - bundle invoice'),
                 new InvoiceFullNumber('FV 69/2021'),
                 new InvoiceTotalValue(100),
@@ -83,17 +85,27 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
                 ]),
                 $contractor,
                 new Currency('PLN'),
-                new DateTime(),
+                $now = new DateTime(),
                 new DateTime(),
                 new DateTime(),
                 new Language('PL')
             )
         );
 
-        self::assertNotEmpty($invoice->getIdentifier()->toString());
+        $this->assertNotEmpty($invoice->getIdentifier()->toString());
 
         //test find
         $invoice = $this->invoiceBook->find($invoice->getIdentifier());
+        $this->assertEquals('123', (string) $invoice->getIdentifier());
+
+        //test list
+        $conditions = [
+            new ExactDate(\DateTimeImmutable::createFromMutable($now)),
+            new IncludeSeries((string) $invoiceSeries->getIdentifier())
+        ];
+        $invoices = $this->invoiceBook->list(1, ...$conditions);
+        $this->assertCount(1, $invoices->getIterator());
+        $this->assertEquals('123', $invoices->getAll()[0]->getIdentifier());
 
         //test delete
         $this->invoiceBook->delete($invoice->getIdentifier());

@@ -70,7 +70,7 @@ XML,
         $this->expectExceptionMessage('Provided condition is not supported');
 
         $this->transformer->toXml(new class() implements Condition {
-            public function __toString() : string
+            public function __toString(): string
             {
                 return '';
             }
