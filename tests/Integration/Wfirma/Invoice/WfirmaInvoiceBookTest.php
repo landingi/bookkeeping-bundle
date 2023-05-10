@@ -101,7 +101,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         //test list
         $conditions = [
             new ExactDate(\DateTimeImmutable::createFromMutable($now)),
-            new IncludeSeries((string) $invoiceSeries->getIdentifier())
+            new IncludeSeries((string) $invoiceSeries->getIdentifier()),
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
         $this->assertCount(1, $invoices->getIterator());
