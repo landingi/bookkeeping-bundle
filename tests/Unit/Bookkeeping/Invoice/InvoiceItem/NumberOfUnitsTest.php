@@ -15,13 +15,15 @@ final class NumberOfUnitsTest extends TestCase
         self::assertEquals('1', $units->toString());
         self::assertEquals('1', (string) $units);
         self::assertEquals(1, $units->toInteger());
+
+        $units = new NumberOfUnits(0);
+        self::assertEquals('0', $units->toString());
+        self::assertEquals('0', (string) $units);
+        self::assertEquals(0, $units->toInteger());
     }
 
-    public function testItIsNotEmptyString(): void
+    public function testItIsNotNegative(): void
     {
-        $this->expectException(InvoiceItemException::class);
-        new NumberOfUnits(0);
-
         $this->expectException(InvoiceItemException::class);
         new NumberOfUnits(-1);
     }
