@@ -74,7 +74,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
                 new InvoiceIdentifier('123'),
                 $invoiceSeries = new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
                 new InvoiceDescription('test description - bundle invoice'),
-                new InvoiceFullNumber('FV 69/2021'),
+                new InvoiceFullNumber('FV 69/2023'),
                 new InvoiceTotalValue(100),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
@@ -97,7 +97,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
 
         //test find
         $invoice = $this->invoiceBook->find($invoice->getIdentifier());
-        $this->assertEquals('FV 69/2021', (string) $invoice->getFullNumber());
+        $this->assertEquals('test description - bundle invoice', (string) $invoice->getDescription());
 
         //test list
         $conditions = [
@@ -106,7 +106,8 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
         $this->assertCount(1, $invoices->getIterator());
-        $this->assertEquals('FV 69/2021', $invoices->getAll()[0]->getFullNumber());
+        $this->assertEquals('test description - bundle invoice', $invoices->getAll()[0]->getDescription());
+        $this->assertEquals($invoice->getIdentifier(), $invoices->getAll()[0]->getIdentifier());
 
         // test list excludes invoice
         $conditions = [

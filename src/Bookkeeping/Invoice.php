@@ -4,18 +4,20 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Bookkeeping;
 
 use DateTime;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceFullNumber;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 
 abstract class Invoice
 {
-    protected Invoice\InvoiceIdentifier $identifier;
-    protected Invoice\InvoiceSeries $invoiceSeries;
-    protected Invoice\InvoiceDescription $description;
-    protected Invoice\InvoiceFullNumber $fullNumber;
-    protected Invoice\InvoiceTotalValue $totalValue;
+    protected InvoiceIdentifier $identifier;
+    protected InvoiceSeries $invoiceSeries;
+    protected InvoiceDescription $description;
+    protected InvoiceFullNumber $fullNumber;
+    protected InvoiceTotalValue $totalValue;
     protected Collection $items;
     protected Contractor $contractor;
     protected Currency $currency;
@@ -25,11 +27,11 @@ abstract class Invoice
     protected Language $language;
 
     public function __construct(
-        Invoice\InvoiceIdentifier $identifier,
-        Invoice\InvoiceSeries $invoiceSeries,
-        Invoice\InvoiceDescription $description,
-        Invoice\InvoiceFullNumber $fullNumber,
-        Invoice\InvoiceTotalValue $totalValue,
+        InvoiceIdentifier $identifier,
+        InvoiceSeries $invoiceSeries,
+        InvoiceDescription $description,
+        InvoiceFullNumber $fullNumber,
+        InvoiceTotalValue $totalValue,
         Collection $items,
         Contractor $contractor,
         Currency $currency,
@@ -90,6 +92,11 @@ abstract class Invoice
     public function getTotalValue(): InvoiceTotalValue
     {
         return $this->totalValue;
+    }
+
+    public function getDescription() : InvoiceDescription
+    {
+        return $this->description;
     }
 
     abstract public function print(Media $media): Media;
