@@ -60,7 +60,7 @@ abstract class Invoice
 
     /**
      * Returns NET sum of all invoice items. This is in-currency.
-     * Note: If the invoice is a correction, the value is positive, as opposed to getTotalValue()
+     * Note: If the invoice is a correction, the value is positive, as opposed to getTotalValue().
      */
     public function getMoneyValue(): float
     {
