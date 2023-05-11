@@ -10,12 +10,14 @@ final class NumberOfUnits
     private int $number;
 
     /**
+     * Note: If the invoice is a correction, the number of units of an invoice item can be zero.
+     *
      * @throws InvoiceItemException
      */
     public function __construct(int $number)
     {
-        if ($number < 1) {
-            throw new InvoiceItemException('The number of units must not be less than 1');
+        if ($number < 0) {
+            throw new InvoiceItemException('The number of units must not be less than 0');
         }
 
         $this->number = $number;
