@@ -94,7 +94,7 @@ abstract class Invoice
         return $this->totalValue;
     }
 
-    public function getDescription() : InvoiceDescription
+    public function getDescription(): InvoiceDescription
     {
         return $this->description;
     }
