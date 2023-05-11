@@ -8,6 +8,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceFullNumber;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceNetPlnValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 
@@ -18,6 +19,7 @@ abstract class Invoice
     protected InvoiceDescription $description;
     protected InvoiceFullNumber $fullNumber;
     protected InvoiceTotalValue $totalValue;
+    protected InvoiceNetPlnValue $nettoPlnValue;
     protected Collection $items;
     protected Contractor $contractor;
     protected Currency $currency;
@@ -32,6 +34,7 @@ abstract class Invoice
         InvoiceDescription $description,
         InvoiceFullNumber $fullNumber,
         InvoiceTotalValue $totalValue,
+        InvoiceNetPlnValue $nettoPlnValue,
         Collection $items,
         Contractor $contractor,
         Currency $currency,
@@ -52,10 +55,12 @@ abstract class Invoice
         $this->paidAt = $paidAt;
         $this->language = $language;
         $this->saleAt = $saleAt;
+        $this->nettoPlnValue = $nettoPlnValue;
     }
 
     /**
-     * Returns NET sum of all invoice items.
+     * Returns NET sum of all invoice items. This is in-currency.
+     * Note: If the invoice is a correction, the value is positive, as opposed to getTotalValue()
      */
     public function getMoneyValue(): float
     {
@@ -89,6 +94,9 @@ abstract class Invoice
         return $this->paidAt;
     }
 
+    /**
+     * Returns total invoice value, in-currency. This can be negative if the invoice is a correction.
+     */
     public function getTotalValue(): InvoiceTotalValue
     {
         return $this->totalValue;

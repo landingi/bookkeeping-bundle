@@ -23,7 +23,8 @@ final class InvoiceFactory
             new Invoice\InvoiceSeries(new InvoiceSeriesIdentifier($data['series']['id'])),
             new Invoice\InvoiceDescription($data['description']),
             new Invoice\InvoiceFullNumber($data['fullnumber']),
-            new Invoice\InvoiceTotalValue((int) ($data['total'] * 100)),
+            new Invoice\InvoiceTotalValue((int) ($data['total'] * 100)), // This is in-currency
+            new Invoice\InvoiceNetPlnValue((int) ($data['netto'] * 100)),
             new WfirmaInvoiceItemCollection($this->getInvoiceItems($data['invoicecontents'])),
             $contractor,
             new Currency($data['currency']),
@@ -41,7 +42,7 @@ final class InvoiceFactory
         foreach ($items as $key => $item) {
             $invoiceItems[] = new WfirmaInvoiceItem(
                 new Invoice\InvoiceItem\Name($item['invoicecontent']['name']),
-                new Invoice\InvoiceItem\Price((int) ($item['invoicecontent']['price'] * 100)),
+                new Invoice\InvoiceItem\Price((int) ($item['invoicecontent']['price'] * 100)), // In-currency
                 new WfirmaValueAddedTax(
                     (string) $item['invoicecontent']['vat_code']['id'],
                     new Invoice\InvoiceItem\ValueAddedTax(0)

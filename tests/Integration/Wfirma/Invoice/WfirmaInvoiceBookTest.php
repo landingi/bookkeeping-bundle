@@ -26,6 +26,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Name;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\NumberOfUnits;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Price;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceNetPlnValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
@@ -75,6 +76,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
                 new InvoiceDescription('test description - bundle invoice'),
                 new InvoiceFullNumber('FV 69/2023'),
                 new InvoiceTotalValue(100),
+                new InvoiceNetPlnValue(100),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),
@@ -97,6 +99,8 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         //test find
         $invoice = $this->invoiceBook->find($invoice->getIdentifier());
         $this->assertEquals('test description - bundle invoice', (string) $invoice->getDescription());
+        $this->assertEquals('100.00', $invoice->getTotalValue()->toString());
+        $this->assertEquals(201.10, $invoice->getMoneyValue());
 
         //test list
         $conditions = [
