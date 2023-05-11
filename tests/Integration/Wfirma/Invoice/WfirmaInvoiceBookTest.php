@@ -15,6 +15,9 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactDate;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExcludeSeries;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\IncludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceDescription;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceFullNumber;
@@ -30,6 +33,7 @@ use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
+use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaConditionTransformer;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\WfirmaContractorBook;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
@@ -51,7 +55,8 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
                 (string) getenv('WFIRMA_API_LOGIN'),
                 (string) getenv('WFIRMA_API_PASSWORD'),
                 (int) getenv('WFIRMA_API_COMPANY')
-            )
+            ),
+            new WfirmaConditionTransformer()
         );
         $factory = new ContractorFactory(
             new MemoryIdentifierFactory()
@@ -63,13 +68,12 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
     public function testInvoiceWorkflow(): void
     {
         $contractor = $this->getContractor();
-
         $invoice = $this->invoiceBook->create(
             new WfirmaInvoice(
                 new InvoiceIdentifier('123'),
-                new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
+                $invoiceSeries = new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
                 new InvoiceDescription('test description - bundle invoice'),
-                new InvoiceFullNumber('FV 69/2021'),
+                new InvoiceFullNumber('FV 69/2023'),
                 new InvoiceTotalValue(100),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
@@ -81,17 +85,38 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
                 ]),
                 $contractor,
                 new Currency('PLN'),
-                new DateTime(),
+                $now = new DateTime(),
                 new DateTime(),
                 new DateTime(),
                 new Language('PL')
             )
         );
 
-        self::assertNotEmpty($invoice->getIdentifier()->toString());
+        $this->assertNotEmpty($invoice->getIdentifier()->toString());
 
         //test find
         $invoice = $this->invoiceBook->find($invoice->getIdentifier());
+        $this->assertEquals('test description - bundle invoice', (string) $invoice->getDescription());
+
+        //test list
+        $conditions = [
+            new ExactDate(\DateTimeImmutable::createFromMutable($now)),
+            new IncludeSeries((string) $invoiceSeries->getIdentifier()),
+        ];
+        $invoices = $this->invoiceBook->list(1, ...$conditions);
+        $this->assertGreaterThanOrEqual(1, $invoiceArray = $invoices->getAll());
+        /** @var WfirmaInvoice $lastInvoice */
+        $lastInvoice = end($invoiceArray);
+        $this->assertEquals('test description - bundle invoice', $lastInvoice->getDescription());
+        $this->assertEquals($invoice->getIdentifier(), $lastInvoice->getIdentifier());
+
+        // test list excludes invoice
+        $conditions = [
+            new ExactDate(\DateTimeImmutable::createFromMutable($now)),
+            new ExcludeSeries((string) $invoiceSeries->getIdentifier()),
+        ];
+        $invoices = $this->invoiceBook->list(1, ...$conditions);
+        $this->assertCount(0, $invoices->getAll());
 
         //test delete
         $this->invoiceBook->delete($invoice->getIdentifier());

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Client;
 
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition;
 use Landingi\BookkeepingBundle\Curl\Curl;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException;
@@ -12,17 +13,22 @@ use Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceededException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceededException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoice\Download;
+use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoices\FindInvoices;
 use function json_decode;
 use function sprintf;
 
 final class WfirmaClient
 {
-    private WfirmaCredentials $credentials;
     private const API = 'https://api2.wfirma.pl';
+    private WfirmaCredentials $credentials;
+    private WfirmaConditionTransformer $conditionTransformer;
 
-    public function __construct(WfirmaCredentials $credentials)
-    {
+    public function __construct(
+        WfirmaCredentials $credentials,
+        WfirmaConditionTransformer $conditionTransformer
+    ) {
         $this->credentials = $credentials;
+        $this->conditionTransformer = $conditionTransformer;
     }
 
     /**
@@ -133,6 +139,23 @@ final class WfirmaClient
     public function requestInvoiceDownload(string $url): string
     {
         return $this->handleFileResponse($this->getCurl($url)->requestPOST((string) new Download()), $url, 'invoice_download');
+    }
+
+    public function findInvoices(string $url, int $page = 1, Condition ...$conditions): array
+    {
+        return $this->requestPOST($url, (string) new FindInvoices(
+            array_reduce(
+                $conditions,
+                function (string $carry, Condition $condition) {
+                    return <<<XML
+                    {$carry}
+                    {$this->conditionTransformer->toXml($condition)}
+                    XML;
+                },
+                ''
+            ),
+            $page
+        ));
     }
 
     private function getCurl(string $url): Curl
