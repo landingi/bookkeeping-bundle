@@ -22,6 +22,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Name;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\NumberOfUnits;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Price;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceNetPlnValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries\InvoiceSeriesIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
@@ -43,6 +44,7 @@ final class WfirmaInvoiceTest extends TestCase
             new InvoiceDescription('Description Example'),
             new InvoiceFullNumber('FV 69/2021'),
             new InvoiceTotalValue(100),
+            new InvoiceNetPlnValue(400),
             new WfirmaInvoiceItemCollection([
                 new WfirmaInvoiceItem(
                     new Name('item name 1'),
@@ -123,6 +125,7 @@ XML,
             new InvoiceDescription('Description Example'),
             new InvoiceFullNumber('FV 99/2021'),
             new InvoiceTotalValue(100),
+            new InvoiceNetPlnValue(100),
             new WfirmaInvoiceItemCollection([
                 new WfirmaInvoiceItem(
                     new Name('item name 1'),
@@ -203,6 +206,7 @@ XML,
             new InvoiceDescription('Description Example'),
             new InvoiceFullNumber('FV 99/2021'),
             new InvoiceTotalValue(100),
+            new InvoiceNetPlnValue(400),
             new WfirmaInvoiceItemCollection([
                 new WfirmaInvoiceItem(
                     new Name('item name 1'),

@@ -27,6 +27,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Name;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\NumberOfUnits;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Price;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceNetPlnValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
@@ -124,6 +125,7 @@ XML;
                 new InvoiceDescription('testCompanyInPoland'),
                 new InvoiceFullNumber('FV 69/2021'),
                 new InvoiceTotalValue(100),
+                new InvoiceNetPlnValue(100),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),
@@ -237,6 +239,7 @@ XML;
                 new InvoiceDescription('testCompanyInEuropeanUnion'),
                 new InvoiceFullNumber('FV 69/2021'),
                 new InvoiceTotalValue(100),
+                new InvoiceNetPlnValue(400),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),
@@ -347,6 +350,7 @@ XML;
                 new InvoiceDescription('testCompanyInGreatBritain'),
                 new InvoiceFullNumber('FV 69/2021'),
                 new InvoiceTotalValue(100),
+                new InvoiceNetPlnValue(450),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),
@@ -458,6 +462,7 @@ XML;
                 new InvoiceDescription('testCompanyInTheWorld'),
                 new InvoiceFullNumber('FV 69/2021'),
                 new InvoiceTotalValue(100),
+                new InvoiceNetPlnValue(400),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),
@@ -565,6 +570,7 @@ XML;
                 new InvoiceDescription('testPersonInPoland'),
                 new InvoiceFullNumber('FV 69/2021'),
                 new InvoiceTotalValue(100),
+                new InvoiceNetPlnValue(100),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),
@@ -672,6 +678,7 @@ XML;
                 new InvoiceDescription('testPersonInEuropeanUnion'),
                 new InvoiceFullNumber('FV 69/2021'),
                 new InvoiceTotalValue(100),
+                new InvoiceNetPlnValue(400),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),
@@ -784,6 +791,7 @@ XML;
                 new InvoiceDescription('testPersonInTheWorld'),
                 new InvoiceFullNumber('FV 69/2021'),
                 new InvoiceTotalValue(100),
+                new InvoiceNetPlnValue(400),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),

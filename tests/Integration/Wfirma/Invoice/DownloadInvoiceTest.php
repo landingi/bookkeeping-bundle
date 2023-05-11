@@ -25,6 +25,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Name;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\NumberOfUnits;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\Price;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceNetPlnValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
@@ -91,6 +92,7 @@ class DownloadInvoiceTest extends IntegrationTestCase
                 new InvoiceDescription('testCompanyInPoland'),
                 new InvoiceFullNumber('FV 69/2021'),
                 new InvoiceTotalValue(100),
+                new InvoiceNetPlnValue(100),
                 new WfirmaInvoiceItemCollection([
                     new WfirmaInvoiceItem(
                         new Name('foo 1'),

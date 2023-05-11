@@ -1,26 +1,26 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 
-final class InvoiceTotalValue
+final class InvoiceNetPlnValue
 {
-    private int $totalValue;
+    private int $netPlnValue;
 
     /**
-     * Provide $totalValue in "cents". This is the value in the specified currency.
+     * Provide $netPlnValue in "cents". This is returned in PLN.
      * This can be negative if the invoice is a correction.
-     * If this is a corrected invoice, this should be the value before corrections.
      *
      * @throws InvoiceException
      */
-    public function __construct(int $totalValue)
+    public function __construct(int $netPlnValue)
     {
-        if (0 === $totalValue) {
-            throw new InvoiceException('Total Value cannot be zero');
+        if (0 === $netPlnValue) {
+            throw new InvoiceException('Netto PLN Value cannot be zero');
         }
 
-        $this->totalValue = $totalValue;
+        $this->netPlnValue = $netPlnValue;
     }
 
     public function toString(): string
@@ -35,6 +35,6 @@ final class InvoiceTotalValue
 
     public function toFloat(): float
     {
-        return $this->totalValue / 100;
+        return $this->netPlnValue / 100;
     }
 }
