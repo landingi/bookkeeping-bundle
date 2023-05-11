@@ -69,7 +69,9 @@ final class WfirmaInvoiceBook implements InvoiceBook
                 function (array $invoiceResult) {
                     return $this->invoiceFactory->getInvoiceFromApiData(
                         $invoiceResult['invoice'],
-                        $this->contractorFactory->getContractor($invoiceResult['invoice'])
+                        $this->contractorFactory->getContractor(
+                            $this->getContractorResult($invoiceResult['invoice'])
+                        )
                     );
                 },
                 array_filter($result['invoices'], static function (array $invoiceResult) {
