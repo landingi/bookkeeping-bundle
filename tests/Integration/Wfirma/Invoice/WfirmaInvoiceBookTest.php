@@ -100,6 +100,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         $invoice = $this->invoiceBook->find($invoice->getIdentifier());
         $this->assertEquals('test description - bundle invoice', (string) $invoice->getDescription());
         $this->assertEquals('100.00', $invoice->getTotalValue()->toString());
+        $this->assertEquals('100.00', $invoice->getNetPlnValue()->toString());
         $this->assertEquals(201.10, $invoice->getMoneyValue());
 
         //test list

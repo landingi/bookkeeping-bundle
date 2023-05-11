@@ -19,7 +19,7 @@ abstract class Invoice
     protected InvoiceDescription $description;
     protected InvoiceFullNumber $fullNumber;
     protected InvoiceTotalValue $totalValue;
-    protected InvoiceNetPlnValue $nettoPlnValue;
+    protected InvoiceNetPlnValue $netPlnValue;
     protected Collection $items;
     protected Contractor $contractor;
     protected Currency $currency;
@@ -55,7 +55,7 @@ abstract class Invoice
         $this->paidAt = $paidAt;
         $this->language = $language;
         $this->saleAt = $saleAt;
-        $this->nettoPlnValue = $nettoPlnValue;
+        $this->netPlnValue = $nettoPlnValue;
     }
 
     /**
@@ -100,6 +100,11 @@ abstract class Invoice
     public function getTotalValue(): InvoiceTotalValue
     {
         return $this->totalValue;
+    }
+
+    public function getNetPlnValue(): InvoiceNetPlnValue
+    {
+        return $this->netPlnValue;
     }
 
     public function getDescription(): InvoiceDescription
