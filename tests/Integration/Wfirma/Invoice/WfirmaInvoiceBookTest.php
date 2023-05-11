@@ -52,9 +52,9 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
     {
         $client = new WfirmaClient(
             new WfirmaCredentials(
-                'pawel@landingi.com',
-                'lander12pl',
-                97526
+                (string) getenv('WFIRMA_API_LOGIN'),
+                (string) getenv('WFIRMA_API_PASSWORD'),
+                (int) getenv('WFIRMA_API_COMPANY')
             ),
             new WfirmaConditionTransformer()
         );
