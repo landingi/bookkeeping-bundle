@@ -19,6 +19,7 @@ final class ViesValueAddedTaxIdentifierFactoryTest extends IntegrationTestCase
 
         self::assertTrue($identifier instanceof ValidatedIdentifier);
         self::assertEquals('FR29480969591', $identifier->toString());
+        sleep(1);
     }
 
     public function testItIsValidPolishIdentifier(): void
@@ -28,6 +29,7 @@ final class ViesValueAddedTaxIdentifierFactoryTest extends IntegrationTestCase
 
         self::assertTrue($identifier instanceof SimpleIdentifier);
         self::assertEquals('6762461659', $identifier->toString());
+        sleep(1);
     }
 
     public function testItIsInvalidIdentifier(): void
@@ -36,5 +38,6 @@ final class ViesValueAddedTaxIdentifierFactoryTest extends IntegrationTestCase
 
         $factory = new ViesIdentifierFactory(new Vies());
         $factory->create('333111222', 'DE');
+        sleep(1);
     }
 }
