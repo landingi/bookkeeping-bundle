@@ -106,7 +106,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
         );
 
         if ($result['invoices']['parameters']['total'] > $page * (int) $result['invoices']['parameters']['limit']) {
-            $summaryCollection->merge($this->list($page + 1, ...$conditions));
+            $summaryCollection->merge($this->listSummaries($page + 1, ...$conditions));
         }
 
         return $summaryCollection;
