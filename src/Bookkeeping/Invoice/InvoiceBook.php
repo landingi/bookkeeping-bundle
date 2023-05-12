@@ -11,6 +11,7 @@ interface InvoiceBook
 {
     public function find(InvoiceIdentifier $identifier): Invoice;
     public function list(int $page, Condition ...$conditions): Collection;
+    public function listSummaries(int $page, Condition ...$conditions): Collection;
     public function create(Invoice $invoice): Invoice;
     public function delete(InvoiceIdentifier $identifier): void;
     public function download(InvoiceIdentifier $identifier): string;

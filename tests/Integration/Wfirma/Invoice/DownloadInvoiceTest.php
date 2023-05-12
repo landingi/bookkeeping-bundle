@@ -38,6 +38,7 @@ use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaConditionTransformer;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\WfirmaContractorBook;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceSummaryFactory;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceBook;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
@@ -63,7 +64,12 @@ class DownloadInvoiceTest extends IntegrationTestCase
         $factory = new ContractorFactory(
             new MemoryIdentifierFactory()
         );
-        $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), $factory);
+        $this->invoiceBook = new WfirmaInvoiceBook(
+            $client,
+            new InvoiceFactory(),
+            new InvoiceSummaryFactory(),
+            $factory
+        );
         $this->contractorBook = new WfirmaContractorBook($client, $factory);
         $this->today = new DateTime();
     }

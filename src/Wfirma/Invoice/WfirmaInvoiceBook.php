@@ -14,6 +14,7 @@ use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceSummaryFactory;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaException;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoiceCollection;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
@@ -27,14 +28,17 @@ final class WfirmaInvoiceBook implements InvoiceBook
     private WfirmaClient $client;
     private InvoiceFactory $invoiceFactory;
     private ContractorFactory $contractorFactory;
+    private InvoiceSummaryFactory $invoiceSummaryFactory;
 
     public function __construct(
         WfirmaClient $client,
         InvoiceFactory $invoiceFactory,
+        InvoiceSummaryFactory $invoiceSummaryFactory,
         ContractorFactory $contractorFactory
     ) {
         $this->client = $client;
         $this->invoiceFactory = $invoiceFactory;
+        $this->invoiceSummaryFactory = $invoiceSummaryFactory;
         $this->contractorFactory = $contractorFactory;
     }
 
@@ -85,6 +89,27 @@ final class WfirmaInvoiceBook implements InvoiceBook
         }
 
         return $invoiceCollection;
+    }
+
+    public function listSummaries(int $page, Condition ...$conditions): Collection
+    {
+        $result = $this->client->findInvoices(self::INVOICES_FIND_URL, $page, ...$conditions);
+        $summaryCollection = new Collection(
+            array_map(
+                function (array $invoiceResult) {
+                    return $this->invoiceSummaryFactory->getSummaryFromApiData($invoiceResult['invoice']);
+                },
+                array_filter($result['invoices'], static function (array $invoiceResult) {
+                    return false === empty($invoiceResult['invoice']);
+                })
+            )
+        );
+
+        if ($result['invoices']['parameters']['total'] > $page * (int) $result['invoices']['parameters']['limit']) {
+            $summaryCollection->merge($this->list($page + 1, ...$conditions));
+        }
+
+        return $summaryCollection;
     }
 
     /**

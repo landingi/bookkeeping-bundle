@@ -29,6 +29,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem\ValueAddedTax;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceNetPlnValue;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
+use Landingi\BookkeepingBundle\Bookkeeping\InvoiceSummary;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
@@ -38,6 +39,7 @@ use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaConditionTransformer;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\WfirmaContractorBook;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
+use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceSummaryFactory;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\InvoiceItem\WfirmaValueAddedTax;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceBook;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\WfirmaInvoiceItem;
@@ -62,7 +64,12 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         $factory = new ContractorFactory(
             new MemoryIdentifierFactory()
         );
-        $this->invoiceBook = new WfirmaInvoiceBook($client, new InvoiceFactory(), $factory);
+        $this->invoiceBook = new WfirmaInvoiceBook(
+            $client,
+            new InvoiceFactory(),
+            new InvoiceSummaryFactory(),
+            $factory
+        );
         $this->contractorBook = new WfirmaContractorBook($client, $factory);
     }
 
@@ -109,11 +116,16 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
             new IncludeSeries((string) $invoiceSeries->getIdentifier()),
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
+        $summaries = $this->invoiceBook->listSummaries(1, ...$conditions);
         $this->assertGreaterThanOrEqual(1, $invoiceArray = $invoices->getAll());
+        $this->assertGreaterThanOrEqual(1, $summaryArray = $summaries->getAll());
         /** @var WfirmaInvoice $lastInvoice */
         $lastInvoice = end($invoiceArray);
+        /** @var InvoiceSummary $lastSummary */
+        $lastSummary = end($summaryArray);
         $this->assertEquals('test description - bundle invoice', $lastInvoice->getDescription());
         $this->assertEquals($invoice->getIdentifier(), $lastInvoice->getIdentifier());
+        $this->assertEquals($invoice->getIdentifier(), $lastSummary->getIdentifier());
 
         // test list excludes invoice
         $conditions = [
