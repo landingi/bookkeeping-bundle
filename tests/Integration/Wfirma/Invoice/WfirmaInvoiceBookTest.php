@@ -123,7 +123,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         $lastInvoice = end($invoiceArray);
         /** @var InvoiceSummary $lastSummary */
         $lastSummary = end($summaryArray);
-        $this->assertEquals('test description - bundle invoice', $lastInvoice->getDescription());
+        $this->assertEquals('test description - bundle invoice', (string) $lastInvoice->getDescription());
         $this->assertEquals($invoice->getIdentifier(), $lastInvoice->getIdentifier());
         $this->assertEquals($invoice->getIdentifier(), $lastSummary->getIdentifier());
 

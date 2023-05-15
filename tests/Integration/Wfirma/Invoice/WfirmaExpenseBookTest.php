@@ -41,7 +41,7 @@ final class WfirmaExpenseBookTest extends IntegrationTestCase
             new ExcludeExpenseSeries((string) 'foo'),
         ];
         $summaries = $this->expenseBook->listSummaries(1, ...$conditions);
-        $this->assertEquals(1, $summaryArray = $summaries->getAll());
+        $this->assertCount(1, $summaryArray = $summaries->getAll());
         /** @var ExpenseSummary $summary */
         $summary = $summaryArray[0];
         $this->assertEquals('EXP 1', $summary->getIdentifier());
