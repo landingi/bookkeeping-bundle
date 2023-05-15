@@ -10,6 +10,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\Condition\ExactExp
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\Condition\ExcludeExpenseSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\ExpenseCondition;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactDate;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactInvoiceNumber;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExcludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\IncludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
@@ -33,6 +34,10 @@ final class WfirmaConditionTransformer
     {
         if ($condition instanceof ExactDate) {
             return $this->buildExactDateXml($condition);
+        }
+
+        if ($condition instanceof ExactInvoiceNumber) {
+            return $this->buildExactNumberXml($condition);
         }
 
         if ($condition instanceof IncludeSeries) {
@@ -64,6 +69,17 @@ final class WfirmaConditionTransformer
         return <<<XML
 <condition>
     <field>date</field>
+    <operator>eq</operator>
+    <value>{$condition}</value>
+</condition>
+XML;
+    }
+
+    private function buildExactNumberXml(CollectionCondition $condition): string
+    {
+        return <<<XML
+<condition>
+    <field>fullnumber</field>
     <operator>eq</operator>
     <value>{$condition}</value>
 </condition>
