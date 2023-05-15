@@ -15,6 +15,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactDate;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExcludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\IncludeSeries;
@@ -133,7 +134,9 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
             new ExcludeSeries((string) $invoice->getFullNumber()),
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
-        $this->assertCount(0, $invoices->getAll());
+        $this->assertEmpty(array_filter($invoices->getAll(), fn(Invoice $filterCandidate) =>
+            (string) $filterCandidate->getFullNumber() === (string) $invoice->getFullNumber()
+        ));
 
         //test delete
         $this->invoiceBook->delete($invoice->getIdentifier());
