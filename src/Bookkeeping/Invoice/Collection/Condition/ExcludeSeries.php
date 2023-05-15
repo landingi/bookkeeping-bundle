@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition;
 
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
 
-final class ExcludeSeries implements Condition
+final class ExcludeSeries implements InvoiceCondition
 {
-    private string $invoiceSeries;
+    private string $invoiceNumberFragment;
 
-    public function __construct(string $invoiceSeries)
+    /**
+     * This accepts a fragment of the invoice's full number, to compare against.
+     */
+    public function __construct(string $invoiceNumberFragment)
     {
-        $this->invoiceSeries = $invoiceSeries;
+        $this->invoiceNumberFragment = $invoiceNumberFragment;
     }
 
     public function __toString(): string
     {
-        return $this->invoiceSeries;
+        return $this->invoiceNumberFragment;
     }
 }

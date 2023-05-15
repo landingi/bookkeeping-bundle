@@ -15,6 +15,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorName;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Bookkeeping\Currency;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactDate;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExcludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\IncludeSeries;
@@ -79,7 +80,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         $invoice = $this->invoiceBook->create(
             new WfirmaInvoice(
                 new InvoiceIdentifier('123'),
-                $invoiceSeries = new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
+                new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
                 new InvoiceDescription('test description - bundle invoice'),
                 new InvoiceFullNumber('FV 69/2023'),
                 new InvoiceTotalValue(100),
@@ -95,8 +96,8 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
                 $contractor,
                 new Currency('PLN'),
                 $now = new DateTime(),
-                new DateTime(),
-                new DateTime(),
+                $now,
+                $now,
                 new Language('PL')
             )
         );
@@ -113,27 +114,30 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         //test list
         $conditions = [
             new ExactDate(\DateTimeImmutable::createFromMutable($now)),
-            new IncludeSeries((string) $invoiceSeries->getIdentifier()),
+            new IncludeSeries((string) $invoice->getFullNumber()),
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
         $summaries = $this->invoiceBook->listSummaries(1, ...$conditions);
-        $this->assertGreaterThanOrEqual(1, $invoiceArray = $invoices->getAll());
-        $this->assertGreaterThanOrEqual(1, $summaryArray = $summaries->getAll());
+        $this->assertCount(1, $invoiceArray = $invoices->getAll());
+        $this->assertCount(1, $summaryArray = $summaries->getAll());
         /** @var WfirmaInvoice $lastInvoice */
         $lastInvoice = end($invoiceArray);
         /** @var InvoiceSummary $lastSummary */
         $lastSummary = end($summaryArray);
-        $this->assertEquals('test description - bundle invoice', $lastInvoice->getDescription());
+        $this->assertEquals('test description - bundle invoice', (string) $lastInvoice->getDescription());
         $this->assertEquals($invoice->getIdentifier(), $lastInvoice->getIdentifier());
         $this->assertEquals($invoice->getIdentifier(), $lastSummary->getIdentifier());
 
         // test list excludes invoice
         $conditions = [
             new ExactDate(\DateTimeImmutable::createFromMutable($now)),
-            new ExcludeSeries((string) $invoiceSeries->getIdentifier()),
+            new ExcludeSeries((string) $invoice->getFullNumber()),
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
-        $this->assertCount(0, $invoices->getAll());
+        $this->assertEmpty(array_filter(
+            $invoices->getAll(),
+            fn (Invoice $result) => (string) $result->getFullNumber() === (string) $invoice->getFullNumber()
+        ));
 
         //test delete
         $this->invoiceBook->delete($invoice->getIdentifier());
