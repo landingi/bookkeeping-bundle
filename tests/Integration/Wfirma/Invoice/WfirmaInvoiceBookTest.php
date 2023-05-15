@@ -136,7 +136,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         $invoices = $this->invoiceBook->list(1, ...$conditions);
         $this->assertEmpty(array_filter(
             $invoices->getAll(),
-            fn(Invoice $result) => (string) $result->getFullNumber() === (string) $invoice->getFullNumber()
+            fn (Invoice $result) => (string) $result->getFullNumber() === (string) $invoice->getFullNumber()
         ));
 
         //test delete
