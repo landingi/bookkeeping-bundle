@@ -79,7 +79,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         $invoice = $this->invoiceBook->create(
             new WfirmaInvoice(
                 new InvoiceIdentifier('123'),
-                $invoiceSeries = new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
+                new InvoiceSeries(new InvoiceSeries\InvoiceSeriesIdentifier(0)),
                 new InvoiceDescription('test description - bundle invoice'),
                 new InvoiceFullNumber('FV 69/2023'),
                 new InvoiceTotalValue(100),
@@ -113,7 +113,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         //test list
         $conditions = [
             new ExactDate(\DateTimeImmutable::createFromMutable($now)),
-            new IncludeSeries((string) $invoiceSeries->getIdentifier()),
+            new IncludeSeries((string) $invoice->getInvoiceSeries()->getIdentifier()),
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
         $summaries = $this->invoiceBook->listSummaries(1, ...$conditions);
@@ -130,7 +130,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         // test list excludes invoice
         $conditions = [
             new ExactDate(\DateTimeImmutable::createFromMutable($now)),
-            new ExcludeSeries((string) $invoiceSeries->getIdentifier()),
+            new ExcludeSeries((string) $invoice->getInvoiceSeries()->getIdentifier()),
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
         $this->assertCount(0, $invoices->getAll());

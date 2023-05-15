@@ -34,6 +34,10 @@ final class WfirmaExpenseBookTest extends IntegrationTestCase
         );
     }
 
+    /**
+     * The predefined expense in this test should be replaced with a created one, whenever
+     * the option to add an expense is added to the bundle
+     */
     public function testItListsExpenseSummaries(): void
     {
         $conditions = [
@@ -44,7 +48,7 @@ final class WfirmaExpenseBookTest extends IntegrationTestCase
         $this->assertCount(1, $summaryArray = $summaries->getAll());
         /** @var ExpenseSummary $summary */
         $summary = $summaryArray[0];
-        $this->assertEquals('EXP 1', $summary->getIdentifier());
+        $this->assertEquals('82866659', $summary->getIdentifier());
         $this->assertEquals(2137.00, $summary->getNetPlnValue()->toFloat());
     }
 }
