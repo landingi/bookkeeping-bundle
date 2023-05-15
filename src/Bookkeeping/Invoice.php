@@ -79,11 +79,6 @@ abstract class Invoice
         return $this->identifier;
     }
 
-    public function getInvoiceSeries(): InvoiceSeries
-    {
-        return $this->invoiceSeries;
-    }
-
     public function getFullNumber(): InvoiceFullNumber
     {
         return $this->fullNumber;

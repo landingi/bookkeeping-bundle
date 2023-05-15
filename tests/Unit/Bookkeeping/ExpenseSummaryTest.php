@@ -19,5 +19,6 @@ class ExpenseSummaryTest extends TestCase
         );
         $this->assertEquals('123', (string) $summary->getIdentifier());
         $this->assertEquals(100.00, $summary->getNetPlnValue()->toFloat());
+        $this->assertEquals('100.00', (string) $summary->getNetPlnValue());
     }
 }
