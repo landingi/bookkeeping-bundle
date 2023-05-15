@@ -9,10 +9,10 @@ use Landingi\BookkeepingBundle\Bookkeeping\Collection\CollectionCondition;
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\Condition\ExactExpenseDate;
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\Condition\ExcludeExpenseSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\ExpenseCondition;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactDate;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExcludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\IncludeSeries;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
 
 final class WfirmaConditionTransformer
 {

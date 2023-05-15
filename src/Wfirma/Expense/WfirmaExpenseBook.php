@@ -7,7 +7,6 @@ namespace Landingi\BookkeepingBundle\Wfirma\Expense;
 use Landingi\BookkeepingBundle\Bookkeeping\Collection;
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\ExpenseCondition;
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\ExpenseBook;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Expense\Factory\ExpenseSummaryFactory;
 

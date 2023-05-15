@@ -9,10 +9,10 @@ use Landingi\BookkeepingBundle\Bookkeeping\Collection\CollectionCondition;
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\Condition\ExactExpenseDate;
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\Condition\ExcludeExpenseSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\ExpenseCondition;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactDate;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExcludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\IncludeSeries;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaConditionTransformer;
 use PHPUnit\Framework\TestCase;
 
@@ -109,7 +109,7 @@ XML
                     return '';
                 }
             },
-            'Provided collection condition is not supported'
+            'Provided collection condition is not supported',
         ];
         yield 'Invoice condition' => [
             new class() implements InvoiceCondition {
@@ -118,7 +118,7 @@ XML
                     return '';
                 }
             },
-            'Provided invoice condition is not supported'
+            'Provided invoice condition is not supported',
         ];
         yield 'Expense condition' => [
             new class() implements ExpenseCondition {
@@ -127,7 +127,7 @@ XML
                     return '';
                 }
             },
-            'Provided expense condition is not supported'
+            'Provided expense condition is not supported',
         ];
     }
 }
