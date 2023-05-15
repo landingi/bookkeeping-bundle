@@ -11,7 +11,7 @@ final class ExcludeSeries implements InvoiceCondition
     private string $invoiceNumberFragment;
 
     /**
-     * This accepts a fragment of the invoice's full number, to compare against
+     * This accepts a fragment of the invoice's full number, to compare against.
      */
     public function __construct(string $invoiceNumberFragment)
     {
