@@ -36,7 +36,7 @@ final class WfirmaExpenseBookTest extends IntegrationTestCase
 
     /**
      * The predefined expense in this test should be replaced with a created one, whenever
-     * the option to add an expense is added to the bundle
+     * the option to add an expense is added to the bundle.
      */
     public function testItListsExpenseSummaries(): void
     {
