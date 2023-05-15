@@ -10,6 +10,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\Condition\ExactExp
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\Condition\ExcludeExpenseSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\ExpenseCondition;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactDate;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExactInvoiceNumber;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\ExcludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition\IncludeSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
@@ -44,6 +45,16 @@ class WfirmaConditionTransformerTest extends TestCase
     <field>date</field>
     <operator>eq</operator>
     <value>{$now->format('Y-m-d')}</value>
+</condition>
+XML
+        ];
+        yield 'Invoice exact number condition' => [
+            new ExactInvoiceNumber('FV foo'),
+            <<<XML
+<condition>
+    <field>fullnumber</field>
+    <operator>eq</operator>
+    <value>FV foo</value>
 </condition>
 XML
         ];
