@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Wfirma\Client;
 
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition;
+use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\ExpenseCondition;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
 use Landingi\BookkeepingBundle\Curl\Curl;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException;
@@ -12,6 +13,7 @@ use Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceededException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceededException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Request\Expenses\FindExpenses;
 use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoice\Download;
 use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoices\FindInvoices;
 use function json_decode;
@@ -141,12 +143,29 @@ final class WfirmaClient
         return $this->handleFileResponse($this->getCurl($url)->requestPOST((string) new Download()), $url, 'invoice_download');
     }
 
-    public function findInvoices(string $url, int $page = 1, Condition ...$conditions): array
+    public function findInvoices(string $url, int $page = 1, InvoiceCondition ...$conditions): array
     {
         return $this->requestPOST($url, (string) new FindInvoices(
             array_reduce(
                 $conditions,
-                function (string $carry, Condition $condition) {
+                function (string $carry, InvoiceCondition $condition) {
+                    return <<<XML
+                    {$carry}
+                    {$this->conditionTransformer->toXml($condition)}
+                    XML;
+                },
+                ''
+            ),
+            $page
+        ));
+    }
+
+    public function findExpenses(string $url, int $page = 1, ExpenseCondition ...$conditions): array
+    {
+        return $this->requestPOST($url, (string) new FindExpenses(
+            array_reduce(
+                $conditions,
+                function (string $carry, ExpenseCondition $condition) {
                     return <<<XML
                     {$carry}
                     {$this->conditionTransformer->toXml($condition)}

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition;
+namespace Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\Condition;
 
 use DateTimeImmutable;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
+use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\ExpenseCondition;
 
-final class ExactDate implements InvoiceCondition
+final class ExactExpenseDate implements ExpenseCondition
 {
     private DateTimeImmutable $date;
 

@@ -7,7 +7,7 @@ use JsonException;
 use Landingi\BookkeepingBundle\Bookkeeping\Collection;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
@@ -65,7 +65,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
         );
     }
 
-    public function list(int $page, Condition ...$conditions): Collection
+    public function list(int $page, InvoiceCondition ...$conditions): Collection
     {
         $result = $this->client->findInvoices(self::INVOICES_FIND_URL, $page, ...$conditions);
         $invoiceCollection = new WfirmaInvoiceCollection(
@@ -91,7 +91,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
         return $invoiceCollection;
     }
 
-    public function listSummaries(int $page, Condition ...$conditions): Collection
+    public function listSummaries(int $page, InvoiceCondition ...$conditions): Collection
     {
         $result = $this->client->findInvoices(self::INVOICES_FIND_URL, $page, ...$conditions);
         $summaryCollection = new Collection(

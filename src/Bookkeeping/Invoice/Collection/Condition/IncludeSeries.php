@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition;
 
-use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\Condition;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
 
-final class IncludeSeries implements Condition
+final class IncludeSeries implements InvoiceCondition
 {
     private string $invoiceSeries;
 
