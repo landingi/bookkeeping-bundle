@@ -42,7 +42,7 @@ final class WfirmaExpenseBookTest extends IntegrationTestCase
     {
         $conditions = [
             new ExactExpenseDate(new \DateTimeImmutable('2023-05-15')),
-            new ExcludeExpenseSeries((string) 'foo'),
+            new ExcludeExpenseSeries((string) 'some-nonexistent-fullnumber-fragment'),
         ];
         $summaries = $this->expenseBook->listSummaries(1, ...$conditions);
         $this->assertCount(1, $summaryArray = $summaries->getAll());

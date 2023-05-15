@@ -8,15 +8,18 @@ use Landingi\BookkeepingBundle\Bookkeeping\Expense\Collection\ExpenseCondition;
 
 final class ExcludeExpenseSeries implements ExpenseCondition
 {
-    private string $expenseSeries;
+    private string $expenseNumberFragment;
 
-    public function __construct(string $expenseSeries)
+    /**
+     * This accepts a fragment of the expense's full number, to compare against
+     */
+    public function __construct(string $expenseNumberFragment)
     {
-        $this->expenseSeries = $expenseSeries;
+        $this->expenseNumberFragment = $expenseNumberFragment;
     }
 
     public function __toString(): string
     {
-        return $this->expenseSeries;
+        return $this->expenseNumberFragment;
     }
 }

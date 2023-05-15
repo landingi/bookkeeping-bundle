@@ -95,8 +95,8 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
                 $contractor,
                 new Currency('PLN'),
                 $now = new DateTime(),
-                new DateTime(),
-                new DateTime(),
+                $now,
+                $now,
                 new Language('PL')
             )
         );
@@ -113,12 +113,12 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         //test list
         $conditions = [
             new ExactDate(\DateTimeImmutable::createFromMutable($now)),
-            new IncludeSeries((string) $invoice->getInvoiceSeries()->getIdentifier()),
+            new IncludeSeries((string) $invoice->getFullNumber()),
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
         $summaries = $this->invoiceBook->listSummaries(1, ...$conditions);
-        $this->assertGreaterThanOrEqual(1, $invoiceArray = $invoices->getAll());
-        $this->assertGreaterThanOrEqual(1, $summaryArray = $summaries->getAll());
+        $this->assertCount(1, $invoiceArray = $invoices->getAll());
+        $this->assertCount(1, $summaryArray = $summaries->getAll());
         /** @var WfirmaInvoice $lastInvoice */
         $lastInvoice = end($invoiceArray);
         /** @var InvoiceSummary $lastSummary */
@@ -130,7 +130,7 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
         // test list excludes invoice
         $conditions = [
             new ExactDate(\DateTimeImmutable::createFromMutable($now)),
-            new ExcludeSeries((string) $invoice->getInvoiceSeries()->getIdentifier()),
+            new ExcludeSeries((string) $invoice->getFullNumber()),
         ];
         $invoices = $this->invoiceBook->list(1, ...$conditions);
         $this->assertCount(0, $invoices->getAll());
