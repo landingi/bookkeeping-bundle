@@ -17,10 +17,14 @@ final class Curl
     /**
      * @throws CurlException
      */
-    public static function withBasicAuth(string $url, string $credentials): self
+    public static function withHeaderAuth(string $url, array $headers): self
     {
         $curl = new self($url);
-        $curl->setOpt(CURLOPT_USERPWD, $credentials);
+        $curl->setOpt(CURLOPT_HTTPHEADER, array_map(
+            fn($key, $value) => "$key: $value",
+            array_keys($headers),
+            array_values($headers)
+        ));
 
         return $curl;
     }

@@ -21,14 +21,16 @@ use function sprintf;
 
 final class WfirmaClient
 {
-    private const API = 'https://api2.wfirma.pl';
+    private WfirmaApiUrl $wfirmaApiUrl;
     private WfirmaCredentials $credentials;
     private WfirmaConditionTransformer $conditionTransformer;
 
     public function __construct(
+        WfirmaApiUrl $wfirmaApiUrl,
         WfirmaCredentials $credentials,
         WfirmaConditionTransformer $conditionTransformer
     ) {
+        $this->wfirmaApiUrl = $wfirmaApiUrl;
         $this->credentials = $credentials;
         $this->conditionTransformer = $conditionTransformer;
     }
@@ -179,14 +181,14 @@ final class WfirmaClient
 
     private function getCurl(string $url): Curl
     {
-        return Curl::withBasicAuth(
+        return Curl::withHeaderAuth(
             sprintf(
                 '%s/%s?company_id=%d&inputFormat=xml&outputFormat=json',
-                self::API,
+                $this->wfirmaApiUrl,
                 $url,
                 $this->credentials->getCompanyId()
             ),
-            $this->credentials->toString()
+            $this->credentials->asHeaders()
         );
     }
 

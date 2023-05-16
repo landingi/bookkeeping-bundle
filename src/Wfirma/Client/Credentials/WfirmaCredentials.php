@@ -7,25 +7,26 @@ use function sprintf;
 
 final class WfirmaCredentials
 {
-    private string $login;
-    private string $password;
+    private string $accessKey;
+    private string $secretKey;
+    private string $appKey;
     private int $companyId;
 
-    public function __construct(string $login, string $password, int $companyId)
+    public function __construct(string $accessKey, string $secretKey, string $appKey, int $companyId)
     {
-        $this->login = $login;
-        $this->password = $password;
+        $this->accessKey = $accessKey;
+        $this->secretKey = $secretKey;
+        $this->appKey = $appKey;
         $this->companyId = $companyId;
     }
 
-    public function toString(): string
+    public function asHeaders(): array
     {
-        return sprintf('%s:%s', $this->login, $this->password);
-    }
-
-    public function __toString(): string
-    {
-        return $this->toString();
+        return [
+            'accessKey' => $this->accessKey,
+            'secretKey' => $this->secretKey,
+            'appKey' => $this->appKey,
+        ];
     }
 
     public function getCompanyId(): int

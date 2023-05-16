@@ -11,9 +11,21 @@
 composer require landingi/bookkeeping-bundle
 ```
 
+To use the wFirma implementation, configure the `WfirmaClient` service, specifically provide the necessary credentials
+for the `WfirmaCredentials` class as well as the API host URL (for example `https://api2.wfirma.pl`) for the `WfirmaApiUrl` class.
+
+### v4+
+Starting with version 4.0.0 we no longer use a login/password credential schema, and instead we switched to the following:
+
+- accessKey
+- secretKey
+- appKey
+
+See the wFirma API documentation below for more details.
+
 ## Development
 
 ### Additional
 
-* [Wfirma API documentation](https://doc.wfirma.pl)
+* [wFirma API documentation](https://doc.wfirma.pl)
 * [Documentation](docs/README.md)
