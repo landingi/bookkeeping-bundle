@@ -17,6 +17,7 @@ jobs:
             WFIRMA_API_ACCESS_KEY: ${{ secrets.WFIRMA_API_ACCESS_KEY }}
             WFIRMA_API_SECRET_KEY: ${{ secrets.WFIRMA_API_SECRET_KEY }}
             WFIRMA_API_APP_KEY: ${{ secrets.WFIRMA_API_APP_KEY }}
+            WFIRMA_API_URL: ${{ secrets.WFIRMA_API_URL }}
             WFIRMA_API_COMPANY: ${{ secrets.WFIRMA_API_COMPANY }}
             WFIRMA_API_LOGIN: ${{ secrets.WFIRMA_API_LOGIN }}
             WFIRMA_API_PASSWORD: ${{ secrets.WFIRMA_API_PASSWORD }}
