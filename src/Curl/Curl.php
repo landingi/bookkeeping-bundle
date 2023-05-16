@@ -100,7 +100,7 @@ final class Curl
     private function exec(): string
     {
         $response = curl_exec($this->curl);
-var_dump($response);
+        var_dump($response);
         if (false === $response) {
             throw new CurlException('cURL error: ' . curl_error($this->curl));
         }
