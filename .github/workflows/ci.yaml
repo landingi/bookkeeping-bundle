@@ -12,6 +12,9 @@ jobs:
             max-parallel: 1
             matrix:
                 php-version: [ '7.4', '8.0' ]
+        concurrency:
+            group: ci-tests-${{ github.ref }}
+            cancel-in-progress: true
         env:
             WFIRMA_API_COMPANY_ID: ${{ secrets.WFIRMA_API_COMPANY }}
             WFIRMA_API_ACCESS_KEY: ${{ secrets.WFIRMA_API_ACCESS_KEY }}
