@@ -81,7 +81,7 @@ final class Curl
     /**
      * @throws \Landingi\BookkeepingBundle\Curl\CurlException
      */
-    private function setOpt($option, $value): void
+    private function setOpt(int $option, $value): void
     {
         if (false === curl_setopt($this->curl, $option, $value)) {
             throw new CurlException(
@@ -100,9 +100,9 @@ final class Curl
     private function exec(): string
     {
         $response = curl_exec($this->curl);
-        var_dump($response);
+
         if (false === $response) {
-            throw new CurlException('cURL error: ' . curl_error($this->curl));
+            throw new CurlException(sprintf('cURL error %s: %s', curl_errno($this->curl), curl_error($this->curl)));
         }
 
         return (string) $response;
