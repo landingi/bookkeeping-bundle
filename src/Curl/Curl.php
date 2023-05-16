@@ -19,6 +19,7 @@ final class Curl
      */
     public static function withHeaderAuth(string $url, array $headers): self
     {
+        var_dump($url);
         $curl = new self($url);
         $curl->setOpt(CURLOPT_HTTPHEADER, array_map(
             fn ($key, $value) => "$key: $value",
