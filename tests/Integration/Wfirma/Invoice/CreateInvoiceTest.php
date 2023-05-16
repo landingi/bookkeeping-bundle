@@ -56,6 +56,7 @@ final class CreateInvoiceTest extends IntegrationTestCase
 
     public function setUp(): void
     {
+        var_dump((string) getenv('WFIRMA_API_URL'));
         $client = new WfirmaClient(
             new WfirmaApiUrl((string) getenv('WFIRMA_API_URL')),
             new WfirmaCredentials(
