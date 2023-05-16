@@ -17,10 +17,14 @@ final class Curl
     /**
      * @throws CurlException
      */
-    public static function withBasicAuth(string $url, string $credentials): self
+    public static function withHeaderAuth(string $url, array $headers): self
     {
         $curl = new self($url);
-        $curl->setOpt(CURLOPT_USERPWD, $credentials);
+        $curl->setOpt(CURLOPT_HTTPHEADER, array_map(
+            fn ($key, $value) => "$key: $value",
+            array_keys($headers),
+            array_values($headers)
+        ));
 
         return $curl;
     }
@@ -77,7 +81,7 @@ final class Curl
     /**
      * @throws \Landingi\BookkeepingBundle\Curl\CurlException
      */
-    private function setOpt($option, $value): void
+    private function setOpt(int $option, $value): void
     {
         if (false === curl_setopt($this->curl, $option, $value)) {
             throw new CurlException(
@@ -98,9 +102,9 @@ final class Curl
         $response = curl_exec($this->curl);
 
         if (false === $response) {
-            throw new CurlException('cURL error: ' . curl_error($this->curl));
+            throw new CurlException(sprintf('cURL error %s: %s', curl_errno($this->curl), curl_error($this->curl)));
         }
 
-        return $response;
+        return (string) $response;
     }
 }

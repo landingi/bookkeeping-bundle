@@ -9,6 +9,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Expense\ExpenseBook;
 use Landingi\BookkeepingBundle\Bookkeeping\ExpenseSummary;
 use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
+use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaApiUrl;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaConditionTransformer;
 use Landingi\BookkeepingBundle\Wfirma\Expense\Factory\ExpenseSummaryFactory;
@@ -21,10 +22,12 @@ final class WfirmaExpenseBookTest extends IntegrationTestCase
     public function setUp(): void
     {
         $client = new WfirmaClient(
+            new WfirmaApiUrl((string) getenv('WFIRMA_API_URL')),
             new WfirmaCredentials(
-                (string) getenv('WFIRMA_API_LOGIN'),
-                (string) getenv('WFIRMA_API_PASSWORD'),
-                (int) getenv('WFIRMA_API_COMPANY')
+                (string) getenv('WFIRMA_API_ACCESS_KEY'),
+                (string) getenv('WFIRMA_API_SECRET_KEY'),
+                (string) getenv('WFIRMA_API_APP_KEY'),
+                (int) getenv('WFIRMA_API_COMPANY_ID')
             ),
             new WfirmaConditionTransformer()
         );
