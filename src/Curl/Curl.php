@@ -21,7 +21,7 @@ final class Curl
     {
         $curl = new self($url);
         $curl->setOpt(CURLOPT_HTTPHEADER, array_map(
-            fn($key, $value) => "$key: $value",
+            fn ($key, $value) => "$key: $value",
             array_keys($headers),
             array_values($headers)
         ));
