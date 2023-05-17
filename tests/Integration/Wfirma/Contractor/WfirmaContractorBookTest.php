@@ -7,6 +7,7 @@ use Generator;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Person;
 use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
@@ -47,11 +48,18 @@ final class WfirmaContractorBookTest extends IntegrationTestCase
     {
         $contractor = $this->book->create($person);
 
-        self::assertNotEmpty($contractor->getIdentifier()->toString());
+        $this->assertNotEmpty($contractor->getIdentifier()->toString());
+        $this->assertEquals($person->getEmail(), $contractor->getEmail());
 
         $contractor = $this->book->find($contractor->getIdentifier());
 
-        self::assertInstanceOf(Person::class, $contractor);
+        $this->assertInstanceOf(Person::class, $contractor);
+        $this->assertEquals($person->getEmail(), $contractor->getEmail());
+
+        $contractor->changeEmail($newEmail = new ContractorEmail('contractor-person@example.com'));
+        $contractor = $this->book->update($contractor);
+
+        $this->assertEquals($newEmail, $contractor->getEmail());
 
         $this->book->delete($contractor->getIdentifier());
     }
@@ -81,6 +89,12 @@ final class WfirmaContractorBookTest extends IntegrationTestCase
         $contractor = $this->book->find($contractor->getIdentifier());
 
         self::assertInstanceOf(Company::class, $contractor);
+        $this->assertEquals($company->getEmail(), $contractor->getEmail());
+
+        $contractor->changeEmail($newEmail = new ContractorEmail('contractor-company@example.com'));
+        $contractor = $this->book->update($contractor);
+
+        $this->assertEquals($newEmail, $contractor->getEmail());
 
         $this->book->delete($contractor->getIdentifier());
     }

@@ -60,6 +60,16 @@ final class Company implements Contractor
         return $this->identifier;
     }
 
+    public function getEmail(): ContractorEmail
+    {
+        return $this->email;
+    }
+
+    public function changeEmail(ContractorEmail $email): void
+    {
+        $this->email = $email;
+    }
+
     public function isPolish(): bool
     {
         return $this->address->getCountry()->isPoland();

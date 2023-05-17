@@ -85,6 +85,21 @@ final class WfirmaContractorBook implements ContractorBook
         );
     }
 
+    public function update(Contractor $contractor): Contractor
+    {
+        return $this->contractorFactory->getContractor(
+            $this->getContractorResult(
+                $this->client->requestPOST(
+                    sprintf(
+                        self::CONTRACTOR_API_URL,
+                        "edit/{$contractor->getIdentifier()}"
+                    ),
+                    $contractor->print(WfirmaMedia::api())->toString()
+                )
+            )
+        );
+    }
+
     /**
      * @throws WfirmaException
      */

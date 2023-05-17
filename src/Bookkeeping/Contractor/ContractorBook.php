@@ -10,4 +10,6 @@ interface ContractorBook
     public function find(ContractorIdentifier $identifier): Contractor;
     public function create(Contractor $contractor): Contractor;
     public function delete(ContractorIdentifier $identifier): void;
+
+    public function update(Contractor $contractor): Contractor;
 }
