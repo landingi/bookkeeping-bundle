@@ -13,7 +13,7 @@ jobs:
             matrix:
                 php-version: [ '7.4', '8.0' ]
         concurrency:
-            group: ci-tests-${{ github.ref }}
+            group: ci-tests-${{ github.ref }}-${{ matrix.php-version }}
             cancel-in-progress: true
         env:
             WFIRMA_API_COMPANY_ID: ${{ secrets.WFIRMA_API_COMPANY }}
