@@ -56,8 +56,8 @@ final class WfirmaContractorBookTest extends IntegrationTestCase
         $this->assertInstanceOf(Person::class, $contractor);
         $this->assertEquals($person->getEmail(), $contractor->getEmail());
 
-        $contractor->changeEmail($newEmail = new ContractorEmail('contractor-person@example.com'));
-        $contractor = $this->book->update($contractor);
+        $person->changeEmail($newEmail = new ContractorEmail('contractor-person@example.com'));
+        $contractor = $this->book->update($person);
 
         $this->assertEquals($newEmail, $contractor->getEmail());
 
@@ -91,8 +91,8 @@ final class WfirmaContractorBookTest extends IntegrationTestCase
         self::assertInstanceOf(Company::class, $contractor);
         $this->assertEquals($company->getEmail(), $contractor->getEmail());
 
-        $contractor->changeEmail($newEmail = new ContractorEmail('contractor-company@example.com'));
-        $contractor = $this->book->update($contractor);
+        $company->changeEmail($newEmail = new ContractorEmail('contractor-company@example.com'));
+        $contractor = $this->book->update($company);
 
         $this->assertEquals($newEmail, $contractor->getEmail());
 
