@@ -40,14 +40,24 @@ final class Person implements Contractor
         return $media;
     }
 
-    public function isPolish(): bool
-    {
-        return $this->address->getCountry()->isPoland();
-    }
-
     public function getIdentifier(): ContractorIdentifier
     {
         return $this->identifier;
+    }
+
+    public function getEmail(): ContractorEmail
+    {
+        return $this->email;
+    }
+
+    public function changeEmail(ContractorEmail $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function isPolish(): bool
+    {
+        return $this->address->getCountry()->isPoland();
     }
 
     public function isEuropeanUnionCitizen(): bool
