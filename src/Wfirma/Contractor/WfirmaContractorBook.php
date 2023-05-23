@@ -134,7 +134,7 @@ final class WfirmaContractorBook implements ContractorBook
                 case 'nip':
                     throw new InvalidVatIdException($error['message'] ?: 'Invalid Vat Id provided');
                 default:
-                    // To be determined
+                    // Do nothing
             }
         }
     }

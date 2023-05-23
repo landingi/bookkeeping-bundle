@@ -111,4 +111,28 @@ final class WfirmaContractorBookTest extends IntegrationTestCase
             yield [$factory->getContractor($company)];
         }
     }
+
+    public function testErrorResponseThrowsException(Contractor $company, string $exceptionClass): void
+    {
+        $this->expectException($exceptionClass);
+        $this->book->create($company);
+    }
+
+    /**
+     * @internal use only in testErrorResponseThrowsException function
+     */
+    public function invalidCompanies(): Generator
+    {
+        $factory = new ContractorFactory(new MemoryIdentifierFactory());
+        $data = json_decode(
+            (string) file_get_contents(__DIR__ . '/Resources/companies_invalid.json'),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+
+        foreach ($data['companies'] as $company) {
+            yield [$factory->getContractor($company)];
+        }
+    }
 }
