@@ -100,17 +100,28 @@ final class WfirmaContractorBook implements ContractorBook
 
     public function update(Contractor $contractor): Contractor
     {
-        return $this->contractorFactory->getContractor(
-            $this->getContractorResult(
-                $this->client->requestPOST(
-                    sprintf(
-                        self::CONTRACTOR_API_URL,
-                        "edit/{$contractor->getIdentifier()}"
-                    ),
-                    $contractor->print(WfirmaMedia::api())->toString()
+        try {
+            return $this->contractorFactory->getContractor(
+                $this->getContractorResult(
+                    $this->client->requestPOST(
+                        sprintf(
+                            self::CONTRACTOR_API_URL,
+                            "edit/{$contractor->getIdentifier()}"
+                        ),
+                        $contractor->print(WfirmaMedia::api())->toString()
+                    )
                 )
-            )
-        );
+            );
+        } catch (ErrorResponseException $e) {
+            try {
+                $contractor = $this->getContractorResult($e->getResult());
+            } catch (WfirmaException $invalidResponseStructureException) {
+                throw $e;
+            }
+
+            $this->tryToThrowSpecificExceptionFromResponse($contractor);
+            throw $e;
+        }
     }
 
     /**

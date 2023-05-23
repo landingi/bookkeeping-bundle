@@ -120,14 +120,26 @@ final class WfirmaContractorBookTest extends IntegrationTestCase
      * @param Contractor $company
      * @param class-string<Throwable> $exceptionClass
      */
-    public function testErrorResponseThrowsException(Contractor $company, string $exceptionClass): void
+    public function testCreateErrorResponseThrowsException(Contractor $company, string $exceptionClass): void
     {
         $this->expectException($exceptionClass);
         $this->book->create($company);
     }
 
     /**
-     * @internal use only in testErrorResponseThrowsException function
+     * @dataProvider invalidCompanies
+     *
+     * @param Contractor $company
+     * @param class-string<Throwable> $exceptionClass
+     */
+    public function testUpdateErrorResponseThrowsException(Contractor $company, string $exceptionClass): void
+    {
+        $this->expectException($exceptionClass);
+        $this->book->update($company);
+    }
+
+    /**
+     * @internal use only in testErrorResponseThrowsException and testUpdateErrorResponseThrowsException functions
      */
     public function invalidCompanies(): Generator
     {
