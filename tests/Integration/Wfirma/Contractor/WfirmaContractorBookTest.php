@@ -6,6 +6,7 @@ namespace Landingi\BookkeepingBundle\Integration\Wfirma\Contractor;
 use Generator;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\SimpleIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorEmail;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\InvalidVatIdException;
@@ -120,7 +121,7 @@ final class WfirmaContractorBookTest extends IntegrationTestCase
      * @param Contractor $company
      * @param class-string<Throwable> $exceptionClass
      */
-    public function testErrorResponseThrowsException(Contractor $company, string $exceptionClass): void
+    public function testCreateErrorResponseThrowsException(Contractor $company, string $exceptionClass): void
     {
         $this->expectException($exceptionClass);
         $this->book->create($company);
@@ -142,5 +143,24 @@ final class WfirmaContractorBookTest extends IntegrationTestCase
         foreach ($data['companies'] as $company) {
             yield [$factory->getContractor($company), InvalidVatIdException::class];
         }
+    }
+
+    public function testUpdateErrorResponseThrowsException(): void
+    {
+        $factory = new ContractorFactory(new MemoryIdentifierFactory());
+        $data = json_decode(
+            (string) file_get_contents(__DIR__ . '/Resources/companies.json'),
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+        $company = $factory->getContractor($data['companies'][0]);
+        /** @var Company $contractor */
+        $contractor = $this->book->create($company);
+
+        $this->expectException(InvalidVatIdException::class);
+
+        $contractor->changeValueAddedTaxIdentifier(new SimpleIdentifier('12345678'));
+        $this->book->update($contractor);
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception;
 
-use RuntimeException;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException;
 
-final class InvalidVatIdException extends RuntimeException
+final class InvalidVatIdException extends ContractorException
 {
 }
