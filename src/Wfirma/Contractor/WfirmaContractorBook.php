@@ -8,8 +8,16 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\InvalidEmailAddressException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\InvalidVatIdException;
+use Landingi\BookkeepingBundle\Curl\CurlException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Exception\AuthorizationException;
 use Landingi\BookkeepingBundle\Wfirma\Client\Exception\ErrorResponseException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Exception\FatalException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Exception\NotFoundException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Exception\OutOfServiceException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalExecutionTimeLimitExceededException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceededException;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
@@ -54,9 +62,19 @@ final class WfirmaContractorBook implements ContractorBook
     }
 
     /**
-     * @throws WfirmaException
      * @throws ContractorException
+     * @throws InvalidEmailAddressException
+     * @throws ErrorResponseException
      * @throws JsonException
+     * @throws WfirmaException
+     * @throws CurlException
+     * @throws AuthorizationException
+     * @throws FatalException
+     * @throws NotFoundException
+     * @throws OutOfServiceException
+     * @throws TotalExecutionTimeLimitExceededException
+     * @throws TotalRequestsLimitExceededException
+     * @return Contractor
      */
     public function create(Contractor $contractor): Contractor
     {
@@ -98,6 +116,22 @@ final class WfirmaContractorBook implements ContractorBook
         );
     }
 
+    /**
+     * @throws AuthorizationException
+     * @throws ContractorException
+     * @throws CurlException
+     * @throws ErrorResponseException
+     * @throws FatalException
+     * @throws InvalidEmailAddressException
+     * @throws InvalidVatIdException
+     * @throws JsonException
+     * @throws NotFoundException
+     * @throws OutOfServiceException
+     * @throws TotalExecutionTimeLimitExceededException
+     * @throws TotalRequestsLimitExceededException
+     * @throws WfirmaException
+     * @return Contractor
+     */
     public function update(Contractor $contractor): Contractor
     {
         try {
