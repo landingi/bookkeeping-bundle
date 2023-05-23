@@ -84,4 +84,9 @@ final class Company implements Contractor
     {
         return $this->address->getCountry()->isEuropeanUnion();
     }
+
+    public function changeValueAddedTaxIdentifier(ValueAddedTaxIdentifier $identifier): void
+    {
+        $this->valueAddedTaxIdentifier = $identifier;
+    }
 }
