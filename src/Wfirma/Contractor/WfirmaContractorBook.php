@@ -8,6 +8,8 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Exception\InvalidVatIdException;
+use Landingi\BookkeepingBundle\Wfirma\Client\Exception\ErrorResponseException;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
@@ -58,17 +60,28 @@ final class WfirmaContractorBook implements ContractorBook
      */
     public function create(Contractor $contractor): Contractor
     {
-        return $this->contractorFactory->getContractor(
-            $this->getContractorResult(
-                $this->client->requestPOST(
-                    sprintf(
-                        self::CONTRACTOR_API_URL,
-                        sprintf('%s', 'add')
-                    ),
-                    $contractor->print(WfirmaMedia::api())->toString()
+        try {
+            return $this->contractorFactory->getContractor(
+                $this->getContractorResult(
+                    $this->client->requestPOST(
+                        sprintf(
+                            self::CONTRACTOR_API_URL,
+                            sprintf('%s', 'add')
+                        ),
+                        $contractor->print(WfirmaMedia::api())->toString()
+                    )
                 )
-            )
-        );
+            );
+        } catch (ErrorResponseException $e) {
+            try {
+                $contractor = $this->getContractorResult($e->getResult());
+            } catch (WfirmaException $invalidResponseStructureException) {
+                throw $e;
+            }
+
+            $this->tryToThrowSpecificExceptionFromResponse($contractor);
+            throw $e;
+        }
     }
 
     /**
@@ -110,5 +123,19 @@ final class WfirmaContractorBook implements ContractorBook
         }
 
         return $response['contractors'][0]['contractor'];
+    }
+
+    private function tryToThrowSpecificExceptionFromResponse(array $contractor): void
+    {
+        $error = $contractor['errors'][0]['error'] ?? [];
+
+        if (isset($error['field'])) {
+            switch ($error['field']) {
+                case 'nip':
+                    throw new InvalidVatIdException($error['message'] ?: 'Invalid Vat Id provided');
+                default:
+                    // To be determined
+            }
+        }
     }
 }
