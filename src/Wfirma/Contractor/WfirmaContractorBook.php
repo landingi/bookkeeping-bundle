@@ -74,6 +74,7 @@ final class WfirmaContractorBook implements ContractorBook
      * @throws OutOfServiceException
      * @throws TotalExecutionTimeLimitExceededException
      * @throws TotalRequestsLimitExceededException
+     *
      * @return Contractor
      */
     public function create(Contractor $contractor): Contractor
@@ -130,6 +131,7 @@ final class WfirmaContractorBook implements ContractorBook
      * @throws TotalExecutionTimeLimitExceededException
      * @throws TotalRequestsLimitExceededException
      * @throws WfirmaException
+     *
      * @return Contractor
      */
     public function update(Contractor $contractor): Contractor
