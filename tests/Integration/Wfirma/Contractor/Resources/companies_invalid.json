@@ -1,0 +1,14 @@
+{
+    "companies": [
+        {
+            "id": "1234",
+            "name": "Polish Company",
+            "email": "polish.company@gmail.com",
+            "street": "Witkiewicza",
+            "zip": "44-100",
+            "city": "Gliwice",
+            "country": "PL",
+            "nip": "12345678"
+        }
+    ]
+}
