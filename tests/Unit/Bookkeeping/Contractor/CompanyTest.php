@@ -32,7 +32,7 @@ final class CompanyTest extends TestCase
             ),
             new ValueAddedTax\SimpleIdentifier('id')
         );
-        self::assertTrue($company->isPolish());
+        $this->assertTrue($company->isPolish());
         $company = new Company(
             new ContractorIdentifier('id'),
             new ContractorName('name'),
@@ -45,7 +45,7 @@ final class CompanyTest extends TestCase
             ),
             new ValueAddedTax\SimpleIdentifier('id')
         );
-        self::assertFalse($company->isPolish());
+        $this->assertFalse($company->isPolish());
     }
 
     public function testItIsEuropeanUnionCitizen(): void
@@ -62,7 +62,7 @@ final class CompanyTest extends TestCase
             ),
             new ValueAddedTax\SimpleIdentifier('id')
         );
-        self::assertFalse($company->isEuropeanUnionCitizen());
+        $this->assertFalse($company->isEuropeanUnionCitizen());
     }
 
     public function testItIsEuropeanUnionCompany(): void
@@ -79,7 +79,7 @@ final class CompanyTest extends TestCase
             ),
             new ValueAddedTax\SimpleIdentifier('id')
         );
-        self::assertTrue($company->isEuropeanUnionCompany());
+        $this->assertTrue($company->isEuropeanUnionCompany());
         $company = new Company(
             new ContractorIdentifier('id'),
             new ContractorName('name'),
@@ -92,7 +92,7 @@ final class CompanyTest extends TestCase
             ),
             new ValueAddedTax\SimpleIdentifier('id')
         );
-        self::assertFalse($company->isEuropeanUnionCompany());
+        $this->assertFalse($company->isEuropeanUnionCompany());
     }
 
     public function testItPrintsPolishCompany(): void
@@ -110,7 +110,7 @@ final class CompanyTest extends TestCase
             new ValueAddedTax\SimpleIdentifier('333444555')
         );
 
-        self::assertXmlStringEqualsXmlString(
+        $this->assertXmlStringEqualsXmlString(
             <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
@@ -148,7 +148,7 @@ XML,
             new ValueAddedTax\SimpleIdentifier('333444555')
         );
 
-        self::assertXmlStringEqualsXmlString(
+        $this->assertXmlStringEqualsXmlString(
             <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
@@ -160,6 +160,44 @@ XML,
             <zip>postal</zip>
             <city>city</city>
             <country>DE</country>
+            <email>name@foo.bar</email>
+            <tax_id_type>vat</tax_id_type>
+            <nip>333444555</nip>
+        </contractor>
+    </contractors>
+</api>
+XML,
+            $company->print(WfirmaMedia::api())->toString()
+        );
+    }
+
+    public function testItPrintsGreekCompany(): void
+    {
+        $company = new Company(
+            new ContractorIdentifier('id'),
+            new ContractorName('name'),
+            new ContractorEmail('name@foo.bar'),
+            new ContractorAddress(
+                new Street('street'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('EL')
+            ),
+            new ValueAddedTax\SimpleIdentifier('333444555')
+        );
+
+        $this->assertXmlStringEqualsXmlString(
+            <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<api>
+    <contractors>
+        <contractor>
+            <name>name</name>
+            <altname>name</altname>
+            <street>street</street>
+            <zip>postal</zip>
+            <city>city</city>
+            <country>GR</country>
             <email>name@foo.bar</email>
             <tax_id_type>vat</tax_id_type>
             <nip>333444555</nip>
@@ -186,7 +224,7 @@ XML,
             new ValueAddedTax\SimpleIdentifier('333444555')
         );
 
-        self::assertXmlStringEqualsXmlString(
+        $this->assertXmlStringEqualsXmlString(
             <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>

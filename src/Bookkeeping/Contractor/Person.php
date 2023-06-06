@@ -34,7 +34,7 @@ final class Person implements Contractor
         $contractor->with('street', $this->address->getStreet()->toString());
         $contractor->with('zip', $this->address->getPostalCode()->toString());
         $contractor->with('city', $this->address->getCity()->toString());
-        $contractor->with('country', $this->address->getCountry()->toString());
+        $contractor->with('country', $this->address->getCountry()->getAlpha2Code());
         $contractor->with('email', $this->email->toString());
 
         return $media;

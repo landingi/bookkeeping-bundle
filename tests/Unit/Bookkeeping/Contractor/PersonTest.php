@@ -30,7 +30,7 @@ final class PersonTest extends TestCase
                 new Country('PL')
             )
         );
-        self::assertTrue($person->isPolish());
+        $this->assertTrue($person->isPolish());
         $person = new Person(
             new ContractorIdentifier('id'),
             new ContractorName('name'),
@@ -42,7 +42,7 @@ final class PersonTest extends TestCase
                 new Country('US')
             )
         );
-        self::assertFalse($person->isPolish());
+        $this->assertFalse($person->isPolish());
     }
 
     public function testItIsEuropeanUnionCitizen(): void
@@ -58,7 +58,7 @@ final class PersonTest extends TestCase
                 new Country('PL')
             )
         );
-        self::assertTrue($person->isEuropeanUnionCitizen());
+        $this->assertTrue($person->isEuropeanUnionCitizen());
         $person = new Person(
             new ContractorIdentifier('id'),
             new ContractorName('name'),
@@ -70,7 +70,7 @@ final class PersonTest extends TestCase
                 new Country('US')
             )
         );
-        self::assertFalse($person->isEuropeanUnionCitizen());
+        $this->assertFalse($person->isEuropeanUnionCitizen());
     }
 
     public function testItIsEuropeanUnionCompany(): void
@@ -86,7 +86,7 @@ final class PersonTest extends TestCase
                 new Country('PL')
             )
         );
-        self::assertFalse($person->isEuropeanUnionCompany());
+        $this->assertFalse($person->isEuropeanUnionCompany());
     }
 
     public function testItPrints(): void
@@ -103,7 +103,7 @@ final class PersonTest extends TestCase
             )
         );
 
-        self::assertXmlStringEqualsXmlString(
+        $this->assertXmlStringEqualsXmlString(
             <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <api>
@@ -122,5 +122,52 @@ final class PersonTest extends TestCase
 XML,
             $person->print(WfirmaMedia::api())->toString()
         );
+    }
+
+    public function testItPrintsGreekCitizen(): void
+    {
+        $person = new Person(
+            new ContractorIdentifier('id'),
+            new ContractorName('name'),
+            new ContractorEmail('name@foo.bar'),
+            new ContractorAddress(
+                new Street('street'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('EL')
+            )
+        );
+        $anotherPerson = new Person(
+            new ContractorIdentifier('id'),
+            new ContractorName('name'),
+            new ContractorEmail('name@foo.bar'),
+            new ContractorAddress(
+                new Street('street'),
+                new PostalCode('postal'),
+                new City('city'),
+                new Country('GR')
+            )
+        );
+
+        $this->assertXmlStringEqualsXmlString(
+            <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<api>
+    <contractors>
+        <contractor>
+            <name>name</name>
+            <altname>name</altname>
+            <street>street</street>
+            <zip>postal</zip>
+            <city>city</city>
+            <country>GR</country>
+            <email>name@foo.bar</email>
+        </contractor>
+    </contractors>
+</api>
+XML,
+            $person->print(WfirmaMedia::api())->toString()
+        );
+        $this->assertEquals($person->print(WfirmaMedia::api()), $anotherPerson->print(WfirmaMedia::api()));
     }
 }
