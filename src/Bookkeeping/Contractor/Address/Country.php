@@ -9,7 +9,14 @@ use function strlen;
 
 final class Country
 {
-    private const EUROPEAN_UNION_COUNTRIES = [
+    /**
+     * The EU uses EL for Greece for VAT purposes, even though it's Alpha-2 code is GR
+     */
+    private const EU_VAT_CODE_TO_ALPHA2 = [
+        'EL' => 'GR',
+    ];
+
+    private const EUROPEAN_UNION_VAT_COUNTRIES = [
         'AT',
         'BE',
         'BG',
@@ -53,14 +60,17 @@ final class Country
         $this->alpha2Code = $alpha2Code;
     }
 
+    /**
+     * This may return different results than toString(), specifically for Greece
+     */
     public function getAlpha2Code(): string
     {
-        return $this->alpha2Code;
+        return self::EU_VAT_CODE_TO_ALPHA2[$this->alpha2Code] ?? $this->alpha2Code;
     }
 
     public function isEuropeanUnion(): bool
     {
-        return in_array($this->alpha2Code, self::EUROPEAN_UNION_COUNTRIES);
+        return in_array($this->alpha2Code, self::EUROPEAN_UNION_VAT_COUNTRIES);
     }
 
     public function isPoland(): bool
