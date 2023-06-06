@@ -10,7 +10,7 @@ use function strlen;
 final class Country
 {
     /**
-     * The EU uses EL for Greece for VAT purposes, even though it's Alpha-2 code is GR
+     * The EU uses EL for Greece for VAT purposes, even though it's Alpha-2 code is GR.
      */
     private const EU_VAT_CODE_TO_ALPHA2 = [
         'EL' => 'GR',
@@ -61,7 +61,7 @@ final class Country
     }
 
     /**
-     * This may return different results than toString(), specifically for Greece
+     * This may return different results than toString(), specifically for Greece.
      */
     public function getAlpha2Code(): string
     {
