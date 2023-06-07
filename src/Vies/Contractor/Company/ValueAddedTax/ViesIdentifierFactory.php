@@ -4,13 +4,14 @@ declare(strict_types=1);
 namespace Landingi\BookkeepingBundle\Vies\Contractor\Company\ValueAddedTax;
 
 use DragonBe\Vies\Vies;
-use Exception;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Address\Country;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\IdentifierFactory;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\SimpleIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\ValidatedIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTaxIdentifier;
+use Landingi\BookkeepingBundle\Bookkeeping\Contractor\ContractorException;
 use Landingi\BookkeepingBundle\Vies\Contractor\InvalidViesIdentifierException;
+use Landingi\BookkeepingBundle\Vies\Exception\ViesServiceException;
 use Landingi\BookkeepingBundle\Vies\ViesException;
 
 final class ViesIdentifierFactory implements IdentifierFactory
@@ -24,6 +25,7 @@ final class ViesIdentifierFactory implements IdentifierFactory
 
     /**
      * @throws ViesException
+     * @throws InvalidViesIdentifierException
      */
     public function create(string $identifier, string $country): ValueAddedTaxIdentifier
     {
@@ -41,8 +43,12 @@ final class ViesIdentifierFactory implements IdentifierFactory
             }
 
             return new ValidatedIdentifier(new SimpleIdentifier($identifier), $country);
-        } catch (Exception $e) {
-            throw new ViesException('VIES external service exception: ' . $e->getMessage());
+        } catch (ContractorException $e) {
+            throw InvalidViesIdentifierException::validationFailed($identifier);
+        } catch (\DragonBe\Vies\ViesException $e) {
+            throw new ViesException($e->getMessage(), $e->getCode(), $e);
+        } catch (\DragonBe\Vies\ViesServiceException $e) {
+            throw new ViesServiceException($e->getMessage(), $e->getCode(), $e);
         }
     }
 }

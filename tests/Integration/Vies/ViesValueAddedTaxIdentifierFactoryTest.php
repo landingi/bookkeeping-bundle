@@ -8,7 +8,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\Simp
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\ValidatedIdentifier;
 use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Vies\Contractor\Company\ValueAddedTax\ViesIdentifierFactory;
-use Landingi\BookkeepingBundle\Vies\ViesException;
+use Landingi\BookkeepingBundle\Vies\Contractor\InvalidViesIdentifierException;
 
 final class ViesValueAddedTaxIdentifierFactoryTest extends IntegrationTestCase
 {
@@ -34,7 +34,7 @@ final class ViesValueAddedTaxIdentifierFactoryTest extends IntegrationTestCase
 
     public function testItIsInvalidIdentifier(): void
     {
-        self::expectException(ViesException::class);
+        self::expectException(InvalidViesIdentifierException::class);
 
         $factory = new ViesIdentifierFactory(new Vies());
         $factory->create('333111222', 'DE');
