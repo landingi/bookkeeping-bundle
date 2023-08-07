@@ -29,8 +29,3 @@ jobs:
                 run: composer install
             -   name: make ci
                 run: make ci
-            -   name: Upload coverage to Codecov
-                uses: codecov/codecov-action@v3
-                with:
-                    token: ${{ secrets.CODECOV_TOKEN }}
-                    files: var/coverage/coverage.xml
