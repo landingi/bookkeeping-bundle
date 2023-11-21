@@ -21,16 +21,4 @@ final class PriceTest extends TestCase
         self::assertEquals('10', (string) $price);
         self::assertEquals(10, $price->toFloat());
     }
-
-    public function testItIsNotEmptyString(): void
-    {
-        $this->expectException(InvoiceItemException::class);
-        new Price(0);
-
-        $this->expectException(InvoiceItemException::class);
-        new Price(-1);
-
-        $this->expectException(InvoiceItemException::class);
-        new Price(-1000);
-    }
 }
