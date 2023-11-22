@@ -29,7 +29,7 @@ final class MemoryValueAddedTaxStorage implements ValueAddedTaxStorage
         'IT' => 22,
         'LT' => 21,
         'LV' => 21,
-        'LU' => 17,
+        'LU' => 16,
         'MT' => 18,
         'NL' => 21,
         'PL' => 23,

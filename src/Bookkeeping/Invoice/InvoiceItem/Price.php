@@ -11,15 +11,9 @@ final class Price
 
     /**
      * Provide $price in cents. The minimal value is 1 (0.01).
-     *
-     * @throws InvoiceItemException
      */
     public function __construct(int $price)
     {
-        if ($price <= 0) {
-            throw new InvoiceItemException('Price must be a greater that zero');
-        }
-
         $this->price = $price;
     }
 

@@ -39,7 +39,7 @@ final class InvoiceFactory
     {
         $invoiceItems = [];
 
-        foreach ($items as $key => $item) {
+        foreach ($items as $item) {
             $invoiceItems[] = new WfirmaInvoiceItem(
                 new Invoice\InvoiceItem\Name($item['invoicecontent']['name']),
                 new Invoice\InvoiceItem\Price((int) ($item['invoicecontent']['price'] * 100)), // In-currency
