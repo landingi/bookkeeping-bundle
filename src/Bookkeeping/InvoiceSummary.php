@@ -21,6 +21,7 @@ final class InvoiceSummary
     private DateTimeImmutable $createdAt;
     private DateTimeImmutable $modifiedAt;
     private DateTimeImmutable $paidAt;
+    private DateTimeImmutable $disposalDate;
     private InvoicePaymentMethod $paymentMethod;
 
     public function __construct(
@@ -32,6 +33,7 @@ final class InvoiceSummary
         DateTimeImmutable $createdAt,
         DateTimeImmutable $modifiedAt,
         DateTimeImmutable $paidAt,
+        DateTimeImmutable $disposalDate,
         InvoicePaymentMethod $paymentMethod
     ) {
         $this->identifier = $identifier;
@@ -42,6 +44,7 @@ final class InvoiceSummary
         $this->createdAt = $createdAt;
         $this->modifiedAt = $modifiedAt;
         $this->paidAt = $paidAt;
+        $this->disposalDate = $disposalDate;
         $this->paymentMethod = $paymentMethod;
     }
 
@@ -83,6 +86,11 @@ final class InvoiceSummary
     public function getPaidAt(): DateTimeImmutable
     {
         return $this->paidAt;
+    }
+
+    public function getDisposalDate(): DateTimeImmutable
+    {
+        return $this->disposalDate;
     }
 
     public function getPaymentMethod(): InvoicePaymentMethod

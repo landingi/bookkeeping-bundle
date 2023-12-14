@@ -26,6 +26,7 @@ class InvoiceSummaryTest extends TestCase
             new \DateTimeImmutable('2023-05-10'),
             new \DateTimeImmutable('2023-05-11'),
             new \DateTimeImmutable('2023-05-12'),
+            new \DateTimeImmutable('2023-05-16'),
             new InvoicePaymentMethod('transfer')
         );
         $this->assertEquals('123', (string) $summary->getIdentifier());
@@ -36,6 +37,7 @@ class InvoiceSummaryTest extends TestCase
         $this->assertEquals('2023-05-10', $summary->getCreatedAt()->format('Y-m-d'));
         $this->assertEquals('2023-05-11', $summary->getModifiedAt()->format('Y-m-d'));
         $this->assertEquals('2023-05-12', $summary->getPaidAt()->format('Y-m-d'));
+        $this->assertEquals('2023-05-16', $summary->getDisposalDate()->format('Y-m-d'));
         $this->assertTrue($summary->getPaymentMethod()->isTransfer());
     }
 }
