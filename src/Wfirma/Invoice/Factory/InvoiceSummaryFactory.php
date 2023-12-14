@@ -26,6 +26,7 @@ final class InvoiceSummaryFactory
             new DateTimeImmutable($data['created']),
             new DateTimeImmutable($data['modified']),
             new DateTimeImmutable($data['paymentdate']),
+            new DateTimeImmutable($data['disposaldate']),
             new InvoicePaymentMethod($data['paymentmethod'])
         );
     }
