@@ -19,23 +19,30 @@ use Landingi\BookkeepingBundle\Wfirma\Client\Exception\TotalRequestsLimitExceede
 use Landingi\BookkeepingBundle\Wfirma\Client\Request\Expenses\FindExpenses;
 use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoice\Download;
 use Landingi\BookkeepingBundle\Wfirma\Client\Request\Invoices\FindInvoices;
+use Landingi\BookkeepingBundle\Wfirma\WFirmaLogger;
 use function json_decode;
 use function sprintf;
 
 final class WfirmaClient
 {
+    private const DECLARATION_COUNTRIES_URL = 'declaration_countries/find';
+    private const VAT_CODES_URL = 'vat_codes/find';
+
     private WfirmaApiUrl $wfirmaApiUrl;
     private WfirmaCredentials $credentials;
     private WfirmaConditionTransformer $conditionTransformer;
+    private ?WFirmaLogger $logger;
 
     public function __construct(
         WfirmaApiUrl $wfirmaApiUrl,
         WfirmaCredentials $credentials,
-        WfirmaConditionTransformer $conditionTransformer
+        WfirmaConditionTransformer $conditionTransformer,
+        ?WFirmaLogger $logger = null
     ) {
         $this->wfirmaApiUrl = $wfirmaApiUrl;
         $this->credentials = $credentials;
         $this->conditionTransformer = $conditionTransformer;
+        $this->logger = $logger;
     }
 
     /**
@@ -51,6 +58,8 @@ final class WfirmaClient
      */
     public function requestGET(string $url): array
     {
+        $this->logWFirmaRequest($url);
+
         return $this->handleResponse(json_decode($this->getCurl($url)->requestGET(), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
@@ -67,6 +76,8 @@ final class WfirmaClient
      */
     public function requestPOST(string $url, string $data): array
     {
+        $this->logWFirmaRequest($url, $data);
+
         return $this->handleResponse(json_decode($this->getCurl($url)->requestPOST($data), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
@@ -83,6 +94,8 @@ final class WfirmaClient
      */
     public function requestDELETE(string $url): array
     {
+        $this->logWFirmaRequest($url);
+
         return $this->handleResponse(json_decode($this->getCurl($url)->requestDELETE(), true, 512, JSON_THROW_ON_ERROR), $url);
     }
 
@@ -107,13 +120,15 @@ final class WfirmaClient
         }
 
         $country = $this->requestPOST(
-            'declaration_countries/find',
+            self::DECLARATION_COUNTRIES_URL,
             (string) (new Request\DeclarationCountries\Find($countryCode))
         );
 
+        $this->logWFirmaRequest(self::DECLARATION_COUNTRIES_URL);
+
         if (empty($country['declaration_countries'][0])) {
             throw new WfirmaClientException(
-                'declaration_countries/find',
+                self::DECLARATION_COUNTRIES_URL,
                 $country,
                 'declaration_countries',
                 'Declaration Country not found'
@@ -121,16 +136,18 @@ final class WfirmaClient
         }
 
         $vatCode = $this->requestPOST(
-            'vat_codes/find',
+            self::VAT_CODES_URL,
             (string) (new Request\VatCodes\Find(
                 (int) $country['declaration_countries'][0]['declaration_country']['id'],
                 $vatRate
             ))
         );
 
+        $this->logWFirmaRequest(self::VAT_CODES_URL);
+
         if (empty($vatCode['vat_codes'][0])) {
             throw new WfirmaClientException(
-                'vat_codes/find',
+                self::VAT_CODES_URL,
                 $vatCode,
                 'vat_codes',
                 'Vat Code Not Found'
@@ -148,11 +165,15 @@ final class WfirmaClient
      */
     public function requestInvoiceDownload(string $url): string
     {
+        $this->logWFirmaRequest($url);
+
         return $this->handleFileResponse($this->getCurl($url)->requestPOST((string) new Download()), $url, 'invoice_download');
     }
 
     public function findInvoices(string $url, int $page = 1, InvoiceCondition ...$conditions): array
     {
+        $this->logWFirmaRequest($url);
+
         return $this->requestPOST($url, (string) new FindInvoices(
             array_reduce(
                 $conditions,
@@ -170,6 +191,8 @@ final class WfirmaClient
 
     public function findExpenses(string $url, int $page = 1, ExpenseCondition ...$conditions): array
     {
+        $this->logWFirmaRequest($url);
+
         return $this->requestPOST($url, (string) new FindExpenses(
             array_reduce(
                 $conditions,
@@ -246,5 +269,14 @@ final class WfirmaClient
         }
 
         return $result;
+    }
+
+    private function logWFirmaRequest(string $url, string $data = ''): void
+    {
+        if (null === $this->logger) {
+            return;
+        }
+
+        $this->logger->logRequest($url, $data);
     }
 }
