@@ -46,7 +46,7 @@ final class MemoryValueAddedTaxStorageTest extends TestCase
         yield ['CZ', 21];
         yield ['DE', 19];
         yield ['DK', 25];
-        yield ['EE', 20];
+        yield ['EE', 22];
         yield ['ES', 21];
         yield ['FI', 24];
         yield ['FR', 20];
@@ -57,7 +57,7 @@ final class MemoryValueAddedTaxStorageTest extends TestCase
         yield ['IT', 22];
         yield ['LT', 21];
         yield ['LV', 21];
-        yield ['LU', 16];
+        yield ['LU', 17];
         yield ['MT', 18];
         yield ['NL', 21];
         yield ['PL', 23];
