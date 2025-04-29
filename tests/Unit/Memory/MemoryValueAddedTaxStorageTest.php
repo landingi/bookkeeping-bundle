@@ -32,7 +32,7 @@ final class MemoryValueAddedTaxStorageTest extends TestCase
     /**
      * @dataProvider getEuropeanUnionCountriesValueAddedTaxRate
      */
-    public function testItHasOnlyValueAddedTaxForEuropeanUnionCountries(string $country, int $tax): void
+    public function testItHasOnlyValueAddedTaxForEuropeanUnionCountries(string $country, float $tax): void
     {
         self::assertEquals($tax, $this->storage->getByCountry(new Country($country))->getRate());
     }
