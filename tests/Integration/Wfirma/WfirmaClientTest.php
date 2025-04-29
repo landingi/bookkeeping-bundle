@@ -43,7 +43,7 @@ final class WfirmaClientTest extends IntegrationTestCase
     /**
      * @dataProvider getCountriesValueAddedTaxRate
      */
-    public function testItGetsVatIdentifier(string $country, int $rate): void
+    public function testItGetsVatIdentifier(string $country, float $rate): void
     {
         $this->client->getVatId($country, $rate);
         $this->expectNotToPerformAssertions();
