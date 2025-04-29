@@ -58,7 +58,7 @@ final class WfirmaClientTest extends IntegrationTestCase
         yield ['CZ', 21];
         yield ['DE', 19];
         yield ['DK', 25];
-        yield ['EE', 20];
+        yield ['EE', 24];
         yield ['ES', 21];
         yield ['FI', 25.5];
         yield ['FR', 20];
