@@ -18,7 +18,7 @@ final class MemoryValueAddedTaxStorage implements ValueAddedTaxStorage
         'CZ' => 21,
         'DE' => 19,
         'DK' => 25,
-        'EE' => 22,
+        'EE' => 24,
         'ES' => 21,
         'FI' => 25.5,
         'FR' => 20,
