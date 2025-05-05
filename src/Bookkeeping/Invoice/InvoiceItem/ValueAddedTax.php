@@ -5,14 +5,14 @@ namespace Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem;
 
 final class ValueAddedTax
 {
-    private int $rate;
+    private float $rate;
 
-    public function __construct(int $rate)
+    public function __construct(float $rate)
     {
         $this->rate = $rate;
     }
 
-    public function getRate(): int
+    public function getRate(): float
     {
         return $this->rate;
     }

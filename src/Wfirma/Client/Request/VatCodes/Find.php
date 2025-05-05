@@ -8,9 +8,9 @@ use Landingi\BookkeepingBundle\Wfirma\Client\Request;
 final class Find implements Request
 {
     private int $declarationCountryId;
-    private int $taxRate;
+    private float $taxRate;
 
-    public function __construct(int $declarationCountryId, int $taxRate)
+    public function __construct(int $declarationCountryId, float $taxRate)
     {
         $this->declarationCountryId = $declarationCountryId;
         $this->taxRate = $taxRate;

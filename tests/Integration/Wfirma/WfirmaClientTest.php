@@ -43,7 +43,7 @@ final class WfirmaClientTest extends IntegrationTestCase
     /**
      * @dataProvider getCountriesValueAddedTaxRate
      */
-    public function testItGetsVatIdentifier(string $country, int $rate): void
+    public function testItGetsVatIdentifier(string $country, float $rate): void
     {
         $this->client->getVatId($country, $rate);
         $this->expectNotToPerformAssertions();
@@ -58,9 +58,9 @@ final class WfirmaClientTest extends IntegrationTestCase
         yield ['CZ', 21];
         yield ['DE', 19];
         yield ['DK', 25];
-        yield ['EE', 20];
+        yield ['EE', 22];
         yield ['ES', 21];
-        yield ['FI', 24];
+        yield ['FI', 25.5];
         yield ['FR', 20];
         yield ['GR', 24];
         yield ['HR', 25];
@@ -75,7 +75,7 @@ final class WfirmaClientTest extends IntegrationTestCase
         yield ['PL', 23];
         yield ['PT', 23];
         yield ['RO', 19];
-        yield ['SK', 20];
+        yield ['SK', 23];
         yield ['SI', 22];
         yield ['SE', 25];
     }

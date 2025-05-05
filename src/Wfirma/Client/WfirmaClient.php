@@ -110,7 +110,7 @@ final class WfirmaClient
      * @throws TotalExecutionTimeLimitExceededException
      * @throws WfirmaClientException
      */
-    public function getVatId(string $countryCode, int $vatRate): int
+    public function getVatId(string $countryCode, float $vatRate): int
     {
         /*
          * WFirma API does not recognize PL VAT tax, but the VAT id is 0

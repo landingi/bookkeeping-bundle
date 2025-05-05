@@ -20,7 +20,7 @@ final class MemoryValueAddedTaxStorage implements ValueAddedTaxStorage
         'DK' => 25,
         'EE' => 22,
         'ES' => 21,
-        'FI' => 24,
+        'FI' => 25.5,
         'FR' => 20,
         'GR' => 24,
         'HR' => 25,
@@ -35,7 +35,7 @@ final class MemoryValueAddedTaxStorage implements ValueAddedTaxStorage
         'PL' => 23,
         'PT' => 23,
         'RO' => 19,
-        'SK' => 20,
+        'SK' => 23,
         'SI' => 22,
         'SE' => 25,
     ];
