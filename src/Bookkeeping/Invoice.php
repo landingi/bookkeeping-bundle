@@ -9,6 +9,7 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceFullNumber;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceItem;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceNetPlnValue;
+use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoicePaymentMethod;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceSeries;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 
@@ -27,6 +28,7 @@ abstract class Invoice
     protected DateTime $paidAt;
     protected DateTime $saleAt;
     protected Language $language;
+    protected InvoicePaymentMethod $paymentMethod;
 
     public function __construct(
         InvoiceIdentifier $identifier,
@@ -41,7 +43,8 @@ abstract class Invoice
         DateTime $createdAt,
         DateTime $paidAt,
         DateTime $saleAt,
-        Language $language
+        Language $language,
+        InvoicePaymentMethod $paymentMethod
     ) {
         $this->identifier = $identifier;
         $this->invoiceSeries = $invoiceSeries;
@@ -56,6 +59,7 @@ abstract class Invoice
         $this->language = $language;
         $this->saleAt = $saleAt;
         $this->netPlnValue = $nettoPlnValue;
+        $this->paymentMethod = $paymentMethod;
     }
 
     /**
@@ -110,6 +114,11 @@ abstract class Invoice
     public function getDescription(): InvoiceDescription
     {
         return $this->description;
+    }
+
+    public function getPaymentMethod(): InvoicePaymentMethod
+    {
+        return $this->paymentMethod;
     }
 
     abstract public function print(Media $media): Media;
