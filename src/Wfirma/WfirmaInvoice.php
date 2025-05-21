@@ -15,7 +15,7 @@ final class WfirmaInvoice extends Invoice
         $invoice = $invoices->with('invoice', '');
         $contractor = $invoice->with('contractor', '');
         $contractor->with('id', $this->contractor->getIdentifier()->toString());
-        $invoice->with('paymentmethod', 'transfer');
+        $invoice->with('paymentmethod', (string) $this->getPaymentMethod());
         $invoice->with('currency', $this->currency->getSymbol());
         $invoice->with('paid', '1');
         $invoice->with('alreadypaid_initial', (string) 0);
