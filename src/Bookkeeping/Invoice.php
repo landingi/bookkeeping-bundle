@@ -28,7 +28,7 @@ abstract class Invoice
     protected DateTime $paidAt;
     protected DateTime $saleAt;
     protected Language $language;
-    protected InvoicePaymentMethod $paymentMethod;
+    protected ?InvoicePaymentMethod $paymentMethod;
 
     public function __construct(
         InvoiceIdentifier $identifier,
@@ -44,7 +44,7 @@ abstract class Invoice
         DateTime $paidAt,
         DateTime $saleAt,
         Language $language,
-        InvoicePaymentMethod $paymentMethod
+        ?InvoicePaymentMethod $paymentMethod = null
     ) {
         $this->identifier = $identifier;
         $this->invoiceSeries = $invoiceSeries;
@@ -118,7 +118,7 @@ abstract class Invoice
 
     public function getPaymentMethod(): InvoicePaymentMethod
     {
-        return $this->paymentMethod;
+        return $this->paymentMethod ?? new InvoicePaymentMethod('transfer');
     }
 
     abstract public function print(Media $media): Media;
