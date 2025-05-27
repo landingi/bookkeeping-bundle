@@ -118,7 +118,7 @@ abstract class Invoice
 
     public function getPaymentMethod(): InvoicePaymentMethod
     {
-        return $this->paymentMethod ?? new InvoicePaymentMethod('transfer');
+        return $this->paymentMethod;
     }
 
     abstract public function print(Media $media): Media;
