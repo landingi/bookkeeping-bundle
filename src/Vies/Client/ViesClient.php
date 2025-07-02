@@ -14,7 +14,6 @@ final class ViesClient
     private const VIES_DOMAIN = 'ec.europa.eu';
     private const VIES_PATH = 'taxation_customs/vies/rest-api/ms/%s/vat/%s';
 
-
     public function validateVat(string $countryCode, string $identifier): array
     {
         $curl = $this->getCurl($countryCode, $identifier);
