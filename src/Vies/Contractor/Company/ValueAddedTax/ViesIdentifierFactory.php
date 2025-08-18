@@ -28,13 +28,9 @@ final class ViesIdentifierFactory implements IdentifierFactory
     public function create(string $identifier, string $country): ValueAddedTaxIdentifier
     {
         try {
-            $validation = $this->viesClient->validateVat($country, $identifier);
-
-            if (false === $validation['isValid']) {
-                throw InvalidViesIdentifierException::validationFailed($identifier);
-            }
-
             $country = new Country($country);
+
+            $this->validateVat($identifier, $country);
 
             if ($country->isPoland()) {
                 return new SimpleIdentifier($identifier);
@@ -43,6 +39,17 @@ final class ViesIdentifierFactory implements IdentifierFactory
             return new ValidatedIdentifier(new SimpleIdentifier($identifier), $country);
         } catch (ContractorException|Exception $e) {
             throw InvalidViesIdentifierException::validationFailed($identifier);
+        }
+    }
+
+    private function validateVat(string $identifier, Country $country): void
+    {
+        if ($country->isEuropeanUnion()) {
+            $validation = $this->viesClient->validateVat($country->toString(), $identifier);
+
+            if (false === $validation['isValid']) {
+                throw InvalidViesIdentifierException::validationFailed($identifier);
+            }
         }
     }
 }
