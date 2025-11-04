@@ -26,7 +26,7 @@ final class ViesValueAddedTaxIdentifierFactoryTest extends IntegrationTestCase
         $factory = new ViesIdentifierFactory(new ViesClient());
         $identifier = $factory->create('105454931', 'GB');
 
-        self::assertTrue($identifier instanceof ValidatedIdentifier);
+        self::assertTrue($identifier instanceof SimpleIdentifier);
         self::assertEquals('105454931', $identifier->toString());
     }
 
