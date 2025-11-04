@@ -6,22 +6,28 @@ namespace Landingi\BookkeepingBundle\Integration\Vies;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\SimpleIdentifier;
 use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTax\ValidatedIdentifier;
 use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
-use Landingi\BookkeepingBundle\Unit\Fake\ThrowingVies;
 use Landingi\BookkeepingBundle\Vies\Client\ViesClient;
 use Landingi\BookkeepingBundle\Vies\Contractor\Company\ValueAddedTax\ViesIdentifierFactory;
 use Landingi\BookkeepingBundle\Vies\Contractor\InvalidViesIdentifierException;
-use Landingi\BookkeepingBundle\Vies\Exception\ViesServiceException;
-use Landingi\BookkeepingBundle\Vies\ViesException;
 
 final class ViesValueAddedTaxIdentifierFactoryTest extends IntegrationTestCase
 {
     public function testItIsValidIdentifier(): void
     {
         $factory = new ViesIdentifierFactory(new ViesClient());
-        $identifier = $factory->create('29480969591', 'FR');
+        $identifier = $factory->create('ESB40582447', 'ES');
 
         self::assertTrue($identifier instanceof ValidatedIdentifier);
-        self::assertEquals('FR29480969591', $identifier->toString());
+        self::assertEquals('ESB40582447', $identifier->toString());
+    }
+
+    public function testItIsValidIdentifierForCountryOutsideEu(): void
+    {
+        $factory = new ViesIdentifierFactory(new ViesClient());
+        $identifier = $factory->create('GB105454931', 'GB');
+
+        self::assertTrue($identifier instanceof ValidatedIdentifier);
+        self::assertEquals('105454931', $identifier->toString());
     }
 
     public function testItIsValidPolishIdentifier(): void
