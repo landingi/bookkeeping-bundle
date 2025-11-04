@@ -52,7 +52,7 @@ final class ViesIdentifierFactory implements IdentifierFactory
         if ($country->isEuropeanUnion()) {
             $validation = $this->viesClient->validateVat($country->toString(), $identifier);
 
-            if (self::CONCURRENT_REQUESTS_ERROR_NAME === $validation['userError']) {
+            if (isset($validation['userError']) && self::CONCURRENT_REQUESTS_ERROR_NAME === $validation['userError']) {
                 throw ConcurrentRequestViesIdentifierException::validationBlockedByConcurrentRequests($identifier);
             }
 
