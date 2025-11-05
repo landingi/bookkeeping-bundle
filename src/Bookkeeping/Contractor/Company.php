@@ -89,4 +89,9 @@ final class Company implements Contractor
     {
         $this->valueAddedTaxIdentifier = $identifier;
     }
+
+    public function getValueAddedTaxIdentifier(): ValueAddedTaxIdentifier
+    {
+        return $this->valueAddedTaxIdentifier;
+    }
 }

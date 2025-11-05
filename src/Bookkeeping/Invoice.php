@@ -103,6 +103,11 @@ abstract class Invoice
         return $this->paidAt;
     }
 
+    public function getContractor(): Contractor
+    {
+        return $this->contractor;
+    }
+
     /**
      * Returns total invoice value, in-currency. This can be negative if the invoice is a correction.
      */

@@ -26,12 +26,14 @@ final class ViesIdentifierFactory implements IdentifierFactory
     /**
      * @throws InvalidViesIdentifierException|ConcurrentRequestViesIdentifierException
      */
-    public function create(string $identifier, string $country): ValueAddedTaxIdentifier
+    public function create(string $identifier, string $country, bool $skipValidation = false): ValueAddedTaxIdentifier
     {
         try {
             $country = new Country($country);
 
-            $this->validateVat($identifier, $country);
+            if (!$skipValidation) {
+                $this->validateVat($identifier, $country);
+            }
 
             if ($country->isPoland() || !$country->isEuropeanUnion()) {
                 return new SimpleIdentifier($identifier);
