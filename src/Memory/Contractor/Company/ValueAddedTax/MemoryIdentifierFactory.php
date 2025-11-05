@@ -14,7 +14,7 @@ final class MemoryIdentifierFactory implements IdentifierFactory
     /**
      * @throws \Landingi\BookkeepingBundle\Vies\ViesException
      */
-    public function create(string $identifier, string $country): ValueAddedTaxIdentifier
+    public function create(string $identifier, string $country, bool $skipValidation = false): ValueAddedTaxIdentifier
     {
         if (true === empty($country)) {
             return new SimpleIdentifier($identifier);
