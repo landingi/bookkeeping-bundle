@@ -118,7 +118,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
      * @throws \Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException
      * @throws \Landingi\BookkeepingBundle\Wfirma\WfirmaException
      */
-    public function create(Invoice $invoice, bool $skipViesValidation = false): Invoice
+    public function create(Invoice $invoice): Invoice
     {
         $invoiceResult = $this->getInvoiceResult(
             $this->client->requestPOST(
@@ -132,10 +132,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
 
         return $this->invoiceFactory->getInvoiceFromApiData(
             $invoiceResult,
-            $this->contractorFactory->getContractor(
-                $this->getContractorResult($invoiceResult),
-                $skipViesValidation,
-            )
+            $this->contractorFactory->getContractor($this->getContractorResult($invoiceResult))
         );
     }
 

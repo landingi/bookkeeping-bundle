@@ -7,5 +7,5 @@ use Landingi\BookkeepingBundle\Bookkeeping\Contractor\Company\ValueAddedTaxIdent
 
 interface IdentifierFactory
 {
-    public function create(string $identifier, string $country, bool $skipValidation = false): ValueAddedTaxIdentifier;
+    public function create(string $identifier, string $country): ValueAddedTaxIdentifier;
 }
