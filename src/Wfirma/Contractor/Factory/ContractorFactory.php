@@ -46,7 +46,10 @@ final class ContractorFactory
             new Contractor\ContractorName((string) $data['name']),
             new Contractor\ContractorEmail((string) $data['email']),
             $this->getContractorAddress($data),
-            $this->identifierFactory->create($this->trimCountryFromValueAddedTaxIdentifier($data), (string) $data['country'])
+            $this->identifierFactory->create(
+                $this->trimCountryFromValueAddedTaxIdentifier($data),
+                (string) $data['country']
+            )
         );
     }
 
