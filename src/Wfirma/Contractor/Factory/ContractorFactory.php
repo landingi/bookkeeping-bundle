@@ -30,7 +30,7 @@ final class ContractorFactory
      * @throws ContractorException
      * @throws InvalidEmailAddressException
      */
-    public function getContractor(array $data, bool $skipViesValidation = false): Contractor
+    public function getContractor(array $data): Contractor
     {
         if (empty($data['nip'])) {
             return new Person(
@@ -46,11 +46,7 @@ final class ContractorFactory
             new Contractor\ContractorName((string) $data['name']),
             new Contractor\ContractorEmail((string) $data['email']),
             $this->getContractorAddress($data),
-            $this->identifierFactory->create(
-                $this->trimCountryFromValueAddedTaxIdentifier($data),
-                (string) $data['country'],
-                $skipViesValidation,
-            ),
+            $this->identifierFactory->create($this->trimCountryFromValueAddedTaxIdentifier($data), (string) $data['country'])
         );
     }
 
