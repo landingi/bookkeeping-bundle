@@ -22,7 +22,7 @@ final class MemoryIdentifierFactory implements IdentifierFactory
 
         $country = new Country($country);
 
-        if ($country->isPoland()) {
+        if ($country->isPoland() || !$country->isEuropeanUnion()) {
             return new SimpleIdentifier($identifier);
         }
 
