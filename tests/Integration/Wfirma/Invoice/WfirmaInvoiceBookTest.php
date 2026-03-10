@@ -34,7 +34,9 @@ use Landingi\BookkeepingBundle\Bookkeeping\InvoiceSummary;
 use Landingi\BookkeepingBundle\Bookkeeping\Language;
 use Landingi\BookkeepingBundle\Integration\IntegrationTestCase;
 use Landingi\BookkeepingBundle\Memory\Contractor\Company\ValueAddedTax\MemoryIdentifierFactory;
+use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\NonCertifiedWfirmaCredentials;
 use Landingi\BookkeepingBundle\Wfirma\Client\Credentials\WfirmaCredentials;
+use Landingi\BookkeepingBundle\Wfirma\Client\NonCertifiedWfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaApiUrl;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaConditionTransformer;
@@ -65,11 +67,21 @@ final class WfirmaInvoiceBookTest extends IntegrationTestCase
             ),
             new WfirmaConditionTransformer()
         );
+        $nonCertifiedClient = new NonCertifiedWfirmaClient(
+            new WfirmaApiUrl((string) getenv('WFIRMA_API_URL')),
+            new NonCertifiedWfirmaCredentials(
+                (string) getenv('WFIRMA_API_ACCESS_KEY'),
+                (string) getenv('WFIRMA_API_SECRET_KEY'),
+                (string) getenv('WFIRMA_API_APP_KEY'),
+                (int) getenv('WFIRMA_API_COMPANY_ID')
+            ),
+        );
         $factory = new ContractorFactory(
             new MemoryIdentifierFactory()
         );
         $this->invoiceBook = new WfirmaInvoiceBook(
             $client,
+            $nonCertifiedClient,
             new InvoiceFactory(),
             new InvoiceSummaryFactory(),
             $factory
