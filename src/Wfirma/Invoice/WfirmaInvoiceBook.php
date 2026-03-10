@@ -125,27 +125,16 @@ final class WfirmaInvoiceBook implements InvoiceBook
      */
     public function create(Invoice $invoice): Invoice
     {
-        if ($invoice->hasInternalSeries()) {
-            $invoiceResult = $this->getInvoiceResult(
-                $this->nonCertifiedClient->requestPOST(
-                    sprintf(
-                        self::INVOICE_API_URL,
-                        'add'
-                    ),
-                    $invoice->print(WfirmaMedia::api())->toString()
-                )
-            );
-        } else {
-            $invoiceResult = $this->getInvoiceResult(
-                $this->client->requestPOST(
-                    sprintf(
-                        self::INVOICE_API_URL,
-                        'add'
-                    ),
-                    $invoice->print(WfirmaMedia::api())->toString()
-                )
-            );
-        }
+        $client = $invoice->hasInternalSeries() ? $this->nonCertifiedClient : $this->client;
+        $invoiceResult = $this->getInvoiceResult(
+            $client->requestPOST(
+                sprintf(
+                    self::INVOICE_API_URL,
+                    'add'
+                ),
+                $invoice->print(WfirmaMedia::api())->toString()
+            )
+        );
 
         return $this->invoiceFactory->getInvoiceFromApiData(
             $invoiceResult,
