@@ -125,7 +125,7 @@ final class WfirmaInvoiceBook implements InvoiceBook
      */
     public function create(Invoice $invoice): Invoice
     {
-        if ($invoice instanceof NonCertifiedWfirmaInvoice) {
+        if ($invoice->hasInternalSeries()) {
             $invoiceResult = $this->getInvoiceResult(
                 $this->nonCertifiedClient->requestPOST(
                     sprintf(
