@@ -10,11 +10,13 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\Collection\InvoiceCondition;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceBook;
 use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceIdentifier;
+use Landingi\BookkeepingBundle\Wfirma\Client\NonCertifiedWfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClient;
 use Landingi\BookkeepingBundle\Wfirma\Client\WfirmaClientException;
 use Landingi\BookkeepingBundle\Wfirma\Contractor\Factory\ContractorFactory;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceFactory;
 use Landingi\BookkeepingBundle\Wfirma\Invoice\Factory\InvoiceSummaryFactory;
+use Landingi\BookkeepingBundle\Wfirma\NonCertifiedWfirmaInvoice;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaException;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaInvoiceCollection;
 use Landingi\BookkeepingBundle\Wfirma\WfirmaMedia;
@@ -26,17 +28,20 @@ final class WfirmaInvoiceBook implements InvoiceBook
     private const INVOICES_FIND_URL = '/invoices/find';
 
     private WfirmaClient $client;
+    private NonCertifiedWfirmaClient $nonCertifiedClient;
     private InvoiceFactory $invoiceFactory;
     private ContractorFactory $contractorFactory;
     private InvoiceSummaryFactory $invoiceSummaryFactory;
 
     public function __construct(
         WfirmaClient $client,
+        NonCertifiedWfirmaClient $nonCertifiedClient,
         InvoiceFactory $invoiceFactory,
         InvoiceSummaryFactory $invoiceSummaryFactory,
         ContractorFactory $contractorFactory
     ) {
         $this->client = $client;
+        $this->nonCertifiedClient = $nonCertifiedClient;
         $this->invoiceFactory = $invoiceFactory;
         $this->invoiceSummaryFactory = $invoiceSummaryFactory;
         $this->contractorFactory = $contractorFactory;
@@ -120,8 +125,9 @@ final class WfirmaInvoiceBook implements InvoiceBook
      */
     public function create(Invoice $invoice): Invoice
     {
+        $client = $invoice->hasInternalSeries() ? $this->nonCertifiedClient : $this->client;
         $invoiceResult = $this->getInvoiceResult(
-            $this->client->requestPOST(
+            $client->requestPOST(
                 sprintf(
                     self::INVOICE_API_URL,
                     'add'

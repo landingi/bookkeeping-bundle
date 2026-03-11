@@ -15,6 +15,8 @@ use Landingi\BookkeepingBundle\Bookkeeping\Invoice\InvoiceTotalValue;
 
 abstract class Invoice
 {
+    private const LEGACY_SERIES = 1368157;
+
     protected InvoiceIdentifier $identifier;
     protected InvoiceSeries $invoiceSeries;
     protected InvoiceDescription $description;
@@ -86,6 +88,11 @@ abstract class Invoice
     public function getInvoiceSeries(): InvoiceSeries
     {
         return $this->invoiceSeries;
+    }
+
+    public function hasInternalSeries(): bool
+    {
+        return self::LEGACY_SERIES === $this->invoiceSeries->getIdentifier()->toInteger();
     }
 
     public function getFullNumber(): InvoiceFullNumber
