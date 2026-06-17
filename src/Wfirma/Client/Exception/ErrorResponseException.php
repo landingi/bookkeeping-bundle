@@ -10,6 +10,11 @@ final class ErrorResponseException extends WfirmaClientException
 {
     public function __construct(string $url, array $result, string $request)
     {
-        parent::__construct($url, $result, $request, 'External system returns an error');
+        parent::__construct(
+            $url,
+            ['extra' => json_encode($result)],
+            $request,
+            'External system returns an error',
+        );
     }
 }
