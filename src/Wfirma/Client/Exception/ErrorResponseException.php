@@ -12,9 +12,9 @@ final class ErrorResponseException extends WfirmaClientException
     {
         parent::__construct(
             $url,
-            ['extra' => json_encode($result)],
+            $result,
             $request,
-            'External system returns an error',
+            sprintf('External system returned error: %s', json_encode($result)),
         );
     }
 }
